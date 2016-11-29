@@ -51,6 +51,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/name"
                     android:text="Name: "/>
 
                 <TextView
@@ -76,11 +77,16 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="View Profile"/>
+                    android:id="@+id/v_pro"
+                    android:text="View Store"
+                    android:textSize="12dp"
+                    android:drawableLeft="@mipmap/store_70" />
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/verified_70"
+                    android:textSize="12dp"
                     android:text="Verified"/>
 
             </LinearLayout>
@@ -93,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="0.4"
+            android:layout_weight="0.1"
             android:background="#C0C0C0">
 
             <LinearLayout
@@ -106,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request"/>
+                    android:src="@mipmap/request_70"/>
 
             </LinearLayout>
 
@@ -120,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request"/>
+                    android:src="@mipmap/camera_70"/>
 
             </LinearLayout>
 
@@ -134,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request"/>
+                    android:src="@mipmap/calendar_70"/>
 
             </LinearLayout>
 
@@ -148,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request"/>
+                    android:src="@mipmap/promote_70"/>
 
             </LinearLayout>
 
@@ -162,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request"/>
+                    android:src="@mipmap/noti_70"/>
 
             </LinearLayout>
 

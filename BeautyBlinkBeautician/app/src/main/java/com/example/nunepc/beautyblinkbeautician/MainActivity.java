@@ -1,5 +1,6 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.Image;
 import android.support.annotation.Nullable;
@@ -9,13 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.ProFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,24 +35,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
+    private String name;
+    private TextView showname;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //fragment
-        if(savedInstanceState==null){
-            //first create
-            //Place fragment
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentcontainer,new GalleryFragment())
-                    .commit();
+        //Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        if(mFirebaseUser == null){
+            // Not signed in, launch the sign in activity.
+            startActivity(new Intent(this, EmailLogin.class));
+
+        }else {
+            //fragment
+            if(savedInstanceState==null){
+                //first create
+                //Place fragment
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.contentcontainer,new GalleryFragment())
+                        .commit();
+            }
+
+            name = mFirebaseUser.getDisplayName();
         }
 
         initInstances();
     }
 
     private  void initInstances(){
+
+        showname = (TextView) findViewById(R.id.name);
+        showname.setText(name);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_planner).setOnClickListener(this);
         findViewById(R.id.bt_noti).setOnClickListener(this);
         findViewById(R.id.bt_promote).setOnClickListener(this);
+        findViewById(R.id.v_pro).setOnClickListener(this);
 
     }
 
@@ -75,6 +108,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void signOut() {
+        // Firebase sign out
+        FirebaseAuth.getInstance().signOut();
+        finish();
     }
 
 
@@ -105,6 +144,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,ProFragment.newInstance())
                         .commit();
+                break;
+            case R.id.v_pro:
+                signOut();
                 break;
         }
     }
