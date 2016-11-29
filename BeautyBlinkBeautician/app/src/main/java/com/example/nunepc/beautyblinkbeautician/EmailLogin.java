@@ -92,7 +92,10 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     EmailPasswordLogin();
                     break;
                 case R.id.register:
-                    Register();
+
+                    Intent intent = new Intent(this, Register.class);
+                    startActivity(intent);
+                    //Register();
                     break;
             }
         }
@@ -111,11 +114,15 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                 return;
             }
 
+            Toast.makeText(EmailLogin.this, "Test1", Toast.LENGTH_LONG).show();
+
             //authenticate user
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(EmailLogin.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            Toast.makeText(EmailLogin.this, "Test", Toast.LENGTH_LONG).show();
                             // If sign in fails, display a message to the user. If sign in succeeds
                             // the auth state listener will be notified and logic to handle the
                             // signed in user can be handled in the listener.
