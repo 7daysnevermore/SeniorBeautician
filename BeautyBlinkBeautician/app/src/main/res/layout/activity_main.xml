@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#FFDDDD">
+            android:background="#FFFFFF">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,6 +80,7 @@
                     android:id="@+id/v_pro"
                     android:text="View Store"
                     android:textSize="12dp"
+                    android:background="#ffffff"
                     android:drawableLeft="@mipmap/store_70" />
 
                 <Button
@@ -87,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/verified_70"
                     android:textSize="12dp"
+                    android:background="#ffffff"
                     android:text="Verified"/>
 
             </LinearLayout>
@@ -100,11 +102,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="0.1"
-            android:background="#C0C0C0">
+            android:background="#BEBEBE">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#FF6633"
                 android:layout_weight="1">
 
                 <ImageView
