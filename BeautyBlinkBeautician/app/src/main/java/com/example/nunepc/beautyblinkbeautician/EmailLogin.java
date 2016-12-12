@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -92,10 +93,9 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     EmailPasswordLogin();
                     break;
                 case R.id.register:
-
-                    Intent intent = new Intent(this, Register.class);
-                    startActivity(intent);
-                    //Register();
+                    Register();
+                    //Intent intent = new Intent(this, Register.class);
+                    //startActivity(intent);
                     break;
             }
         }
@@ -173,18 +173,20 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
                                 DatabaseReference mUsersRef = mRootRef.child("beautician");
-                                String key = mUsersRef.push().getKey();
+                                //String key = mUsersRef.push().getKey();
 
-                                HashMap<String, Object> UserValues = new HashMap<>();
+                                User user = new User(email, "Chanasit");
+
+                                /*HashMap<String, Object> UserValues = new HashMap<>();
                                 UserValues.put("Email", email);
-                                UserValues.put("Pass", password);
-                                UserValues.put("UID", mFirebaseUser.getUid());
                                 UserValues.put("Name", "Tidaporn");
 
                                 Map<String, Object> childUpdates = new HashMap<>();
-                                childUpdates.put( key, UserValues);
+                                childUpdates.put( mFirebaseUser.getUid(), UserValues);
 
-                                mUsersRef.updateChildren(childUpdates);
+                                mUsersRef.updateChildren(childUpdates);*/
+
+                                mUsersRef.child(mFirebaseUser.getUid()).setValue(user);
 
                                 startActivity(new Intent(EmailLogin.this, MainActivity.class));
                                 finish();
