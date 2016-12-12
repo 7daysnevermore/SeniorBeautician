@@ -2,25 +2,23 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.ProFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
+import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,16 +27,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    private String name;
     private TextView showname;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +51,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+
         if(mFirebaseUser == null){
             // Not signed in, launch the sign in activity.
             startActivity(new Intent(this, EmailLogin.class));
 
         }else {
+
+            uid = mFirebaseUser.getUid().toString();
             //fragment
             if(savedInstanceState==null){
                 //first create
@@ -63,19 +68,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
             }
 
-            name = mFirebaseUser.getDisplayName();
         }
-
         initInstances();
     }
 
     private  void initInstances(){
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
-        showname = (TextView) findViewById(R.id.name);
-        showname.setText(name);
+        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(MainActivity.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+                    showname = (TextView) findViewById(R.id.name);
+                    showname.setText(user.name);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
