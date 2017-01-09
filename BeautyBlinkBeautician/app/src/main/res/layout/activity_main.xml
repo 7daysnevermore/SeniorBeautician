@@ -22,79 +22,7 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <!--Profile-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#FFFFFF">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.4">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name"
-                    android:text="Name: "/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rating: "/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Following: "/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:layout_weight="1.3">
-
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/v_pro"
-                    android:text="View Store"
-                    android:textSize="12dp"
-                    android:background="#ffffff"
-                    android:drawableLeft="@mipmap/store_70" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/verified_70"
-                    android:textSize="12dp"
-                    android:background="#ffffff"
-                    android:text="Verified"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
 
         <!--Menu-->
         <LinearLayout
@@ -153,11 +81,11 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/bt_noti"
+                    android:id="@+id/bt_promote"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/promote_70"/>
+                    android:src="@mipmap/noti_70"/>
 
             </LinearLayout>
 
@@ -167,13 +95,14 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/bt_promote"
+                    android:id="@+id/bt_noti"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/noti_70"/>
+                    android:src="@mipmap/setting_70"/>
 
             </LinearLayout>
+
 
 
         </LinearLayout>
