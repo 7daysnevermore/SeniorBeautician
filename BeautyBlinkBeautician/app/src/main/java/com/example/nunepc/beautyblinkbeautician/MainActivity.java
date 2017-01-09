@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,GalleryFragment.newInstance())
                         .commit();
+                signOut();
                 break;
             case R.id.bt_request:
                 getSupportFragmentManager().beginTransaction()
@@ -169,9 +170,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,ProFragment.newInstance())
                         .commit();
-                break;
-            case R.id.v_pro:
-                signOut();
                 break;
         }
     }
