@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +15,8 @@ import android.widget.Toast;
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
-import com.example.nunepc.beautyblinkbeautician.fragment.ProFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
+import com.example.nunepc.beautyblinkbeautician.fragment.SettingFragment;
 import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,9 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -82,8 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (user == null) {
                     Toast.makeText(MainActivity.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    showname = (TextView) findViewById(R.id.name);
-                    showname.setText(user.name);
+                    //show name is it display or not
                 }
             }
 
@@ -118,8 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_request).setOnClickListener(this);
         findViewById(R.id.bt_planner).setOnClickListener(this);
         findViewById(R.id.bt_noti).setOnClickListener(this);
-        findViewById(R.id.bt_promote).setOnClickListener(this);
-        findViewById(R.id.v_pro).setOnClickListener(this);
+        findViewById(R.id.bt_setting).setOnClickListener(this);
 
     }
 
@@ -166,9 +160,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .commit();
                 break;
-            case R.id.bt_promote:
+            case R.id.bt_setting:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,ProFragment.newInstance())
+                        .replace(R.id.contentcontainer, SettingFragment.newInstance())
                         .commit();
                 break;
         }
