@@ -160,7 +160,7 @@
                 android:maxLines="1" />
 
             <EditText
-                android:id="@+id/sub-district"
+                android:id="@+id/sub_district"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
