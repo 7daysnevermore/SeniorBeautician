@@ -20,6 +20,15 @@
             android:background="?attr/colorPrimary"
             android:titleTextColor="#1111">
 
+            <TextView
+                android:id="@+id/showname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:gravity="center_vertical"
+                android:textSize="30dp"
+                />
+
         </android.support.v7.widget.Toolbar>
 
 
@@ -98,10 +107,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:src="@mipmap/setting_70"/>
-
             </LinearLayout>
-
-
 
         </LinearLayout>
 
