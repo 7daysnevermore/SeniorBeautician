@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    private TextView showname;
+    private TextView namename;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
@@ -78,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (user == null) {
                     Toast.makeText(MainActivity.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    //show name is it display or not
+                    namename = (TextView) findViewById(R.id.showname);
+                    namename.setText(user.name);
                 }
             }
 
