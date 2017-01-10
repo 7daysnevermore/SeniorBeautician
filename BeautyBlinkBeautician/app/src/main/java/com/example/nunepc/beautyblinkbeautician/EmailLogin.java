@@ -114,8 +114,6 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                 return;
             }
 
-            Toast.makeText(EmailLogin.this, "Test1", Toast.LENGTH_LONG).show();
-
             //authenticate user
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(EmailLogin.this, new OnCompleteListener<AuthResult>() {
