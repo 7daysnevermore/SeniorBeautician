@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-        /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
 
-        });*/
+        });
 
 
 
