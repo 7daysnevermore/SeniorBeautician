@@ -1,7 +1,7 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,13 +9,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
-import com.example.nunepc.beautyblinkbeautician.fragment.ProFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
+import com.example.nunepc.beautyblinkbeautician.fragment.SettingFragment;
+import com.example.nunepc.beautyblinkbeautician.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,27 +32,71 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
+    private TextView namename;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
+    String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //fragment
-        if(savedInstanceState==null){
-            //first create
-            //Place fragment
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.contentcontainer,new GalleryFragment())
-                    .commit();
-        }
+        //Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
+
+        if(mFirebaseUser == null){
+            // Not signed in, launch the sign in activity.
+            startActivity(new Intent(this, EmailLogin.class));
+
+        }else {
+
+            uid = mFirebaseUser.getUid().toString();
+            //fragment
+            if(savedInstanceState==null){
+                //first create
+                //Place fragment
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.contentcontainer,new GalleryFragment())
+                        .commit();
+            }
+
+        }
         initInstances();
     }
 
     private  void initInstances(){
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+        /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(MainActivity.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+                    namename = (TextView) findViewById(R.id.showname);
+                    namename.setText(user.name);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });*/
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -61,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_request).setOnClickListener(this);
         findViewById(R.id.bt_planner).setOnClickListener(this);
         findViewById(R.id.bt_noti).setOnClickListener(this);
-        findViewById(R.id.bt_promote).setOnClickListener(this);
+        findViewById(R.id.bt_setting).setOnClickListener(this);
 
     }
 
@@ -77,6 +130,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    private void signOut() {
+        // Firebase sign out
+        FirebaseAuth.getInstance().signOut();
+        finish();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -85,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,GalleryFragment.newInstance())
                         .commit();
+                signOut();
                 break;
             case R.id.bt_request:
                 getSupportFragmentManager().beginTransaction()
@@ -101,9 +161,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .commit();
                 break;
-            case R.id.bt_promote:
+            case R.id.bt_setting:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,ProFragment.newInstance())
+                        .replace(R.id.contentcontainer, SettingFragment.newInstance())
                         .commit();
                 break;
         }
