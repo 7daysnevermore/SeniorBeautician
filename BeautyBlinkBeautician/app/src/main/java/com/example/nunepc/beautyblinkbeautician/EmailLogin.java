@@ -93,14 +93,9 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     EmailPasswordLogin();
                     break;
                 case R.id.register:
-<<<<<<< HEAD
-                    Register();
-                    //Intent intent = new Intent(this, Register.class);
-                    //startActivity(intent);
-=======
                     Intent intent = new Intent(this, Register.class);
                     startActivity(intent);
->>>>>>> develop
+
                     break;
             }
         }
@@ -140,66 +135,7 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     });
         }
 
-<<<<<<< HEAD
-        private void Register(){
 
-            final String email = inputEmail.getText().toString();
-            final String password = inputPassword.getText().toString();
-
-            if (TextUtils.isEmpty(email)) {
-                Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (TextUtils.isEmpty(password)) {
-                Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            //create user
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(EmailLogin.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            Toast.makeText(EmailLogin.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                            // If sign in fails, display a message to the user. If sign in succeeds
-                            // the auth state listener will be notified and logic to handle the
-                            // signed in user can be handled in the listener.
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(EmailLogin.this, "Authentication failed." + task.getException(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                //Get current to pull UID and email
-                                mFirebaseAuth = FirebaseAuth.getInstance();
-                                mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-                                //create root of Beautician
-                                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
-                                DatabaseReference mUsersRef = mRootRef.child("beautician");
-                                //String key = mUsersRef.push().getKey();
-
-                                User user = new User(email, "Chanasit");
-
-                                /*HashMap<String, Object> UserValues = new HashMap<>();
-                                UserValues.put("Email", email);
-                                UserValues.put("Name", "Tidaporn");
-
-                                Map<String, Object> childUpdates = new HashMap<>();
-                                childUpdates.put( mFirebaseUser.getUid(), UserValues);
-
-                                mUsersRef.updateChildren(childUpdates);*/
-
-                                mUsersRef.child(mFirebaseUser.getUid()).setValue(user);
-
-                                startActivity(new Intent(EmailLogin.this, MainActivity.class));
-                                finish();
-                            }
-                        }
-                    });
-        }
-=======
->>>>>>> develop
 
         private void updateUI() {
             Intent intent = new Intent(this, MainActivity.class);
