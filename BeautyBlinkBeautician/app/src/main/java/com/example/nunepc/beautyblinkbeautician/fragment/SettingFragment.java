@@ -6,6 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
+=======
+import android.widget.TextView;
+>>>>>>> develop
 
 import com.example.nunepc.beautyblinkbeautician.R;
 
@@ -16,7 +20,13 @@ import java.util.Set;
  */
 
 public class SettingFragment extends Fragment {
+<<<<<<< HEAD
     public SettingFragment(){ super(); }
+=======
+
+    public SettingFragment(){ super(); }
+    private TextView profilepromote;
+>>>>>>> develop
 
     public static SettingFragment newInstance(){
         SettingFragment fragment = new SettingFragment();
@@ -32,6 +42,10 @@ public class SettingFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_setting,container,false);
         initInstance(rootView);
         return rootView;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
     }
 
     private void initInstance(View rootView){

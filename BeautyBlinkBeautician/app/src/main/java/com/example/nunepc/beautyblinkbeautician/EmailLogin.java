@@ -93,9 +93,14 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     EmailPasswordLogin();
                     break;
                 case R.id.register:
+<<<<<<< HEAD
                     Register();
                     //Intent intent = new Intent(this, Register.class);
                     //startActivity(intent);
+=======
+                    Intent intent = new Intent(this, Register.class);
+                    startActivity(intent);
+>>>>>>> develop
                     break;
             }
         }
@@ -135,6 +140,7 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     });
         }
 
+<<<<<<< HEAD
         private void Register(){
 
             final String email = inputEmail.getText().toString();
@@ -192,6 +198,8 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                         }
                     });
         }
+=======
+>>>>>>> develop
 
         private void updateUI() {
             Intent intent = new Intent(this, MainActivity.class);

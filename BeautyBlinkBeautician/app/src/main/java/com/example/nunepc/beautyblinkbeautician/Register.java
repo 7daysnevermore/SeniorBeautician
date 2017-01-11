@@ -71,9 +71,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private EditText inputS04;
 
 
+<<<<<<< HEAD
     private String email, password, fname, lname, phone, addr_num,
             addr_s_dist, addr_dist, addr_province, addr_code;
 
+=======
+>>>>>>> develop
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
