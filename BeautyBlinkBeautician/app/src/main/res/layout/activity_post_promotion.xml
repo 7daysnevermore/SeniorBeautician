@@ -1,107 +1,342 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.nunepc.beautyblinkbeautician.PostPromotion">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimaryDark"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-        <Button
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right"
-            android:background="@drawable/ic_post"
-            android:id="@+id/post"
-            android:layout_marginRight="20dp" />
-    </android.support.v7.widget.Toolbar>
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:weightSum="1">
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Create promotion"
+                android:gravity="center_vertical"
+                android:id="@+id/crpro"
+                android:textSize="25dp" />
 
             <ImageView
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@mipmap/ic_launcher"
-                android:id="@+id/profile" />
+                android:padding="10dp"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_createpromotion"
+                android:layout_alignRight="@+id/crpro"
+                android:src="@mipmap/add"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pimtha"
-                android:id="@+id/textView2" />
-        </LinearLayout>
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerHorizontal="true">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/ic_add_a_photo"
-                android:id="@+id/addPic"
-                android:background="@drawable/add_picture"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true" />
-
-            <EditText
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/topic"
-                android:hint="Topic"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/input_outline"
-                android:padding="10dp" />
+                android:gravity="center_vertical"
+                android:layout_weight="0.5">
 
-            <EditText
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/profile" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pimtha"
+                    android:textSize="20sp"
+                    android:id="@+id/name" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/add_200"
+                    android:id="@+id/addPic"
+                    android:background="@drawable/add_picture"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/desc"
-                android:hint="What do you thinking about ?"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/input_outline"
-                android:padding="10dp" />
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:ems="10"
+                    android:id="@+id/promotion"
+                    android:hint="Promotion"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/input_outline"
+                    android:padding="10dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="Price : "/>
+
+                        <EditText
+                            android:id="@+id/price"
+                            android:inputType="number"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:background="@drawable/input_outline" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="Sale : "/>
+
+                        <EditText
+                            android:id="@+id/sale"
+                            android:inputType="number"
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/input_outline" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text="DateFrom : "/>
+
+                    <EditText
+                        android:id="@+id/dateFrom_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="dd"
+                        android:background="@drawable/input_outline"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text=" / "/>
+
+                    <EditText
+                        android:id="@+id/dateFrom_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="mm"
+                        android:background="@drawable/input_outline"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text=" / "/>
+
+                    <EditText
+                        android:id="@+id/dateFrom_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="yyyy"
+                        android:background="@drawable/input_outline"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DateTo      : "
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/dateTo_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="dd"
+                        android:background="@drawable/input_outline"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text=" / "/>
+
+                    <EditText
+                        android:id="@+id/dateTo_month"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="mm"
+                        android:background="@drawable/input_outline"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:text=" / "/>
+
+                    <EditText
+                        android:id="@+id/dateTo_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5sp"
+                        android:paddingRight="5sp"
+                        android:hint="yyyy"
+                        android:background="@drawable/input_outline"
+                        />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details"
+                    android:hint="Details"
+                    android:inputType="textMultiLine"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/input_outline"
+                    android:padding="10dp" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <CheckBox
-            android:text="CheckBox"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/requestP"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="250dp"
-            android:layout_weight="0.22" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/topic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Promotion"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:id="@+id/btn_createpromotion"
+                android:layout_width="40dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent"
+                android:src="@mipmap/add" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+</LinearLayout>

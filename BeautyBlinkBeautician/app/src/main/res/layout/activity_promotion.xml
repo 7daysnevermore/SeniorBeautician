@@ -2,7 +2,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nunepc.beautyblinkbeautician.Promotion">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:titleTextColor="#1111">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Promotion"
+                android:gravity="center_vertical"
+                android:textSize="25dp" />
+
+
+    </android.support.v7.widget.Toolbar>
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -11,33 +32,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:id="@+id/post_content">
+        android:id="@+id/create_pro"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/imageView"
-            android:src="@drawable/ic_account_circle" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10sp"
+            android:src="@mipmap/add" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="What do you thinking about?"
-            android:id="@+id/nameUSer"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp" />
+            android:textSize="20sp"
+            android:text="Create new promotion"
+            android:layout_gravity="center" />
     </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/post_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="vertical" />
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/create_pro"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
