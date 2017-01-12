@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.nunepc.beautyblinkbeautician">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,12 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EmailLogin"></activity>
-        <activity android:name=".Register"></activity>
-        <activity android:name=".ViewProfile"></activity>
-        <activity android:name=".ProfilePromote"></activity>
-        <activity android:name=".Promotion"></activity>
-        <activity android:name=".Verified"></activity>
+        <activity android:name=".EmailLogin" />
+        <activity android:name=".Register" />
+        <activity android:name=".ViewProfile" />
+        <activity android:name=".ProfilePromote" />
+        <activity android:name=".Promotion" />
+        <activity android:name=".Verified" />
+        <activity android:name=".PostPromotion"></activity>
     </application>
 
 </manifest>
