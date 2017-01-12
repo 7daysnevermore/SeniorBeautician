@@ -6,19 +6,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.nunepc.beautyblinkbeautician.R;
 
+import java.util.Set;
+
 /**
- * Created by NunePC on 18/11/2559.
+ * Created by CaptainPC on 9/1/2560.
  */
 
-public class ProFragment extends Fragment {
+public class SettingFragment extends Fragment {
 
-    public ProFragment(){ super(); }
+    public SettingFragment(){ super(); }
+    private TextView profilepromote;
 
-    public static ProFragment newInstance(){
-        ProFragment fragment = new ProFragment();
+    public static SettingFragment newInstance(){
+        SettingFragment fragment = new SettingFragment();
         Bundle args = new Bundle(); //Argument
         fragment.setArguments(args);
         return fragment;
@@ -28,9 +32,10 @@ public class ProFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_promote,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_setting,container,false);
         initInstance(rootView);
         return rootView;
+
     }
 
     private void initInstance(View rootView){
@@ -57,5 +62,4 @@ public class ProFragment extends Fragment {
             //Restore Instance State here
         }
     }
-
 }
