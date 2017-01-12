@@ -95,6 +95,7 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                 case R.id.register:
                     Intent intent = new Intent(this, Register.class);
                     startActivity(intent);
+
                     break;
             }
         }
@@ -133,6 +134,7 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                         }
                     });
         }
+
 
 
         private void updateUI() {
