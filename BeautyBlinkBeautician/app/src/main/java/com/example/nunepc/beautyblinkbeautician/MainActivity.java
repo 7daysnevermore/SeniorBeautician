@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
         mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -90,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         });
-
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -126,42 +126,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    private void signOut() {
-        // Firebase sign out
-        FirebaseAuth.getInstance().signOut();
-        finish();
-    }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_gallery:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,GalleryFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
-                signOut();
                 break;
             case R.id.bt_request:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,RequestFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_planner:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,PlannerFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_noti:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_setting:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer, SettingFragment.newInstance())
+                        .addToBackStack(null)
                         .commit();
                 break;
         }
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
     }
 }
