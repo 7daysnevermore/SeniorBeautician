@@ -1,5 +1,6 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -88,7 +89,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.btn_edit:
-
+                startActivity(new Intent(ViewProfile.this, EditProfile.class));
                 break;
 
         }

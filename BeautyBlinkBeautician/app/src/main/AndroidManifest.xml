@@ -22,6 +22,7 @@
         <activity android:name=".ProfilePromote"></activity>
         <activity android:name=".Promotion"></activity>
         <activity android:name=".Verified"></activity>
+        <activity android:name=".EditProfile"></activity>
     </application>
 
 </manifest>
