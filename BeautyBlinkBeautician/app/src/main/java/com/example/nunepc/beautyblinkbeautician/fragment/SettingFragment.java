@@ -27,7 +27,6 @@ import java.util.Set;
 public class SettingFragment extends Fragment {
 
     private FirebaseAuth mFirebaseAuth;
-
     private TextView viewProfile;
     private TextView profilepromote;
     private TextView verified;
@@ -89,6 +88,7 @@ public class SettingFragment extends Fragment {
         promotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getActivity(), Promotion.class));
             }
         });

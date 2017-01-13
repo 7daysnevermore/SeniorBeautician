@@ -35,6 +35,7 @@ public class Promotion extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference;
     private LinearLayout lr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,9 @@ public class Promotion extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
     @Override
-    public void onStart(){
+    protected void onStart(){
         super.onStart();
 
         FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
@@ -74,6 +74,7 @@ public class Promotion extends AppCompatActivity {
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+
     }
     public static class PromotionViewHolder extends RecyclerView.ViewHolder{
 
@@ -98,6 +99,7 @@ public class Promotion extends AppCompatActivity {
             Picasso.with(context).load(image).fit().centerCrop().into(img);
         }
     }
+
 
 
 }
