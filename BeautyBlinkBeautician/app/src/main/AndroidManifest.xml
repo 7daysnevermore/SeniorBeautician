@@ -23,6 +23,7 @@
         <activity android:name=".Promotion" />
         <activity android:name=".Verified" />
         <activity android:name=".EditProfile"></activity>
+        <activity android:name=".PromotionDetails"></activity>
     </application>
 
 </manifest>
