@@ -12,32 +12,46 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostPromotion extends AppCompatActivity {
 
     private int REQUEST_CAMERA =0,SELECT_FILE=1;
     private Toolbar toolbar;
-    private ImageView addPicture,addPic1,addPic2,addPic3;
-    private EditText topic,desc;
-    private Button btnP;
-    private CheckBox reqPro;
+    private ImageView addPicture;
+    private EditText input_promotion,input_price,input_sale,input_df_day,input_df_month,input_df_year,
+            input_dt_day,input_dt_month,input_dt_year,input_details;
+    private TextView input_name;
+    String username;
+    private ImageView btn_createpromotion;
     private Integer[] mThumbsId;
     private Uri imageUri = null;
     private ProgressDialog progressDialog;
     private StorageReference storageReference,filepath;
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,23 +59,14 @@ public class PostPromotion extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mAuth = FirebaseAuth.getInstance();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser()==null){
-                    Intent loginIntent = new Intent(PostPromotion.this,EmailLogin.class);
-                    loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(loginIntent);
-                }
-            }
-        };
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Promotion");
-        mAuth.addAuthStateListener(mAuthListener);
+
         progressDialog = new ProgressDialog(this);
-        reqPro = (CheckBox)findViewById(R.id.requestP);
         addPicture = (ImageView) findViewById(R.id.addPic);
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +78,45 @@ public class PostPromotion extends AppCompatActivity {
             }
         });
 
-        topic= (EditText)findViewById(R.id.topic);
-        desc = (EditText)findViewById(R.id.desc);
-        btnP=(Button)findViewById(R.id.post);
-        btnP.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference userRootRef = FirebaseDatabase.getInstance().getReference();
+
+        userRootRef.child("beautician").child(mFirebaseUser.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(PostPromotion.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+                    username = user.firstname;
+                    input_name = (TextView) findViewById(R.id.name);
+                    input_name.setText(username);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+        input_promotion= (EditText)findViewById(R.id.promotion);
+        input_price = (EditText) findViewById(R.id.price);
+        input_sale = (EditText) findViewById(R.id.sale);
+        input_df_day = (EditText) findViewById(R.id.dateFrom_day);
+        input_df_month = (EditText) findViewById(R.id.dateFrom_month);
+        input_df_year = (EditText) findViewById(R.id.dateFrom_year);
+        input_dt_day = (EditText) findViewById(R.id.dateTo_day);
+        input_dt_month = (EditText) findViewById(R.id.dateTo_month);
+        input_dt_year = (EditText) findViewById(R.id.dateTo_year);
+        input_details = (EditText) findViewById(R.id.details);
+
+        btn_createpromotion = (ImageView)findViewById(R.id.btn_createpromotion);
+
+
+        btn_createpromotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startPost();
@@ -99,27 +139,56 @@ public class PostPromotion extends AppCompatActivity {
 
         progressDialog.setMessage("Posting...");
         progressDialog.show();
-        final String str_topic = topic.getText().toString().trim();
-        final String str_desc = desc.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(str_topic) && !TextUtils.isEmpty(str_desc) && imageUri != null){
-            filepath = storageReference.child("Post_Images").child(imageUri.getLastPathSegment());
+        final String promotion = input_promotion.getText().toString();
+        final String price = input_price.getText().toString();
+        final String sale = input_sale.getText().toString();
+        final String df_day = input_df_day.getText().toString();
+        final String df_month = input_df_month.getText().toString();
+        final String df_year = input_df_year.getText().toString();
+        final String dt_day = input_dt_day.getText().toString();
+        final String dt_month = input_dt_month.getText().toString();
+        final String dt_year = input_dt_year.getText().toString();
+        final String details = input_details.getText().toString();
+
+        if(!TextUtils.isEmpty(promotion) && !TextUtils.isEmpty(price) &&
+                !TextUtils.isEmpty(sale) && !TextUtils.isEmpty(df_day) &&
+                !TextUtils.isEmpty(df_month) && !TextUtils.isEmpty(df_year) &&
+                !TextUtils.isEmpty(dt_day) && !TextUtils.isEmpty(dt_month) &&
+                !TextUtils.isEmpty(dt_year) && !TextUtils.isEmpty(details) && imageUri != null){
+
+            filepath = storageReference.child("Promotion").child(imageUri.getLastPathSegment());
 
             filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri dowloadUrl = taskSnapshot.getDownloadUrl();
-                    DatabaseReference newPost = databaseReference.push();
-                    newPost.child("Topic").setValue(str_topic);
-                    newPost.child("Desc").setValue(str_desc);
-                    newPost.child("Image").setValue(dowloadUrl.toString());
-                    if(reqPro.isChecked() == true){
-                        newPost.child("RequestPro").setValue("Request");
-                    }
-                    else
-                    {
-                        newPost.child("RequestPro").setValue("Nope");
-                    }
+
+                    //create root of Promotion
+                    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference mPromotionRef = mRootRef.child("promotion");
+
+                    String key = mPromotionRef.push().getKey();
+
+                    final HashMap<String, Object> PromotionValues = new HashMap<>();
+                    PromotionValues.put("promotion", promotion);
+                    PromotionValues.put("image", dowloadUrl.toString());
+                    PromotionValues.put("price", price);
+                    PromotionValues.put("sale", sale);
+                    PromotionValues.put("datefrom", df_day + "/" + df_month + "/" + df_year);
+                    PromotionValues.put("dateto", dt_day + "/" + dt_month + "/" + dt_year);
+                    PromotionValues.put("details", details);
+                    PromotionValues.put("uid", mFirebaseUser.getUid().toString());
+                    PromotionValues.put("name", username);
+
+
+                    Map<String,Object> childUpdate = new HashMap<>();
+                    childUpdate.put("/promotion/"+key, PromotionValues);
+                    childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, PromotionValues);
+
+                    mRootRef.updateChildren(childUpdate);
+
+                    //create root of Beautician-Promotion
 
                     progressDialog.dismiss();
 

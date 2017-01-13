@@ -1,85 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@mipmap/ic_launcher"
-                android:id="@+id/pic_pro"
-                android:layout_marginRight="52dp"
-                android:layout_marginEnd="52dp"
-                android:layout_centerVertical="true" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/Proname"
-                    android:text="Name"
-                    android:padding="10dp"
-
-                    android:textSize="16dp"
-                    android:textStyle="normal|bold"
-                    android:textAlignment="textStart" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/Protype"
-                    android:textSize="14dp"
-                    android:text="Type"
-                    android:padding="10dp"
-
-                    />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_topic"
-            android:text="Topic"
-
-            android:padding="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:textSize="16dp"
-            android:textStyle="normal|bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_desc"
-            android:text="Description"
-            android:padding="10dp"
-
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -88,6 +15,52 @@
             android:src="@mipmap/ic_launcher"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/promotion"
+            android:text="Promotion"
+
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/sale"
+                android:textSize="18dp"
+                android:textColor="@color/red"
+                android:text="Sale"
+                android:textStyle="normal|bold"
+                android:layout_marginLeft="5dp"
+ />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:id="@+id/price"
+                android:textSize="14dp"
+                android:textColor="#808080"
+                android:text="Sale"
+                android:layout_marginLeft="10dp" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
