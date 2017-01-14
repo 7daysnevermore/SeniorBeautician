@@ -24,6 +24,8 @@
         <activity android:name=".Verified" />
         <activity android:name=".EditProfile"></activity>
         <activity android:name=".PromotionDetails"></activity>
+        <activity android:name=".ViewServices"></activity>
+        <activity android:name=".AddService"></activity>
     </application>
 
 </manifest>
