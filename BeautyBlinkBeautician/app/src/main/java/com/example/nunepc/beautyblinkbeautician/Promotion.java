@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.parceler.Parcels;
 
 import com.example.nunepc.beautyblinkbeautician.model.DataPromotion;
@@ -45,13 +47,9 @@ public class Promotion extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference;
-<<<<<<< HEAD
-    private LinearLayout lr;
-=======
     private LinearLayout create_pro;
 
 
->>>>>>> develop
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,18 +76,25 @@ public class Promotion extends AppCompatActivity {
             @Override
             protected void populateViewHolder(PromotionViewHolder viewHolder, DataPromotion model, final int position) {
 
+
+
                 viewHolder.setImage(getApplicationContext(),model.getImage());
                 viewHolder.setPromotion(model.getPromotion());
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setSale(model.getSale());
 
                 viewHolder.mview.setOnClickListener(new View.OnClickListener() {
-                    private static final String TAG = "Promotion";
-
+                    //private static final String TAG = "Promotion";
+                    final String cshow = getRef(position).getKey();
                     @Override
                     public void onClick(View view) {
-                        Log.w(TAG, "You clicked on "+position);
+                        //Log.w(TAG, "You clicked on "+position);
                         //firebaseRecyclerAdapter.getRef(position).removeValue();
+                        //Toast.makeText(Promotion.this, "This is my Toast message!",
+                               // Toast.LENGTH_LONG).show();
+                        Intent cPro = new Intent(Promotion.this,PromotionDetails.class);
+                        cPro.putExtra("to_show",cshow);
+                        startActivity(cPro);
                     }
                 });
 
@@ -117,70 +122,19 @@ public class Promotion extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-<<<<<<< HEAD
-        FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
-                (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
 
-            @Override
-            protected void populateViewHolder(PromotionViewHolder viewHolder, DataPromotion model, int position) {
-                viewHolder.setImage(getApplicationContext(),model.getImage());
-                viewHolder.setTopic(model.getTopic());
-                viewHolder.setDesc(model.getDesc());
-
-            }
-        };
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-
-=======
->>>>>>> develop
     }
 
-    public static class PromotionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class PromotionViewHolder extends RecyclerView.ViewHolder  {
 
         View mview;
-        Context mContext;
-
-        private FirebaseAuth mAuth;
-        private FirebaseUser mFirebaseUser;
 
         public PromotionViewHolder(View itemView){
             super(itemView);
             mview=itemView;
-            mContext = itemView.getContext();
 
-            mAuth = FirebaseAuth.getInstance();
-            mFirebaseUser = mAuth.getCurrentUser();
-
-            itemView.setOnClickListener(PromotionViewHolder.this);
         }
 
-        @Override
-        public void onClick(View view){
-
-            final ArrayList<DataPromotion> dataPromotion = new ArrayList<>();
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("beautician-promotion"+"/"+mFirebaseUser.getUid().toString());
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        dataPromotion.add(snapshot.getValue(DataPromotion.class));
-                    }
-
-                    int itemPosition = getLayoutPosition();
-
-                    Intent intent = new Intent(mContext, PromotionDetails.class);
-                    intent.putExtra("position", itemPosition + "");
-                    intent.putExtra("restaurants", Parcels.wrap(dataPromotion));
-
-                    mContext.startActivity(intent);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
 
         public void setPromotion(String promotion){
             TextView post_promotion = (TextView)mview.findViewById(R.id.promotion);
