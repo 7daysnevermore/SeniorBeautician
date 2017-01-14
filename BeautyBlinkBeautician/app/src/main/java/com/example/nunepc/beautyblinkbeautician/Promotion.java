@@ -45,9 +45,13 @@ public class Promotion extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference;
+<<<<<<< HEAD
+    private LinearLayout lr;
+=======
     private LinearLayout create_pro;
 
 
+>>>>>>> develop
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,13 +111,28 @@ public class Promotion extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
-    public void onStart(){
+    protected void onStart(){
         super.onStart();
 
+<<<<<<< HEAD
+        FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
+                (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
+
+            @Override
+            protected void populateViewHolder(PromotionViewHolder viewHolder, DataPromotion model, int position) {
+                viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.setTopic(model.getTopic());
+                viewHolder.setDesc(model.getDesc());
+
+            }
+        };
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+=======
+>>>>>>> develop
     }
 
     public static class PromotionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -182,6 +201,7 @@ public class Promotion extends AppCompatActivity {
             post_sale.setText(sale+" Bath");
         }
     }
+
 
 
 }
