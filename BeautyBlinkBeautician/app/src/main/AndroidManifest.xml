@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PostPromotion"></activity>
+        <activity android:name=".PostPromotion" />
         <activity android:name=".EmailLogin" />
         <activity android:name=".Register" />
         <activity android:name=".ViewProfile" />
@@ -27,6 +27,7 @@
         <activity android:name=".ViewServices"></activity>
         <activity android:name=".AddService"></activity>
         <activity android:name=".EditPromotion"></activity>
+        <activity android:name=".StorePreview" />
     </application>
 
 </manifest>
