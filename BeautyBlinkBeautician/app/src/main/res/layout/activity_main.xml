@@ -31,8 +31,6 @@
 
         </android.support.v7.widget.Toolbar>
 
-
-
         <!--Menu-->
         <LinearLayout
             android:layout_width="match_parent"
