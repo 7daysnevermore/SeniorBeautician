@@ -5,123 +5,149 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111">
 
-        android:background="#ffffff"
-        android:padding="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"
-            android:id="@+id/pic_pro"
-            android:layout_marginRight="52dp"
-            android:layout_marginEnd="52dp"
-            android:layout_centerVertical="true"
-            android:foregroundGravity="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Promotion"
+                android:gravity="center_vertical"
+                android:id="@+id/crpro"
+                android:textSize="25dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:padding="10dp"
+                android:layout_height="match_parent"
+                android:id="@+id/btn_editpromotion"
+                android:layout_alignRight="@+id/crpro"
+                android:src="@mipmap/request_70"/>
+
+        </RelativeLayout>
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:text="Name"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/proName"
-                android:layout_weight="1"
-                android:layout_margin="5dp" />
+                android:orientation="vertical"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:layout_marginTop="20sp">
 
-            <TextView
-                android:text="Type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/proType"
-                android:layout_weight="1"
-                android:layout_margin="5dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24dp"
+
+                        android:id="@+id/proTopic"
+                        android:textColor="#FF424242"
+                        android:gravity="center"
+                        android:textStyle="bold"/>
+
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/proPrice"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="#FF424242"
+                        android:padding="2dp" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="@color/red"
+                        android:gravity="center"
+                        android:id="@+id/proSale"
+                        android:padding="5dp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:id="@+id/proImg"
+                        android:src="@drawable/common_google_signin_btn_text_light_disabled"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"  />
+                    <TextView
+                        android:text="Date From"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FF424242"
+                        android:textSize="18sp"
+                        android:id="@+id/proDF"
+                        android:padding="5dp" />
+                    <TextView
+                        android:text="Date To"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FF424242"
+                        android:textSize="18sp"
+                        android:id="@+id/proDT"
+                        android:padding="5dp" />
+                    <TextView
+                        android:text="Details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="10dp" />
+
+                    <TextView
+                        android:text="details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30sp"
+                        android:layout_marginBottom="30sp"
+                        android:textSize="20dp"
+                        android:textColor="#FF424242"
+                        android:id="@+id/proDetails"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:text="Topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-
-            android:id="@+id/proTopic"
-            android:textColor="#FF424242"
-            android:gravity="center"
-            android:padding="5dp"
-            android:textStyle="bold"/>
 
 
+    </ScrollView>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/proPrice"
-            android:gravity="center"
-            android:textColor="#FF424242"
-            android:padding="5dp" />
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FF424242"
-            android:gravity="center"
-            android:id="@+id/proSale"
-            android:padding="5dp" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/proImg"
-            android:src="@drawable/common_google_signin_btn_text_light_disabled"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"  />
-        <TextView
-            android:text="Date From"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FF424242"
-            android:gravity="center"
-            android:id="@+id/proDF"
-            android:padding="5dp" />
-        <TextView
-            android:text="Date To"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FF424242"
-            android:gravity="center"
-            android:id="@+id/proDT"
-            android:padding="5dp" />
-        <TextView
-            android:text="Sub Topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/proSubtopic"
-            android:textSize="18dp"
-            android:paddingBottom="5dp"
-            android:paddingEnd="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingStart="5dp"
-            android:paddingTop="10dp" />
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -26,6 +26,7 @@
         <activity android:name=".PromotionDetails"></activity>
         <activity android:name=".ViewServices"></activity>
         <activity android:name=".AddService"></activity>
+        <activity android:name=".EditPromotion"></activity>
     </application>
 
 </manifest>
