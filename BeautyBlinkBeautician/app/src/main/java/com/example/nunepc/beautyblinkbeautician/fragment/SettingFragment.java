@@ -13,6 +13,7 @@ import com.example.nunepc.beautyblinkbeautician.EmailLogin;
 import com.example.nunepc.beautyblinkbeautician.ProfilePromote;
 import com.example.nunepc.beautyblinkbeautician.Promotion;
 import com.example.nunepc.beautyblinkbeautician.R;
+import com.example.nunepc.beautyblinkbeautician.StorePreview;
 import com.example.nunepc.beautyblinkbeautician.Verified;
 import com.example.nunepc.beautyblinkbeautician.ViewProfile;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ public class SettingFragment extends Fragment {
 
     private FirebaseAuth mFirebaseAuth;
     private TextView viewProfile;
+    private TextView storePreview;
     private TextView profilepromote;
     private TextView verified;
     private TextView promotion;
@@ -57,6 +59,7 @@ public class SettingFragment extends Fragment {
     private void initInstance(View rootView){
 
         viewProfile = (TextView) rootView.findViewById(R.id.viewProfile);
+        storePreview = (TextView) rootView.findViewById(R.id.storePreview);
         profilepromote = (TextView) rootView.findViewById(R.id.profilePromote);
         verified = (TextView) rootView.findViewById(R.id.verified);
         promotion = (TextView) rootView.findViewById(R.id.promotion);
@@ -67,6 +70,13 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ViewProfile.class));
+            }
+        });
+
+        storePreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), StorePreview.class));
             }
         });
 

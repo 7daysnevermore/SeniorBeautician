@@ -15,15 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PostPromotion"></activity>
+        <activity android:name=".PostPromotion" />
         <activity android:name=".EmailLogin" />
         <activity android:name=".Register" />
         <activity android:name=".ViewProfile" />
         <activity android:name=".ProfilePromote" />
         <activity android:name=".Promotion" />
         <activity android:name=".Verified" />
-        <activity android:name=".EditProfile"></activity>
-        <activity android:name=".PromotionDetails"></activity>
+        <activity android:name=".EditProfile" />
+        <activity android:name=".PromotionDetails" />
+        <activity android:name=".StorePreview" />
     </application>
 
 </manifest>
