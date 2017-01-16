@@ -5,26 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:titleTextColor="#1111">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Promotion"
-                android:gravity="center_vertical"
-                android:textSize="25dp" />
-
-
-    </android.support.v7.widget.Toolbar>
-
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
@@ -57,5 +37,25 @@
         android:scrollbars="vertical"
         android:layout_below="@+id/create_pro"
         android:layout_alignParentStart="true" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Promotion"
+                android:gravity="center_vertical"
+                android:textSize="25dp" />
+
+
+    </android.support.v7.widget.Toolbar>
 
 </RelativeLayout>
