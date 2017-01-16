@@ -92,16 +92,19 @@
             android:id="@+id/addpromotepic1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
+            android:adjustViewBounds="true"
             android:src="@mipmap/add_200"
             android:layout_weight="1"/>
-
 
         <ImageView
             android:id="@+id/addpromotepic2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
+            android:adjustViewBounds="true"
             android:src="@mipmap/add_200"
             android:layout_weight="1"/>
 
@@ -109,9 +112,14 @@
             android:id="@+id/addpromotepic3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
+            android:adjustViewBounds="true"
             android:src="@mipmap/add_200"
             android:layout_weight="1"/>
+
+
+
 
     </LinearLayout>
 

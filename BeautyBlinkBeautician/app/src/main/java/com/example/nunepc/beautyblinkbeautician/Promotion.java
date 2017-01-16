@@ -50,7 +50,6 @@ public class Promotion extends AppCompatActivity {
     private LinearLayout create_pro;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -115,7 +115,6 @@ public class PostPromotion extends AppCompatActivity {
 
         btn_createpromotion = (ImageView)findViewById(R.id.btn_createpromotion);
 
-
         btn_createpromotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

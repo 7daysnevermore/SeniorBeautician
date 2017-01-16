@@ -1,5 +1,6 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,18 +10,35 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.w3c.dom.Text;
 
 /**
  * Created by NunePC on 12/1/2560.
  */
 
-public class ProfilePromote extends AppCompatActivity implements View.OnClickListener {
+public class ProfilePromote extends AppCompatActivity {
 
-    ImageView picpromote, addpromotepic1, addpromotepic2, addpromotepic3;
+    ImageView  addpromotepic1, addpromotepic2, addpromotepic3;
     TextView namepromote, locationpromote, pricepromote;
+    private ProgressDialog progressDialog;
+    String pic,pic2,pic3;
     Button promotenow;
-    private Uri imageUri = null;
+    private Uri imageUri1 = null;
+    private Uri imageUri2 = null;
+    private Uri imageUri3 = null;
+
+    private StorageReference storageReference,filepath;
+    private DatabaseReference databaseReference;
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
 
     private int SELECT_FILE = 1;
 
@@ -29,51 +47,89 @@ public class ProfilePromote extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilepromote);
 
-        findViewById(R.id.addpromotepic1).setOnClickListener(this);
-        findViewById(R.id.addpromotepic2).setOnClickListener(this);
-        findViewById(R.id.addpromotepic3).setOnClickListener(this);
-        findViewById(R.id.promotenow).setOnClickListener(this);
+        progressDialog = new ProgressDialog(this);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
+
+        addpromotepic1 = (ImageView) findViewById(R.id.addpromotepic1);
+        addpromotepic1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                pic = "1";
+                startActivityForResult(galleryIntent,SELECT_FILE);
+            }
+        });
+
+        addpromotepic2 = (ImageView) findViewById(R.id.addpromotepic2);
+        addpromotepic2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                pic = "2";
+                startActivityForResult(galleryIntent,SELECT_FILE);
+            }
+        });
+
+        addpromotepic3 = (ImageView) findViewById(R.id.addpromotepic3);
+        addpromotepic3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                pic = "3";
+                startActivityForResult(galleryIntent, SELECT_FILE);
+            }
+        });
 
         namepromote = (TextView) findViewById(R.id.namepromote);
         locationpromote = (TextView) findViewById(R.id.locationpromote);
         pricepromote = (TextView) findViewById(R.id.pricepromote);
+        promotenow = (Button) findViewById(R.id.promotenow);
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.addpromotepic1:
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                galleryIntent.setFlags(1);
-                startActivityForResult(galleryIntent, SELECT_FILE);
-                break;
-            case R.id.addpromotepic2:
-                Intent galleryIntent2 = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent2.setType("image/*");
-                startActivityForResult(galleryIntent2, SELECT_FILE);
-                break;
-            case R.id.addpromotepic3:
-                Intent galleryIntent3 = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent3.setType("image/*");
-                startActivityForResult(galleryIntent3, SELECT_FILE);
-                break;
-            case R.id.promotenow:
-
-                break;
-        }
+        promotenow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startPost();
+            }
+        });
     }
 
     @Override
     protected  void onActivityResult(int requestCode, int resultCode, Intent data ){
         super.onActivityResult(requestCode,resultCode,data);
 
-        if(requestCode == SELECT_FILE && resultCode == RESULT_OK && data.getFlags() == 1 ){
-            imageUri = data.getData();
-            addpromotepic1.setImageURI(imageUri);
+        if(requestCode == SELECT_FILE && resultCode == RESULT_OK && pic=="1" ){
+            imageUri1 = data.getData();
+            addpromotepic1.setImageURI(imageUri1);
+        }
+        if(requestCode == SELECT_FILE && resultCode == RESULT_OK && pic=="2" ){
+            imageUri2 = data.getData();
+            addpromotepic2.setImageURI(imageUri2);
+        }
+        if(requestCode == SELECT_FILE && resultCode == RESULT_OK && pic=="3"  ){
+            imageUri3 = data.getData();
+            addpromotepic3.setImageURI(imageUri3);
+        }
+    }
+
+    private void startPost(){
+        progressDialog.setMessage("Posting...");
+        progressDialog.show();
+
+        if(imageUri1!=null && imageUri2!=null && imageUri3!=null){
+            filepath = storageReference.child("ProfilePromote").child(imageUri1.getLastPathSegment());
+            filepath = storageReference.child("ProfilePromote").child(imageUri2.getLastPathSegment());
+            filepath = storageReference.child("ProfilePromote").child(imageUri3.getLastPathSegment());
+
 
         }
-
     }
+
 }
