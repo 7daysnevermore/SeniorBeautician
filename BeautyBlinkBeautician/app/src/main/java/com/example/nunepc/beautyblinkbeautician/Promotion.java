@@ -78,8 +78,6 @@ public class Promotion extends AppCompatActivity {
             @Override
             protected void populateViewHolder(PromotionViewHolder viewHolder, final DataPromotion model, final int position) {
 
-                final String key = databaseReference.getKey();
-
                 viewHolder.setImage(getApplicationContext(),model.getImage());
                 viewHolder.setPromotion(model.getPromotion());
                 viewHolder.setPrice(model.getPrice());
@@ -95,7 +93,7 @@ public class Promotion extends AppCompatActivity {
                         //Toast.makeText(Promotion.this, "This is my Toast message!",
                                // Toast.LENGTH_LONG).show();
                         HashMap<String, Object> promotionValues = new HashMap<>();
-                        promotionValues.put("key",key);
+                        promotionValues.put("key",cshow);
                         promotionValues.put("promotion",model.getPromotion());
                         promotionValues.put("image",model.getImage());
                         promotionValues.put("details",model.getDetails());

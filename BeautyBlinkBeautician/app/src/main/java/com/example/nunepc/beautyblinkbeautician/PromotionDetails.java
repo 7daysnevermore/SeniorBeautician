@@ -46,6 +46,7 @@ public class PromotionDetails extends AppCompatActivity implements View.OnClickL
 
         promotionValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("promotion");
 
+
         proTopic = (TextView)findViewById(R.id.proTopic);
         proPrice = (TextView) findViewById(R.id.proPrice);
         proSale = (TextView) findViewById(R.id.proSale);
