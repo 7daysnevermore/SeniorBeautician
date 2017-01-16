@@ -29,12 +29,14 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
                         .add(R.id.previewContainer,new PreviewGalleryFragment())
                         .commit();
 
-                //tab button
-                findViewById(R.id.bt_gallery).setOnClickListener(this);
-                findViewById(R.id.bt_review).setOnClickListener(this);
-                findViewById(R.id.bt_planner).setOnClickListener(this);
-                findViewById(R.id.bt_detail).setOnClickListener(this);
             }
+
+        //tab button
+        findViewById(R.id.bt_gallery).setOnClickListener(this);
+        findViewById(R.id.bt_review).setOnClickListener(this);
+        findViewById(R.id.bt_planner).setOnClickListener(this);
+        findViewById(R.id.bt_detail).setOnClickListener(this);
+
     }
 
     @Override
