@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -41,7 +44,6 @@ import java.util.List;
 public class Promotion extends AppCompatActivity {
 
     private TextView postP;
-    private List<DataPromotion> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
@@ -73,9 +75,7 @@ public class Promotion extends AppCompatActivity {
                 (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
 
             @Override
-            protected void populateViewHolder(PromotionViewHolder viewHolder, DataPromotion model, final int position) {
-
-
+            protected void populateViewHolder(PromotionViewHolder viewHolder, final DataPromotion model, final int position) {
 
                 viewHolder.setImage(getApplicationContext(),model.getImage());
                 viewHolder.setPromotion(model.getPromotion());
@@ -91,8 +91,19 @@ public class Promotion extends AppCompatActivity {
                         //firebaseRecyclerAdapter.getRef(position).removeValue();
                         //Toast.makeText(Promotion.this, "This is my Toast message!",
                                // Toast.LENGTH_LONG).show();
+                        HashMap<String, Object> promotionValues = new HashMap<>();
+                        promotionValues.put("key",cshow);
+                        promotionValues.put("promotion",model.getPromotion());
+                        promotionValues.put("image",model.getImage());
+                        promotionValues.put("details",model.getDetails());
+                        promotionValues.put("price",model.getPrice());
+                        promotionValues.put("sale",model.getSale());
+                        promotionValues.put("dateFrom",model.getDateFrom());
+                        promotionValues.put("dateTo",model.getDateTo());
+                        promotionValues.put("uid",model.getUid());
+                        promotionValues.put("name",model.getName());
                         Intent cPro = new Intent(Promotion.this,PromotionDetails.class);
-                        cPro.putExtra("to_show",cshow);
+                        cPro.putExtra("promotion",  promotionValues);
                         startActivity(cPro);
                     }
                 });
@@ -141,7 +152,7 @@ public class Promotion extends AppCompatActivity {
         }
         public void setImage(Context context, String image){
             ImageView img = (ImageView)mview.findViewById(R.id.post_image);
-            //Picasso.with(context).load(image).into(img);
+
             Picasso.with(context).load(image).fit().centerCrop().into(img);
         }
         public void setPrice(String price){

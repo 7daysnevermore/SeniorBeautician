@@ -131,6 +131,7 @@
             android:src="@mipmap/add_200"
             android:layout_weight="1"/>
 
+
         <ImageView
             android:id="@+id/addpromotepic2"
             android:layout_width="match_parent"
