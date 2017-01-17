@@ -72,7 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  void initInstances(){
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
+<<<<<<< HEAD
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+=======
+/*        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+>>>>>>> develop
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -166,4 +170,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
     }
+
 }

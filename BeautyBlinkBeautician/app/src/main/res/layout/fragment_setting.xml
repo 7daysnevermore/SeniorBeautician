@@ -4,261 +4,304 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/bg_grey"/>
+        android:layout_height="wrap_content">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/profile"/>
-        <TextView
-            android:id="@+id/viewProfile"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="View Profile"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/bg_grey"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="40dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/profile" />
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/profile"/>
+                <TextView
+                    android:id="@+id/viewProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="View Profile"/>
 
-        <TextView
-            android:id="@+id/service"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:paddingLeft="11dp"
-            android:text="Service"
-            android:textSize="21sp" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="40dp"
-        android:background="@android:color/darker_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/profile"/>
+                <TextView
+                    android:id="@+id/storePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Store Preview"/>
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/profilepromote"/>
-        <TextView
-            android:id="@+id/profilePromote"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="Profile Promote"/>
-    </LinearLayout>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="40dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/verified"/>
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/profile" />
 
-        <TextView
-            android:id="@+id/verified"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="Verified"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/service"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="11dp"
+                    android:text="Service"
+                    android:textSize="21sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="40dp"
-        android:background="@android:color/darker_gray"/>
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray" />
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/promotion"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/promotion"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="Promotion"/>
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/profilepromote"/>
+                <TextView
+                    android:id="@+id/profilePromote"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Profile Promote"/>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/bg_grey"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/verified"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/verified"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Verified"/>
+            </LinearLayout>
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/setting"/>
-        <TextView
-            android:id="@+id/accountSetting"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="Account Setting"/>
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="40dp"
-        android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/promotion"/>
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:paddingLeft="6dp"
-            android:src="@mipmap/support"/>
-        <TextView
-            android:id="@+id/support"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="11dp"
-            android:textSize="21sp"
-            android:gravity="center_vertical"
-            android:text="Help and Support"/>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/promotion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Promotion"/>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/bg_grey"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/bg_grey"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:textSize="21sp"
-            android:gravity="center"
-            android:textColor="@color/darker_orange"
-            android:text="Logout"/>
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/setting"/>
+                <TextView
+                    android:id="@+id/accountSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Account Setting"/>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@android:color/darker_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@android:color/darker_gray"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_grey"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:paddingLeft="6dp"
+                    android:src="@mipmap/support"/>
+                <TextView
+                    android:id="@+id/support"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="11dp"
+                    android:textSize="21sp"
+                    android:gravity="center_vertical"
+                    android:text="Help and Support"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/bg_grey"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:textSize="21sp"
+                    android:gravity="center"
+                    android:textColor="@color/darker_orange"
+                    android:text="Logout"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_grey"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 </LinearLayout>

@@ -155,7 +155,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_continue:
-
                 addNewUser();
                 break;
             case R.id.btn_register:

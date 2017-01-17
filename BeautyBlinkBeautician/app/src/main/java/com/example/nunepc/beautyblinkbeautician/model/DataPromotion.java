@@ -5,8 +5,15 @@ package com.example.nunepc.beautyblinkbeautician.model;
  */
 
 public class DataPromotion {
-    private String promotion,image,details,price,
-            sale,datefrom,dateto,uid,name;
+    public String promotion;
+    private String image;
+    private String details;
+    private String price;
+    private String sale;
+    private String datefrom;
+    private String dateto;
+    private String uid;
+    private String name;
 
     public DataPromotion(){
 
@@ -46,7 +53,7 @@ public class DataPromotion {
         return this.details;
     }
 
-    public void setDetails(String detail) {
+    public void setDetails(String details) {
         this.details = details;
     }
 
