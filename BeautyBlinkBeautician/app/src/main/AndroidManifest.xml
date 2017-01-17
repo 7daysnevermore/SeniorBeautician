@@ -22,12 +22,13 @@
         <activity android:name=".ProfilePromote" />
         <activity android:name=".Promotion" />
         <activity android:name=".Verified" />
-        <activity android:name=".EditProfile"></activity>
-        <activity android:name=".PromotionDetails"></activity>
-        <activity android:name=".ViewServices"></activity>
-        <activity android:name=".AddService"></activity>
-        <activity android:name=".EditPromotion"></activity>
+        <activity android:name=".EditProfile" />
+        <activity android:name=".PromotionDetails" />
+        <activity android:name=".ViewServices" />
+        <activity android:name=".AddService" />
+        <activity android:name=".EditPromotion" />
         <activity android:name=".StorePreview" />
+        <activity android:name=".OpenPhoto"></activity>
     </application>
 
 </manifest>

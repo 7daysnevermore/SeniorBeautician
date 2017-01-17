@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  void initInstances(){
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
-<<<<<<< HEAD
+
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 =======
 /*        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
