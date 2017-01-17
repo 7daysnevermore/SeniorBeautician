@@ -68,7 +68,6 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                     phone.setText(user.phone);
                     addr.setText(user.address_number+" "+user.address_sub_district+", "+user.address_district+", "
                     +user.address_province+" "+user.address_code);
-
                 }
             }
 
@@ -76,8 +75,6 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
             public void onCancelled(DatabaseError databaseError) {
 
             }
-
-
         });
 
         edit.setOnClickListener(this);
