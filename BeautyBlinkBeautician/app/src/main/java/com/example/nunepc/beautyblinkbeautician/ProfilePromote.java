@@ -9,15 +9,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nunepc.beautyblinkbeautician.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by NunePC on 12/1/2560.
@@ -26,9 +36,8 @@ import org.w3c.dom.Text;
 public class ProfilePromote extends AppCompatActivity {
 
     ImageView  addpromotepic1, addpromotepic2, addpromotepic3;
-    TextView namepromote, locationpromote, pricepromote;
     private ProgressDialog progressDialog;
-    String pic,pic2,pic3;
+    String pic;
     Button promotenow;
     private Uri imageUri1 = null;
     private Uri imageUri2 = null;
@@ -39,6 +48,9 @@ public class ProfilePromote extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+
+    String uid;
+    TextView namepromote ,locationpromote ,pricepromote;
 
     private int SELECT_FILE = 1;
 
@@ -51,9 +63,33 @@ public class ProfilePromote extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        uid = mFirebaseUser.getUid().toString();
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
+
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+                    namepromote.setText(user.firstname+" "+user.lastname);
+                    locationpromote.setText(user.address_number+" "+user.address_sub_district+", "+user.address_district+", "
+                            +user.address_province+" "+user.address_code);
+                    pricepromote.setText(user.birthday);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(ProfilePromote.this, "Failed to load user information.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         addpromotepic1 = (ImageView) findViewById(R.id.addpromotepic1);
         addpromotepic1.setOnClickListener(new View.OnClickListener() {
@@ -123,13 +159,59 @@ public class ProfilePromote extends AppCompatActivity {
         progressDialog.setMessage("Posting...");
         progressDialog.show();
 
-        if(imageUri1!=null && imageUri2!=null && imageUri3!=null){
+        if(imageUri1!=null){
             filepath = storageReference.child("ProfilePromote").child(imageUri1.getLastPathSegment());
-            filepath = storageReference.child("ProfilePromote").child(imageUri2.getLastPathSegment());
-            filepath = storageReference.child("ProfilePromote").child(imageUri3.getLastPathSegment());
-
-
+            putfile(imageUri1);
         }
+        if(imageUri2!=null){
+            filepath = storageReference.child("ProfilePromote").child(imageUri2.getLastPathSegment());
+            putfile(imageUri2);
+        }
+        if(imageUri3!=null){
+            filepath = storageReference.child("ProfilePromote").child(imageUri3.getLastPathSegment());
+            putfile(imageUri3);
+        }
+    }
+
+    private void putfile(Uri imageUri) {
+        filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+
+                //create root of Promotion
+                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mPromotionRef = mRootRef.child("promotion");
+
+                /*
+                String key = mPromotionRef.push().getKey();
+
+                final HashMap<String, Object> PromotionValues = new HashMap<>();
+                PromotionValues.put("promotion", promotion);
+                PromotionValues.put("image", dowloadUrl.toString());
+                PromotionValues.put("price", price);
+                PromotionValues.put("sale", sale);
+                PromotionValues.put("datefrom", df_day + "/" + df_month + "/" + df_year);
+                PromotionValues.put("dateto", dt_day + "/" + dt_month + "/" + dt_year);
+                PromotionValues.put("details", details);
+                PromotionValues.put("uid", mFirebaseUser.getUid().toString());
+                PromotionValues.put("name", username);
+
+
+                Map<String,Object> childUpdate = new HashMap<>();
+                childUpdate.put("/promotion/"+key, PromotionValues);
+                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, PromotionValues);
+
+                mRootRef.updateChildren(childUpdate);
+
+                //create root of Beautician-Promotion
+
+                progressDialog.dismiss();
+
+                startActivity(new Intent(ProfilePromote.this,Promotion.class));
+                */
+            }
+        });
     }
 
 }
