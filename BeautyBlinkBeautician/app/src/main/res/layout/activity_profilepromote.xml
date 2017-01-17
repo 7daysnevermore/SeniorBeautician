@@ -13,11 +13,15 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="@color/bg_grey"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2.15"
+        android:layout_weight="2.05"
         android:orientation="horizontal">
 
         <ImageView
@@ -47,40 +51,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.8"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/locationpromote"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp"
-            android:text="Location: Nakhon Pathom"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+                android:textSize="15sp"
+                android:text="Location: "/>
+
+            <TextView
+                android:id="@+id/locationpromote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="Location: Nakhon Pathom"/>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
 
-        <TextView
-            android:id="@+id/pricepromote"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15sp"
-            android:text="Price Range: 1,500 Baht (Make-up)"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="2"
+                android:text="Price Range: "/>
+
+            <TextView
+                android:id="@+id/pricepromote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="15sp"
+                android:text="Price Range: 1,500 Baht (Make-up)"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="@color/bg_grey"/>
+
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,15 +151,12 @@
             android:src="@mipmap/add_200"
             android:layout_weight="1"/>
 
-
-
-
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_height="7dp"
+        android:background="@color/bg_grey"/>
 
     <LinearLayout
         android:layout_width="match_parent"
