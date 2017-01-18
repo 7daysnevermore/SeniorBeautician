@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,13 +113,13 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
 
         //checkbox
         CheckBox S01check = (CheckBox) findViewById(R.id.makeupandhair);
-        boolean S01checked = S01check.isChecked();
+        final boolean S01checked = S01check.isChecked();
         CheckBox S02check = (CheckBox) findViewById(R.id.makeup);
-        boolean S02checked = S02check.isChecked();
+        final boolean S02checked = S02check.isChecked();
         CheckBox S03check = (CheckBox) findViewById(R.id.hairstyle);
-        boolean S03checked = S03check.isChecked();
+        final boolean S03checked = S03check.isChecked();
         CheckBox S04check = (CheckBox) findViewById(R.id.hairdress);
-        boolean S04checked = S04check.isChecked();
+        final boolean S04checked = S04check.isChecked();
 
         //starting price of each service
         inputS01 = (EditText) findViewById(R.id.makeupandhair_price);
@@ -129,8 +132,8 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
         final String S04 = inputS04.getText().toString();
 
         //create root of BeauticianService
-        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mUsersRef = mRootRef.child("beautician-service");
+        final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference mUsersRef = mRootRef.child("beautician-service");
 
         //Change price to integer
         if(!TextUtils.isEmpty(S01)){
@@ -146,45 +149,86 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
             s04_price = Integer.parseInt(S04);
         }
 
+        DatabaseReference mProfilePromoteRef = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference mProRef = mProfilePromoteRef.child("beautician-profilepromote/"+mFirebaseUser.getUid());
+        mProRef.orderByChild("uid").equalTo(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-        if (S01checked) {
-            DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
-            HashMap<String, Object> UserValues = new HashMap<>();
-            UserValues.put("price", s01_price);
-            Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("S01", UserValues);
+                String keypro = null;
 
-            mUsersRefService.updateChildren(childUpdates);
-        }
-        if (S02checked) {
-            DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
-            HashMap<String, Object> UserValues = new HashMap<>();
-            UserValues.put("price", s02_price);
-            Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("S02", UserValues);
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    keypro = childSnapshot.getKey();
+                }
 
-            mUsersRefService.updateChildren(childUpdates);
-        }
-        if (S03checked) {
-            DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
-            HashMap<String, Object> UserValues = new HashMap<>();
-            UserValues.put("price", s03_price);
-            Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("S03", UserValues);
+                if (!keypro.equals(null)) {
 
-            mUsersRefService.updateChildren(childUpdates);
-        }
-        if (S04checked) {
-            DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
-            HashMap<String, Object> UserValues = new HashMap<>();
-            UserValues.put("price", s04_price);
-            Map<String, Object> childUpdates = new HashMap<>();
-            childUpdates.put("S04", UserValues);
+                    //Add to profile promote
+                    final DatabaseReference mPromoteRef = mRootRef.child("profilepromote").child(keypro);
+                    final DatabaseReference mPromoteRefB = mRootRef.child("beautician-profilepromote/").child(mFirebaseUser.getUid()).child(keypro);
 
-            mUsersRefService.updateChildren(childUpdates);
-        }
 
-        startActivity(new Intent(AddService.this, ViewServices.class));
+                    if (S01checked) {
+                        DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
+                        HashMap<String, Object> UserValues = new HashMap<>();
+                        UserValues.put("price", s01_price);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("S01", UserValues);
+
+                        mUsersRefService.updateChildren(childUpdates);
+
+                        mPromoteRef.child("S01").setValue(s01_price);
+                        mPromoteRefB.child("S01").setValue(s01_price);
+                    }
+                    if (S02checked) {
+                        DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
+                        HashMap<String, Object> UserValues = new HashMap<>();
+                        UserValues.put("price", s02_price);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("S02", UserValues);
+
+                        mUsersRefService.updateChildren(childUpdates);
+
+                        mPromoteRef.child("S02").setValue(s02_price);
+                        mPromoteRefB.child("S02").setValue(s02_price);
+                    }
+                    if (S03checked) {
+                        DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
+                        HashMap<String, Object> UserValues = new HashMap<>();
+                        UserValues.put("price", s03_price);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("S03", UserValues);
+
+                        mUsersRefService.updateChildren(childUpdates);
+
+                        mPromoteRef.child("S03").setValue(s03_price);
+                        mPromoteRefB.child("S03").setValue(s03_price);
+                    }
+                    if (S04checked) {
+                        DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
+                        HashMap<String, Object> UserValues = new HashMap<>();
+                        UserValues.put("price", s04_price);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("S04", UserValues);
+
+                        mUsersRefService.updateChildren(childUpdates);
+
+                        mPromoteRef.child("S04").setValue(s04_price);
+                        mPromoteRefB.child("S04").setValue(s04_price);
+                    }
+
+                    startActivity(new Intent(AddService.this, ViewServices.class));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
     }
 }

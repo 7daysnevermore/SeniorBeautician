@@ -242,126 +242,166 @@ public class ViewServices extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void changePrice(String key){
+    private void changePrice(final String key){
 
 
-        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference mServiceRef = mRootRef.child("beautician-service/"+mFirebaseUser.getUid());
 
-        if(key.equals("S01")){
+        DatabaseReference mProfilePromoteRef = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference mProRef = mProfilePromoteRef.child("beautician-profilepromote/"+mFirebaseUser.getUid());
+        mProRef.orderByChild("uid").equalTo(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            editeds01.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                String keypro = null;
 
-                    String price_01 = editprice_01.getText().toString();
-                    final Integer price = Integer.parseInt(price_01);
-
-                    HashMap<String, Object> ServiceValues = new HashMap<>();
-                    ServiceValues.put("price", price);
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("S01", ServiceValues);
-
-                    mServiceRef.updateChildren(childUpdates);
-
-                    price_s01.setVisibility(View.VISIBLE);
-                    edits01.setVisibility(View.VISIBLE);
-                    editeds01.setVisibility(View.GONE);
-                    editprice_01.setVisibility(View.GONE);
-
-                    Intent intent = new Intent(ViewServices.this, ViewServices.class);
-                    startActivity(intent);
-
+                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    keypro = childSnapshot.getKey();
                 }
-            });
+
+                if(!keypro.equals(null)){
+
+                    //Add to profile promote
+                    final DatabaseReference mPromoteRef = mRootRef.child("profilepromote").child(keypro);
+                    final DatabaseReference mPromoteRefB = mRootRef.child("beautician-profilepromote/").child(mFirebaseUser.getUid()).child(keypro);
+
+                    if(key.equals("S01")){
+
+                        editeds01.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String price_01 = editprice_01.getText().toString();
+                                final Integer price = Integer.parseInt(price_01);
+
+                                HashMap<String, Object> ServiceValues = new HashMap<>();
+                                ServiceValues.put("price", price);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put("S01", ServiceValues);
+
+                                mServiceRef.updateChildren(childUpdates);
+
+                                mPromoteRef.child("S01").setValue(price);
+                                mPromoteRefB.child("S01").setValue(price);
+
+                                price_s01.setVisibility(View.VISIBLE);
+                                edits01.setVisibility(View.VISIBLE);
+                                editeds01.setVisibility(View.GONE);
+                                editprice_01.setVisibility(View.GONE);
+
+                                Intent intent = new Intent(ViewServices.this, ViewServices.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                    if (key.equals("S02")) {
+
+                        editeds02.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String price_02 = editprice_02.getText().toString();
+                                final Integer price = Integer.parseInt(price_02);
+
+                                HashMap<String, Object> ServiceValues = new HashMap<>();
+                                ServiceValues.put("price", price);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put("S02", ServiceValues);
+
+                                mServiceRef.updateChildren(childUpdates);
+
+                                mPromoteRef.child("S02").setValue(price);
+                                mPromoteRefB.child("S02").setValue(price);
+
+                                price_s02.setVisibility(View.VISIBLE);
+                                edits02.setVisibility(View.VISIBLE);
+                                editeds02.setVisibility(View.GONE);
+                                editprice_02.setVisibility(View.GONE);
+
+                                Intent intent = new Intent(ViewServices.this, ViewServices.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                    if (key.equals("S03")) {
+
+                        editeds03.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String price_03 = editprice_03.getText().toString();
+                                final Integer price = Integer.parseInt(price_03);
+
+                                HashMap<String, Object> ServiceValues = new HashMap<>();
+                                ServiceValues.put("price", price);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put("S03", ServiceValues);
+
+                                mServiceRef.updateChildren(childUpdates);
+
+                                mPromoteRef.child("S03").setValue(price);
+                                mPromoteRefB.child("S03").setValue(price);
+
+                                price_s03.setVisibility(View.VISIBLE);
+                                edits03.setVisibility(View.VISIBLE);
+                                editeds03.setVisibility(View.GONE);
+                                editprice_03.setVisibility(View.GONE);
+
+
+                                Intent intent = new Intent(ViewServices.this, ViewServices.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                    if (key.equals("S04")) {
+
+                        editeds04.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                String price_04 = editprice_04.getText().toString();
+                                final Integer price = Integer.parseInt(price_04);
+
+                                HashMap<String, Object> ServiceValues = new HashMap<>();
+                                ServiceValues.put("price", price);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put("S04", ServiceValues);
+
+                                mServiceRef.updateChildren(childUpdates);
+
+                                mPromoteRef.child("S04").setValue(price);
+                                mPromoteRefB.child("S04").setValue(price);
+
+                                price_s04.setVisibility(View.VISIBLE);
+                                edits04.setVisibility(View.VISIBLE);
+                                editeds04.setVisibility(View.GONE);
+                                editprice_04.setVisibility(View.GONE);
+
+                                Intent intent = new Intent(ViewServices.this, ViewServices.class);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+                }
+
 
         }
-        if (key.equals("S02")) {
 
-            editeds02.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                    String price_02 = editprice_02.getText().toString();
-                    final Integer price = Integer.parseInt(price_02);
+            }
 
-                    HashMap<String, Object> ServiceValues = new HashMap<>();
-                    ServiceValues.put("price", price);
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("S02", ServiceValues);
-
-                    mServiceRef.updateChildren(childUpdates);
-
-                    price_s02.setVisibility(View.VISIBLE);
-                    edits02.setVisibility(View.VISIBLE);
-                    editeds02.setVisibility(View.GONE);
-                    editprice_02.setVisibility(View.GONE);
-
-                    Intent intent = new Intent(ViewServices.this, ViewServices.class);
-                    startActivity(intent);
-
-                }
-            });
-
-        }
-        if (key.equals("S03")) {
-
-            editeds03.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String price_03 = editprice_03.getText().toString();
-                    final Integer price = Integer.parseInt(price_03);
-
-                    HashMap<String, Object> ServiceValues = new HashMap<>();
-                    ServiceValues.put("price", price);
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("S03", ServiceValues);
-
-                    mServiceRef.updateChildren(childUpdates);
-
-                    price_s03.setVisibility(View.VISIBLE);
-                    edits03.setVisibility(View.VISIBLE);
-                    editeds03.setVisibility(View.GONE);
-                    editprice_03.setVisibility(View.GONE);
-
-
-                    Intent intent = new Intent(ViewServices.this, ViewServices.class);
-                    startActivity(intent);
-
-                }
-            });
-
-        }
-        if (key.equals("S04")) {
-
-            editeds04.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String price_04 = editprice_04.getText().toString();
-                    final Integer price = Integer.parseInt(price_04);
-
-                    HashMap<String, Object> ServiceValues = new HashMap<>();
-                    ServiceValues.put("price", price);
-                    Map<String, Object> childUpdates = new HashMap<>();
-                    childUpdates.put("S04", ServiceValues);
-
-                    mServiceRef.updateChildren(childUpdates);
-
-                    price_s04.setVisibility(View.VISIBLE);
-                    edits04.setVisibility(View.VISIBLE);
-                    editeds04.setVisibility(View.GONE);
-                    editprice_04.setVisibility(View.GONE);
-
-                    Intent intent = new Intent(ViewServices.this, ViewServices.class);
-                    startActivity(intent);
-
-                }
-            });
-
-        }
-
+        });
 
     }
 }
