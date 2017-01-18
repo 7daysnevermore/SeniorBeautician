@@ -67,7 +67,7 @@ public class ProfilePromote extends AppCompatActivity {
 
         namepromote = (TextView) findViewById(R.id.namepromote);
         locationpromote = (TextView) findViewById(R.id.locationpromote);
-        pricepromote = (TextView) findViewById(R.id.pricepromote);
+        //pricepromote = (TextView) findViewById(R.id.pricepromote);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
@@ -81,10 +81,9 @@ public class ProfilePromote extends AppCompatActivity {
                 if (user == null) {
                     Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    namepromote.setText(user.firstname+" "+user.lastname);
-                    locationpromote.setText(user.address_number+" "+user.address_sub_district+", "+user.address_district+", "
-                            +user.address_province+" "+user.address_code);
-                    pricepromote.setText(user.birthday);
+                    namepromote.setText(user.firstname);
+                    locationpromote.setText(user.address_district+", " +user.address_province+" ...");
+                    //pricepromote.setText(user.birthday);
                 }
             }
 
@@ -130,7 +129,7 @@ public class ProfilePromote extends AppCompatActivity {
 
         namepromote = (TextView) findViewById(R.id.namepromote);
         locationpromote = (TextView) findViewById(R.id.locationpromote);
-        pricepromote = (TextView) findViewById(R.id.pricepromote);
+        //pricepromote = (TextView) findViewById(R.id.pricepromote);
         promotenow = (Button) findViewById(R.id.promotenow);
 
         promotenow.setOnClickListener(new View.OnClickListener() {
@@ -183,28 +182,18 @@ public class ProfilePromote extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Uri dowloadUrl = taskSnapshot.getDownloadUrl();
 
-                //create root of Promotion
+                /*//create root of Promotion
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference mPromotionRef = mRootRef.child("promotion");
+                DatabaseReference mProfilePromoteRef = mRootRef.child("profilepromote");
 
-                /*
-                String key = mPromotionRef.push().getKey();
+                String key = mProfilePromoteRef.push().getKey();
 
-                final HashMap<String, Object> PromotionValues = new HashMap<>();
-                PromotionValues.put("promotion", promotion);
-                PromotionValues.put("image", dowloadUrl.toString());
-                PromotionValues.put("price", price);
-                PromotionValues.put("sale", sale);
-                PromotionValues.put("datefrom", df_day + "/" + df_month + "/" + df_year);
-                PromotionValues.put("dateto", dt_day + "/" + dt_month + "/" + dt_year);
-                PromotionValues.put("details", details);
-                PromotionValues.put("uid", mFirebaseUser.getUid().toString());
-                PromotionValues.put("name", username);
-
+                final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
+                ProfilePromoteValues.put("promotion", promotion);
 
                 Map<String,Object> childUpdate = new HashMap<>();
-                childUpdate.put("/promotion/"+key, PromotionValues);
-                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, PromotionValues);
+                childUpdate.put("/promotion/"+key, ProfilePromoteValues);
+                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, ProfilePromoteValues);
 
                 mRootRef.updateChildren(childUpdate);
 
@@ -212,8 +201,8 @@ public class ProfilePromote extends AppCompatActivity {
 
                 progressDialog.dismiss();
 
-                startActivity(new Intent(ProfilePromote.this,Promotion.class));
-                */
+                startActivity(new Intent(ProfilePromote.this,Promotion.class));*/
+
             }
         });
     }
