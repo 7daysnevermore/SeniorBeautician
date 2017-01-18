@@ -66,8 +66,8 @@ public class ProfilePromote extends AppCompatActivity {
         uid = mFirebaseUser.getUid().toString();
 
         namepromote = (TextView) findViewById(R.id.namepromote);
-        locationpromote = (TextView) findViewById(R.id.namepromote);
-        pricepromote = (TextView) findViewById(R.id.namepromote);
+        locationpromote = (TextView) findViewById(R.id.locationpromote);
+        pricepromote = (TextView) findViewById(R.id.pricepromote);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");

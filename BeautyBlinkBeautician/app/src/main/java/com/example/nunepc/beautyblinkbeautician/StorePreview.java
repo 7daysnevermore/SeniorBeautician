@@ -46,7 +46,7 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         uid = mFirebaseUser.getUid().toString();
 
-        previewname = (TextView) findViewById(R.id.namepromote);
+        previewname = (TextView) findViewById(R.id.previewname);
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
