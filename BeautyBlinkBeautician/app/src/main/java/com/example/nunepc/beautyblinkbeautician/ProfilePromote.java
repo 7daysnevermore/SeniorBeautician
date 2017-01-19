@@ -82,43 +82,47 @@ public class ProfilePromote extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        mRootRef.child("beautician-profilepromote").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRootRef.child("profilepromote").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DataProfilePromote promote = dataSnapshot.getValue(DataProfilePromote.class);
-                if (promote == null) {
-                    Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
-                } else {
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    DataProfilePromote promote = data.getValue(DataProfilePromote.class);
 
-                    if(promote.name != null && promote.address != null){
-                        namepromote.setText(promote.getName());
-                        locationpromote.setText(promote.getAddress()+" ...");
+                    if (promote == null) {
+                        Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                    } else {
+
+                        namepromote.setText(promote.name);
+                        locationpromote.setText(promote.address+" ...");
+
+
+                        if(!promote.picture1.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture1).into(addpromotepic1);
+                        }
+                        if(!promote.picture2.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture2).into(addpromotepic2);
+                        }
+                        if(!promote.picture3.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture3).into(addpromotepic3);
+                        }
+                    if(promote.S01 != 0){
+                        priceS01.setText("Hair and Makeup : "+Long.toString(promote.S01)+"B");
+                    }
+                    if(promote.S02 != 0){
+                        priceS02.setText("Makeup          : "+Long.toString(promote.S02)+"B");
+                    }
+                    if(promote.S03 != 0){
+                        priceS03.setText("Hairstyle               : "+Long.toString(promote.S03)+"B");
+                    }
+                    if(promote.S04 != 0){
+                        priceS04.setText("Hairdressing : "+Long.toString(promote.S04)+"B");
+                    }
                     }
 
-                    /*if(profilepromote.picture1 != null){
-                        Picasso.with(ProfilePromote.this).load(profilepromote.picture1).into(addpromotepic1);
-                    }
-                    if(profilepromote.picture2 != null){
-                        Picasso.with(ProfilePromote.this).load(profilepromote.picture2).into(addpromotepic2);
-                    }
-                    if(profilepromote.picture3 != null){
-                        Picasso.with(ProfilePromote.this).load(profilepromote.picture3).into(addpromotepic3);
-                    }
-                    /*if(profilepromote.S01 != null){
-                        priceS01.setText("Hair and Makeup : "+Long.toString(profilepromote.S01)+"B");
-                    }
-                    if(profilepromote.S02 != null){
-                        priceS02.setText("Makeup          : "+Long.toString(profilepromote.S02)+"B");
-                    }
-                    if(profilepromote.S03 != null){
-                        priceS03.setText("Hairstyle               : "+Long.toString(profilepromote.S03)+"B");
-                    }
-                    if(profilepromote.S04 != null){
-                        priceS04.setText("Hairdressing : "+Long.toString(profilepromote.S04)+"B");
-                    }*/
-                }
             }
+            }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
