@@ -96,7 +96,6 @@ public class ProfilePromote extends AppCompatActivity {
                         namepromote.setText(promote.name);
                         locationpromote.setText(promote.address+" ...");
 
-
                         if(!promote.picture1.equals("")){
                             Picasso.with(ProfilePromote.this).load(promote.picture1).into(addpromotepic1);
                         }
