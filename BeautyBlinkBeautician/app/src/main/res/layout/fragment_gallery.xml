@@ -15,24 +15,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/add_photo" />
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_gall"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <GridView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/gal_photo"
-                android:numColumns="3"
-                android:gravity="center"
-                android:verticalSpacing="3dp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:visibility="invisible"/>
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:layout_below="@+id/create_pro"
+            android:layout_alignParentStart="true" />
 
     </LinearLayout>
 

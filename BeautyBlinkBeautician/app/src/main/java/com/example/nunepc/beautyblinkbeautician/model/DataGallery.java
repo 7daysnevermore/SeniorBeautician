@@ -19,4 +19,22 @@ public class DataGallery {
         this.uid = uid;
 
     }
+
+    public void setImage(String image){
+        this.image = image;
+    }
+
+    public String getImage(){ return this.image;}
+
+    public void setStatus(String status){ this.status = status; }
+
+    public String getStatus(){ return this.status; }
+
+    public void setName(String name){ this.name = name; }
+
+    public String getName(){ return this.name; }
+
+    public void setUid(String uid){this.uid = uid;}
+
+    public String getUid(){ return this.uid;}
 }

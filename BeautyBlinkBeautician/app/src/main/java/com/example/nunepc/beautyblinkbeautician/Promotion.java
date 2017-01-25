@@ -67,8 +67,9 @@ public class Promotion extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //Order from latest data
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this,3);
-        mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
                 (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
@@ -136,7 +137,7 @@ public class Promotion extends AppCompatActivity {
 
     public static class PromotionViewHolder extends RecyclerView.ViewHolder  {
 
-        View mview;
+        public View mview;
 
         public PromotionViewHolder(View itemView){
             super(itemView);

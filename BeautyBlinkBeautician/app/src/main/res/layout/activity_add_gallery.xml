@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="New Post"
+                android:gravity="center_vertical"
+                android:id="@+id/crpro"
+                android:textSize="25dp" />
+
+            <TextView
+                android:layout_width="60sp"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:paddingRight="10sp"
+                android:gravity="center_vertical"
+                android:layout_alignRight="@+id/crpro"
+                android:textSize="18sp"
+                android:text="Share"
+                android:id="@+id/textView2" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:id="@+id/picpost"
+            android:src="@mipmap/add_200"
+            android:background="@drawable/add_picture"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="left"
+            android:ems="10"
+            android:id="@+id/caption"
+            android:hint="Write a caption..."
+            android:layout_marginTop="20dp"
+            android:background="@drawable/input_outline"
+            android:padding="10dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
