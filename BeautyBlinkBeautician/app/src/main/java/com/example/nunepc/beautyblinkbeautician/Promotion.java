@@ -67,11 +67,11 @@ public class Promotion extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //Order from latest data
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setReverseLayout(true);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
+        final FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
                 (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
 
             @Override
@@ -110,6 +110,23 @@ public class Promotion extends AppCompatActivity {
 
             }
         };
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
+                int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    recyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         recyclerView.setLayoutManager(mLayoutManager);

@@ -6,15 +6,15 @@ package com.example.nunepc.beautyblinkbeautician.model;
 
 public class DataGallery {
 
-    public String image,status,name,uid;
+    public String image,caption,name,uid;
 
     public DataGallery() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public DataGallery(String image,String status,String name,String uid) {
+    public DataGallery(String image,String caption,String name,String uid) {
 
         this.image = image;
-        this.status = status;
+        this.caption = caption;
         this.name = name;
         this.uid = uid;
 
@@ -26,9 +26,9 @@ public class DataGallery {
 
     public String getImage(){ return this.image;}
 
-    public void setStatus(String status){ this.status = status; }
+    public void setCaption(String caption){ this.caption = caption; }
 
-    public String getStatus(){ return this.status; }
+    public String getCaption(){ return this.caption; }
 
     public void setName(String name){ this.name = name; }
 

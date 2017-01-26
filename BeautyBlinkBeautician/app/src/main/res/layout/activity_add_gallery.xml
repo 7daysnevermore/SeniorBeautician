@@ -35,7 +35,7 @@
                 android:layout_alignRight="@+id/crpro"
                 android:textSize="18sp"
                 android:text="Share"
-                android:id="@+id/textView2" />
+                android:id="@+id/share" />
 
         </RelativeLayout>
 

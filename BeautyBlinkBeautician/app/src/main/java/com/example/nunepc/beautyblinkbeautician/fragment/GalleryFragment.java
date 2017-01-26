@@ -93,16 +93,16 @@ public class GalleryFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-promotion"+"/"+mFirebaseUser.getUid().toString());
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
         recyclerView.setHasFixedSize(true);
 
         //Order from latest data
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),3);
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),3);
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
-        FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
+        final FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
                 (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,databaseReference) {
 
             @Override
@@ -121,7 +121,7 @@ public class GalleryFragment extends Fragment {
                         // Toast.LENGTH_LONG).show();
                         HashMap<String, Object> galleryValues = new HashMap<>();
                         galleryValues.put("key",cshow);
-                        galleryValues.put("status",model.getStatus());
+                        galleryValues.put("caption",model.getCaption());
                         galleryValues.put("image",model.getImage());
                         galleryValues.put("uid",model.getUid());
                         galleryValues.put("name",model.getName());
@@ -135,6 +135,23 @@ public class GalleryFragment extends Fragment {
 
 
         };
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
+                int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    recyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         recyclerView.setLayoutManager(mLayoutManager);
