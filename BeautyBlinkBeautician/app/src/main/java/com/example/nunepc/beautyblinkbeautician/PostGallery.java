@@ -161,11 +161,14 @@ public class PostGallery extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode == SELECT_FILE && resultCode == RESULT_OK){
+            dialog.dismiss();
             imageUri = data.getData();
             picpost.setImageURI(imageUri);
 
+
         }
         else if(requestCode == REQUEST_CAMERA && requestCode == RESULT_OK){
+            dialog.dismiss();
             imageUri = data.getData();
             picpost.setImageURI(imageUri);
         }

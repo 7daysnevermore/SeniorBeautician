@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,13 +63,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class GalleryFragment extends Fragment {
 
-    private TextView postP;
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference;
-    private Button add_photo;
+    private FloatingActionButton add_photo;
 
     public GalleryFragment(){ super(); }
 
@@ -157,7 +157,7 @@ public class GalleryFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
 
 
-        add_photo = (Button) rootView.findViewById(R.id.add_photo);
+        add_photo = (FloatingActionButton) rootView.findViewById(R.id.add_photo);
         add_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
