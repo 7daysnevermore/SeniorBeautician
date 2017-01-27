@@ -74,11 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
-        /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-=======
-/*        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
->>>>>>> develop
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);

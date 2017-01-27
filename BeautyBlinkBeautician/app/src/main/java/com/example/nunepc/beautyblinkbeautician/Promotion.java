@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -66,10 +67,8 @@ public class Promotion extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //Order from latest data
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this,3);
+        mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
         FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
                 (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {

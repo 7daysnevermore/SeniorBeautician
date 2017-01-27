@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by NunePC on 12/1/2560.
@@ -25,6 +27,8 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
 
     TextView fname,lname,birthday,gender,phone,addr;
     Button edit;
+
+    ImageView profile;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -47,6 +51,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
         gender = (TextView) findViewById(R.id.gender);
         phone = (TextView) findViewById(R.id.phone);
         addr = (TextView) findViewById(R.id.address);
+        profile = (ImageView) findViewById(R.id.profile);
 
         edit = (Button) findViewById(R.id.btn_edit);
 
@@ -61,6 +66,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                     Toast.makeText(ViewProfile.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
 
+                    Picasso.with(ViewProfile.this).load(user.profile).fit().centerCrop().into(profile);
                     fname.setText(user.firstname);
                     lname.setText(user.lastname);
                     birthday.setText(user.birthday);

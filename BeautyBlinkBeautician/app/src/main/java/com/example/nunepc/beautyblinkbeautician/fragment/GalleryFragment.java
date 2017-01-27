@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -20,6 +21,14 @@ import android.widget.ImageView;
 
 import com.example.nunepc.beautyblinkbeautician.OpenPhoto;
 import com.example.nunepc.beautyblinkbeautician.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,6 +36,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -42,6 +53,13 @@ public class GalleryFragment extends Fragment {
     private Bitmap bm =null;
     private ImageView testP;
     private ArrayList<Bitmap> mylist = new ArrayList<>();
+
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
+
+    private StorageReference storageReference,filepath;
+    private DatabaseReference databaseReference;
 
     public GalleryFragment(){ super(); }
 
@@ -62,6 +80,13 @@ public class GalleryFragment extends Fragment {
     }
 
     private void initInstance(View rootView){
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        storageReference = FirebaseStorage.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Gallery");
+
         addP =(Button)rootView.findViewById(R.id.add_photo);
         testP = (ImageView)rootView.findViewById(R.id.imageView);
 
@@ -152,11 +177,39 @@ public class GalleryFragment extends Fragment {
 
     }
     private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-        File destination = new File(Environment.getExternalStorageDirectory(),
+        Uri imageUri = data.getData();
+
+        /*Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);*/
+
+        filepath = storageReference.child("Gallery/"+mFirebaseUser.getUid()).child(data.getData().getLastPathSegment());
+
+        filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+
+                //create root of Promotion
+                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mGalleryRef = mRootRef.child("gallery");
+
+                String key = mGalleryRef.push().getKey();
+
+                final HashMap<String, Object> GalleryValues = new HashMap<>();
+                GalleryValues.put("image", dowloadUrl.toString());
+
+
+                Map<String,Object> childUpdate = new HashMap<>();
+                childUpdate.put("/gallery/"+key, GalleryValues);
+                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, GalleryValues);
+
+                mRootRef.updateChildren(childUpdate);
+            }
+        });
+
+        /*File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
@@ -169,11 +222,11 @@ public class GalleryFragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
     private void onSelectFromGalleryResult(Intent data) {
 
-        if (data != null) {
+        /*if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
 
@@ -183,7 +236,7 @@ public class GalleryFragment extends Fragment {
             }
         }
         mylist.add(bm);
-        testP.setImageBitmap(bm);
+        testP.setImageBitmap(bm);*/
 
     }
     public class ImageAdapter extends BaseAdapter {

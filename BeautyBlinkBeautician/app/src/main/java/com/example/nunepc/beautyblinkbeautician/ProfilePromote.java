@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nunepc.beautyblinkbeautician.model.DataProfilePromote;
 import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -50,7 +52,7 @@ public class ProfilePromote extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
 
     String uid;
-    TextView namepromote ,locationpromote ,pricepromote;
+    TextView namepromote ,locationpromote ,priceS01,priceS02,priceS03,priceS04;
 
     private int SELECT_FILE = 1;
 
@@ -67,25 +69,59 @@ public class ProfilePromote extends AppCompatActivity {
 
         namepromote = (TextView) findViewById(R.id.namepromote);
         locationpromote = (TextView) findViewById(R.id.locationpromote);
-        //pricepromote = (TextView) findViewById(R.id.pricepromote);
+        priceS01 = (TextView) findViewById(R.id.priceS01);
+        priceS02 = (TextView) findViewById(R.id.priceS02);
+        priceS03 = (TextView) findViewById(R.id.priceS03);
+        priceS04 = (TextView) findViewById(R.id.priceS04);
+
+        addpromotepic1 = (ImageView) findViewById(R.id.addpromotepic1);
+        addpromotepic2 = (ImageView) findViewById(R.id.addpromotepic2);
+        addpromotepic3 = (ImageView) findViewById(R.id.addpromotepic3);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        mRootRef.child("profilepromote").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null) {
-                    Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
-                } else {
-                    namepromote.setText(user.firstname);
-                    locationpromote.setText(user.address_district+", " +user.address_province+" ...");
-                    //pricepromote.setText(user.birthday);
-                }
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    DataProfilePromote promote = data.getValue(DataProfilePromote.class);
+
+                    if (promote == null) {
+                        Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                    } else {
+
+                        namepromote.setText(promote.name);
+                        locationpromote.setText(promote.address+" ...");
+
+                        if(!promote.picture1.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture1).into(addpromotepic1);
+                        }
+                        if(!promote.picture2.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture2).into(addpromotepic2);
+                        }
+                        if(!promote.picture3.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.picture3).into(addpromotepic3);
+                        }
+                    if(promote.S01 != 0){
+                        priceS01.setText("Hair and Makeup : "+Long.toString(promote.S01)+"B");
+                    }
+                    if(promote.S02 != 0){
+                        priceS02.setText("Makeup          : "+Long.toString(promote.S02)+"B");
+                    }
+                    if(promote.S03 != 0){
+                        priceS03.setText("Hairstyle               : "+Long.toString(promote.S03)+"B");
+                    }
+                    if(promote.S04 != 0){
+                        priceS04.setText("Hairdressing : "+Long.toString(promote.S04)+"B");
+                    }
+                    }
+
             }
+            }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -94,7 +130,7 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
-        addpromotepic1 = (ImageView) findViewById(R.id.addpromotepic1);
+
         addpromotepic1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +141,7 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
-        addpromotepic2 = (ImageView) findViewById(R.id.addpromotepic2);
+
         addpromotepic2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +152,7 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
-        addpromotepic3 = (ImageView) findViewById(R.id.addpromotepic3);
+
         addpromotepic3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,9 +163,6 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
-        namepromote = (TextView) findViewById(R.id.namepromote);
-        locationpromote = (TextView) findViewById(R.id.locationpromote);
-        //pricepromote = (TextView) findViewById(R.id.pricepromote);
         promotenow = (Button) findViewById(R.id.promotenow);
 
         promotenow.setOnClickListener(new View.OnClickListener() {
