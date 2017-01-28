@@ -67,7 +67,7 @@ public class GalleryFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseOrder;
     private FloatingActionButton add_photo;
 
     public GalleryFragment(){ super(); }
@@ -94,6 +94,7 @@ public class GalleryFragment extends Fragment {
         mFirebaseUser = mAuth.getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
+
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
         recyclerView.setHasFixedSize(true);
