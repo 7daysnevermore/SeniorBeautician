@@ -230,15 +230,6 @@
             android:layout_weight="1.1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/promotenow"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Promote now !"
-                android:textSize="13sp" />
-
         </LinearLayout>
 
         <View
@@ -247,7 +238,6 @@
             android:background="@android:color/darker_gray" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

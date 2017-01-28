@@ -94,7 +94,7 @@ public class ProfilePromote extends AppCompatActivity {
                     } else {
 
                         namepromote.setText(promote.name);
-                        locationpromote.setText(promote.address+" ...");
+                        locationpromote.setText(promote.district+promote.province+" ...");
 
                         if(!promote.picture1.equals("")){
                             Picasso.with(ProfilePromote.this).load(promote.picture1).into(addpromotepic1);
@@ -163,14 +163,6 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
-        promotenow = (Button) findViewById(R.id.promotenow);
-
-        promotenow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startPost();
-            }
-        });
     }
 
     @Override
@@ -189,53 +181,74 @@ public class ProfilePromote extends AppCompatActivity {
             imageUri3 = data.getData();
             addpromotepic3.setImageURI(imageUri3);
         }
+
+        startPost();
     }
 
     private void startPost(){
-        progressDialog.setMessage("Posting...");
-        progressDialog.show();
-
         if(imageUri1!=null){
             filepath = storageReference.child("ProfilePromote").child(imageUri1.getLastPathSegment());
-            putfile(imageUri1);
+            putfile(imageUri1, "1");
         }
         if(imageUri2!=null){
             filepath = storageReference.child("ProfilePromote").child(imageUri2.getLastPathSegment());
-            putfile(imageUri2);
+            putfile(imageUri2, "2");
         }
         if(imageUri3!=null){
             filepath = storageReference.child("ProfilePromote").child(imageUri3.getLastPathSegment());
-            putfile(imageUri3);
+            putfile(imageUri3, "3");
         }
     }
 
-    private void putfile(Uri imageUri) {
+    private void putfile(Uri imageUri, final String pic) {
         filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+                final Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                /*//create root of Promotion
-                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference mProfilePromoteRef = mRootRef.child("profilepromote");
+                //create root of BeauticianService
+                final DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
-                String key = mProfilePromoteRef.push().getKey();
+                //create root of ProfilePromote
+                DatabaseReference mProfilePromoteRef = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference mProRef = mProfilePromoteRef.child("beautician-profilepromote/" + mFirebaseUser.getUid());
+                mProRef.orderByChild("uid").equalTo(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
-                ProfilePromoteValues.put("promotion", promotion);
+                        String keypro = null;
 
-                Map<String,Object> childUpdate = new HashMap<>();
-                childUpdate.put("/promotion/"+key, ProfilePromoteValues);
-                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, ProfilePromoteValues);
+                        for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                            keypro = childSnapshot.getKey();
+                        }
 
-                mRootRef.updateChildren(childUpdate);
+                        if (!keypro.equals(null)) {
 
-                //create root of Beautician-Promotion
+                            //Add to profile promote
+                            final DatabaseReference mPromoteRef = mRootRef.child("profilepromote").child(keypro);
+                            final DatabaseReference mPromoteRefB = mRootRef.child("beautician-profilepromote/").child(mFirebaseUser.getUid()).child(keypro);
 
-                progressDialog.dismiss();
+                            if (pic.equals("1")){
+                                mPromoteRef.child("picture1").setValue(downloadUrl.toString());
+                                mPromoteRefB.child("picture1").setValue(downloadUrl.toString());
+                            }
+                            if (pic.equals("2")){
+                                mPromoteRef.child("picture2").setValue(downloadUrl.toString());
+                                mPromoteRefB.child("picture2").setValue(downloadUrl.toString());
+                            }
+                            if (pic.equals("3")){
+                                mPromoteRef.child("picture3").setValue(downloadUrl.toString());
+                                mPromoteRefB.child("picture3").setValue(downloadUrl.toString());
+                            }
+                        }
+                    }
 
-                startActivity(new Intent(ProfilePromote.this,Promotion.class));*/
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+
+                });
             }
         });
     }

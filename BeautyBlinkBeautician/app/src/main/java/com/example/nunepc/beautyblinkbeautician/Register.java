@@ -293,75 +293,140 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                     Toast.makeText(Register.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-                                    storageReference = FirebaseStorage.getInstance().getReference();
-                                    databaseReference = FirebaseDatabase.getInstance().getReference().child("Profile");
 
-                                    filepath = storageReference.child("Profile").child(imageUri.getLastPathSegment());
+                                    if (imageUri != null) {
+                                        storageReference = FirebaseStorage.getInstance().getReference();
+                                        databaseReference = FirebaseDatabase.getInstance().getReference().child("BeauticianProfile");
 
-                                    filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            final Uri dowloadUrl = taskSnapshot.getDownloadUrl();
-                                            //Get current to pull UID and email
-                                            mFirebaseAuth = FirebaseAuth.getInstance();
-                                            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+                                        filepath = storageReference.child("BeauticianProfile").child(imageUri.getLastPathSegment());
 
-                                            //create root of Beautician
-                                            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                                        filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                final Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+                                                //Get current to pull UID and email
+                                                mFirebaseAuth = FirebaseAuth.getInstance();
+                                                mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-                                            DatabaseReference mUsersRef = mRootRef.child("beautician");
+                                                //create root of Beautician
+                                                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
-                                            HashMap<String, Object> UserValues = new HashMap<>();
-                                            UserValues.put("profile", dowloadUrl.toString());
-                                            UserValues.put("email", email);
-                                            UserValues.put("firstname", fname);
-                                            UserValues.put("lastname", lname);
-                                            UserValues.put("phone", phone);
-                                            UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
-                                            UserValues.put("gender", input_gender);
-                                            UserValues.put("address_number", addr_num);
-                                            UserValues.put("address_sub_district", addr_s_dist);
-                                            UserValues.put("address_district", addr_dist);
-                                            UserValues.put("address_province", addr_province);
-                                            UserValues.put("address_code", addr_code);
-                                            Map<String, Object> childUpdates = new HashMap<>();
-                                            childUpdates.put(mFirebaseUser.getUid(), UserValues);
+                                                DatabaseReference mUsersRef = mRootRef.child("beautician");
 
-                                            mUsersRef.updateChildren(childUpdates);
+                                                HashMap<String, Object> UserValues = new HashMap<>();
+                                                UserValues.put("profile", dowloadUrl.toString());
+                                                UserValues.put("email", email);
+                                                UserValues.put("firstname", fname);
+                                                UserValues.put("lastname", lname);
+                                                UserValues.put("phone", phone);
+                                                UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                                UserValues.put("gender", input_gender);
+                                                UserValues.put("address_number", addr_num);
+                                                UserValues.put("address_sub_district", addr_s_dist);
+                                                UserValues.put("address_district", addr_dist);
+                                                UserValues.put("address_province", addr_province);
+                                                UserValues.put("address_code", addr_code);
+                                                Map<String, Object> childUpdates = new HashMap<>();
+                                                childUpdates.put(mFirebaseUser.getUid(), UserValues);
 
-                                            //Add to profile promote
-                                            DatabaseReference mPromoteRef = mRootRef.child("profilepromote");
+                                                mUsersRef.updateChildren(childUpdates);
 
-                                            key = mPromoteRef.push().getKey();
+                                                //Add to profile promote
+                                                DatabaseReference mPromoteRef = mRootRef.child("profilepromote");
 
-                                            final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
-                                            ProfilePromoteValues.put("profile", dowloadUrl.toString());
-                                            ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
-                                            ProfilePromoteValues.put("name", fname);
-                                            ProfilePromoteValues.put("address", addr_dist + " " + addr_province);
-                                            ProfilePromoteValues.put("S01",0);
-                                            ProfilePromoteValues.put("S02",0);
-                                            ProfilePromoteValues.put("S03",0);
-                                            ProfilePromoteValues.put("S04",0);
-                                            ProfilePromoteValues.put("picture1","");
-                                            ProfilePromoteValues.put("picture2","");
-                                            ProfilePromoteValues.put("picture3","");
-                                            ProfilePromoteValues.put("rating","");
+                                                key = mPromoteRef.push().getKey();
+
+                                                final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
+                                                ProfilePromoteValues.put("BeauticianProfile", dowloadUrl.toString());
+                                                ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
+                                                ProfilePromoteValues.put("name", fname);
+                                                ProfilePromoteValues.put("address", addr_dist + " " + addr_province);
+                                                ProfilePromoteValues.put("S01", 0);
+                                                ProfilePromoteValues.put("S02", 0);
+                                                ProfilePromoteValues.put("S03", 0);
+                                                ProfilePromoteValues.put("S04", 0);
+                                                ProfilePromoteValues.put("picture1", "");
+                                                ProfilePromoteValues.put("picture2", "");
+                                                ProfilePromoteValues.put("picture3", "");
+                                                ProfilePromoteValues.put("rating", "");
 
 
-                                            Map<String, Object> childUpdate = new HashMap<>();
-                                            childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
-                                            childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
+                                                Map<String, Object> childUpdate = new HashMap<>();
+                                                childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
+                                                childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
 
-                                            mRootRef.updateChildren(childUpdate);
+                                                mRootRef.updateChildren(childUpdate);
 
-                                            //continue to add service
-                                            setContentView(R.layout.activity_regist2);
-                                            findViewById(R.id.btn_register).setOnClickListener(Register.this);
+                                                //continue to add service
+                                                setContentView(R.layout.activity_regist2);
+                                                findViewById(R.id.btn_register).setOnClickListener(Register.this);
 
-                                        }
-                                    });
+                                            }
+                                        });
 
+                                    }
+
+                                    if (imageUri == null){
+
+                                        mFirebaseAuth = FirebaseAuth.getInstance();
+                                        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+                                        //create root of Beautician
+                                        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+                                        DatabaseReference mUsersRef = mRootRef.child("beautician");
+
+                                        HashMap<String, Object> UserValues = new HashMap<>();
+                                        UserValues.put("profile", "");
+                                        UserValues.put("email", email);
+                                        UserValues.put("firstname", fname);
+                                        UserValues.put("lastname", lname);
+                                        UserValues.put("phone", phone);
+                                        UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                        UserValues.put("gender", input_gender);
+                                        UserValues.put("address_number", addr_num);
+                                        UserValues.put("address_sub_district", addr_s_dist);
+                                        UserValues.put("address_district", addr_dist);
+                                        UserValues.put("address_province", addr_province);
+                                        UserValues.put("address_code", addr_code);
+                                        Map<String, Object> childUpdates = new HashMap<>();
+                                        childUpdates.put(mFirebaseUser.getUid(), UserValues);
+
+                                        mUsersRef.updateChildren(childUpdates);
+
+                                        //Add to profile promote
+                                        DatabaseReference mPromoteRef = mRootRef.child("profilepromote");
+
+                                        key = mPromoteRef.push().getKey();
+
+                                        final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
+                                        ProfilePromoteValues.put("BeauticianProfile", "");
+                                        ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
+                                        ProfilePromoteValues.put("name", fname);
+                                        ProfilePromoteValues.put("sub_district", addr_s_dist);
+                                        ProfilePromoteValues.put("district", addr_dist);
+                                        ProfilePromoteValues.put("province", addr_province);
+                                        ProfilePromoteValues.put("S01", 0);
+                                        ProfilePromoteValues.put("S02", 0);
+                                        ProfilePromoteValues.put("S03", 0);
+                                        ProfilePromoteValues.put("S04", 0);
+                                        ProfilePromoteValues.put("picture1", "");
+                                        ProfilePromoteValues.put("picture2", "");
+                                        ProfilePromoteValues.put("picture3", "");
+                                        ProfilePromoteValues.put("rating", "");
+
+
+                                        Map<String, Object> childUpdate = new HashMap<>();
+                                        childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
+                                        childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
+
+                                        mRootRef.updateChildren(childUpdate);
+
+                                        //continue to add service
+                                        setContentView(R.layout.activity_regist2);
+                                        findViewById(R.id.btn_register).setOnClickListener(Register.this);
+
+                                    }
                                 }
 
                             }
