@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +33,12 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
     Button editprofile;
 
+    ImageView profilepicture;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+
+    private int SELECT_FILE = 1;
 
     String uid;
 
@@ -57,6 +62,8 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         address_code = (EditText) findViewById(R.id.code);
 
         editprofile = (Button) findViewById(R.id.btn_editprofile);
+
+        profilepicture = (ImageView) findViewById(R.id.changeProfilePicture);
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -101,6 +108,11 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                 Editprofile();
                 break;
 
+            case R.id.changeProfilePicture:
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,SELECT_FILE);
+                break;
         }
 
     }

@@ -171,9 +171,9 @@ public class PostPromotion extends AppCompatActivity {
                     startActivity(new Intent(PostPromotion.this,Promotion.class));
                 }
             });
+        }//end if
 
 
-        }
     }
     }
 
