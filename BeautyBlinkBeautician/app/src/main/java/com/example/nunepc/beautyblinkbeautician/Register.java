@@ -340,7 +340,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                                 ProfilePromoteValues.put("BeauticianProfile", dowloadUrl.toString());
                                                 ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
                                                 ProfilePromoteValues.put("name", fname);
-                                                ProfilePromoteValues.put("address", addr_dist + " " + addr_province);
+                                                ProfilePromoteValues.put("sub_district", addr_s_dist);
+                                                ProfilePromoteValues.put("district", addr_dist);
+                                                ProfilePromoteValues.put("province", addr_province);
                                                 ProfilePromoteValues.put("S01", 0);
                                                 ProfilePromoteValues.put("S02", 0);
                                                 ProfilePromoteValues.put("S03", 0);

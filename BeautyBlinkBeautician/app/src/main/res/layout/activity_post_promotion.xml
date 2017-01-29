@@ -39,285 +39,320 @@
 
     </android.support.v7.widget.Toolbar>
 
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/toolbar"
-            android:layout_centerHorizontal="true">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/add_200"
-                    android:id="@+id/addPic"
-                    android:background="@drawable/add_picture"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:ems="10"
-                    android:id="@+id/promotion"
-                    android:hint="Promotion"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/input_outline"
-                    android:padding="10dp" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="20sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/toolbar"
+                android:layout_centerHorizontal="true">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:layout_height="200dp">
 
-                    <LinearLayout
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/add_200"
+                        android:id="@+id/addPic"
+                        android:background="@drawable/add_picture"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:ems="10"
+                        android:id="@+id/promotion"
+                        android:hint="Promotion"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/input_outline"
+                        android:padding="10dp" />
+
+
+                    <TextView
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:text="Service :"
+                        android:textSize="18sp"
+                        android:id="@+id/textView3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
+
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/service"
+                            android:layout_weight="2"
+                            android:layout_marginLeft="15dp"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/S01"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="MakeupandHair"
+                                android:checked="true"/>
+
+                            <RadioButton
+                                android:id="@+id/S02"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Makeup"/>
+
+                            <RadioButton
+                                android:id="@+id/S03"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hairstyle" />
+
+                            <RadioButton
+                                android:id="@+id/S04"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Hairdressing" />
+
+                        </RadioGroup>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:text="Price : "
+                                android:id="@+id/textView2" />
+
+                            <EditText
+                                android:id="@+id/price"
+                                android:inputType="number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingLeft="5sp"
+                                android:paddingRight="5sp"
+                                android:background="@drawable/input_outline" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:text="Sale : "/>
+
+                            <EditText
+                                android:id="@+id/sale"
+                                android:inputType="number"
+                                android:paddingLeft="5sp"
+                                android:paddingRight="5sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/input_outline" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
-                            android:text="Price : "/>
+                            android:text="DateFrom : "/>
 
                         <EditText
-                            android:id="@+id/price"
-                            android:inputType="number"
-                            android:layout_width="match_parent"
+                            android:id="@+id/dateFrom_day"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:paddingLeft="5sp"
                             android:paddingRight="5sp"
-                            android:background="@drawable/input_outline" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:layout_weight="1">
+                            android:hint="dd"
+                            android:background="@drawable/input_outline"
+                            />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="20sp"
-                            android:text="Sale : "/>
+                            android:text=" / "/>
 
                         <EditText
-                            android:id="@+id/sale"
-                            android:inputType="number"
+                            android:id="@+id/dateFrom_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:paddingLeft="5sp"
                             android:paddingRight="5sp"
-                            android:layout_width="match_parent"
+                            android:hint="mm"
+                            android:background="@drawable/input_outline"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text=" / "/>
+
+                        <EditText
+                            android:id="@+id/dateFrom_year"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:background="@drawable/input_outline" />
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:hint="yyyy"
+                            android:background="@drawable/input_outline"
+                            />
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DateTo      : "
+                            android:textSize="20sp" />
+
+                        <EditText
+                            android:id="@+id/dateTo_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:hint="dd"
+                            android:background="@drawable/input_outline"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text=" / "/>
+
+                        <EditText
+                            android:id="@+id/dateTo_month"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:hint="mm"
+                            android:background="@drawable/input_outline"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text=" / "/>
+
+                        <EditText
+                            android:id="@+id/dateTo_year"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="5sp"
+                            android:paddingRight="5sp"
+                            android:hint="yyyy"
+                            android:background="@drawable/input_outline"
+                            />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/details"
+                        android:gravity="top"
+                        android:hint="Details"
+                        android:minLines="3"
+                        android:inputType="textMultiLine"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/input_outline"
+                        android:padding="10dp" />
+
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text="DateFrom : "/>
-
-                    <EditText
-                        android:id="@+id/dateFrom_day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="dd"
-                        android:background="@drawable/input_outline"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text=" / "/>
-
-                    <EditText
-                        android:id="@+id/dateFrom_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="mm"
-                        android:background="@drawable/input_outline"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text=" / "/>
-
-                    <EditText
-                        android:id="@+id/dateFrom_year"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="yyyy"
-                        android:background="@drawable/input_outline"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DateTo      : "
-                        android:textSize="20sp" />
-
-                    <EditText
-                        android:id="@+id/dateTo_day"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="dd"
-                        android:background="@drawable/input_outline"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text=" / "/>
-
-                    <EditText
-                        android:id="@+id/dateTo_month"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="mm"
-                        android:background="@drawable/input_outline"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:text=" / "/>
-
-                    <EditText
-                        android:id="@+id/dateTo_year"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="5sp"
-                        android:paddingRight="5sp"
-                        android:hint="yyyy"
-                        android:background="@drawable/input_outline"
-                        />
-
-                </LinearLayout>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/details"
-                    android:hint="Details"
-                    android:inputType="textMultiLine"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/input_outline"
-                    android:padding="10dp" />
-
 
             </LinearLayout>
-
-        </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:titleTextColor="#1111">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/topic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Promotion"
-                android:textSize="25dp" />
-
-            <ImageView
-                android:id="@+id/btn_createpromotion"
-                android:layout_width="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_height="match_parent"
-                android:src="@mipmap/add" />
-
-        </RelativeLayout>
-
-    </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

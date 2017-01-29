@@ -104,13 +104,22 @@
                         android:scaleType="centerCrop"
                         android:adjustViewBounds="true"  />
                     <TextView
-                        android:text="Date From"
+                        android:text="Service"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#FF424242"
                         android:textSize="18sp"
-                        android:id="@+id/proDF"
+                        android:id="@+id/service"
                         android:padding="5dp" />
+
+                    <TextView
+                        android:id="@+id/proDF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Date From"
+                        android:textColor="#FF424242"
+                        android:textSize="18sp" />
                     <TextView
                         android:text="Date To"
                         android:layout_width="match_parent"

@@ -102,6 +102,8 @@ public class Promotion extends AppCompatActivity {
                         promotionValues.put("dateTo",model.getDateTo());
                         promotionValues.put("uid",model.getUid());
                         promotionValues.put("name",model.getName());
+                        promotionValues.put("service",model.getService());
+                        promotionValues.put("status",model.getStatus());
                         Intent cPro = new Intent(Promotion.this,PromotionDetails.class);
                         cPro.putExtra("promotion",  promotionValues);
                         startActivity(cPro);
