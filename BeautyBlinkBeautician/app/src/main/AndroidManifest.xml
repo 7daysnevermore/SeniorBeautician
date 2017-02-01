@@ -28,6 +28,8 @@
         <activity android:name=".AddService" />
         <activity android:name=".EditPromotion" />
         <activity android:name=".StorePreview" />
+        <activity android:name=".GalleryDetails" />
+        <activity android:name=".PostGallery"/>
         <activity android:name=".OpenPhoto"></activity>
     </application>
 

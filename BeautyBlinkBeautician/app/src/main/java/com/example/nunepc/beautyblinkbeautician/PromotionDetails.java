@@ -36,7 +36,7 @@ import java.util.Map;
 public class PromotionDetails extends AppCompatActivity implements View.OnClickListener {
 
     HashMap<String, Object> promotionValues;
-    private TextView proTopic,proPrice,proSale,proDF,proDT,proDetails ;
+    private TextView proTopic,proPrice,proSale,proDF,proDT,proDetails,service ;
     ImageView proImg;
 
     @Override
@@ -53,6 +53,7 @@ public class PromotionDetails extends AppCompatActivity implements View.OnClickL
         proDF = (TextView) findViewById(R.id.proDF);
         proDT = (TextView) findViewById(R.id.proDT);
         proDetails = (TextView) findViewById(R.id.proDetails);
+        service = (TextView) findViewById(R.id.service);
         proImg = (ImageView) findViewById(R.id.proImg);
 
         proTopic.setText(promotionValues.get("promotion").toString());
@@ -62,6 +63,19 @@ public class PromotionDetails extends AppCompatActivity implements View.OnClickL
         proDF.setText("Date from : "+promotionValues.get("dateFrom").toString());
         proDT.setText("Date to     : "+promotionValues.get("dateTo").toString());
         proDetails.setText(promotionValues.get("details").toString());
+        if(promotionValues.get("service").toString().equals("S01")){
+            service.setText("Service : MakeupandHair");
+        }
+        if (promotionValues.get("service").toString().equals("S02")) {
+            service.setText("Service : Makeup");
+        }
+        if (promotionValues.get("service").toString().equals("S03")) {
+            service.setText("Service : Hairstyle");
+        }
+        if (promotionValues.get("service").toString().equals("S04")) {
+            service.setText("Service : Hairdressing");
+        }
+
 
         Picasso.with(this).load(promotionValues.get("image").toString()).into(proImg);
 

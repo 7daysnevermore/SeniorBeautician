@@ -4,12 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +23,19 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.nunepc.beautyblinkbeautician.GalleryDetails;
 import com.example.nunepc.beautyblinkbeautician.OpenPhoto;
+import com.example.nunepc.beautyblinkbeautician.PostGallery;
+import com.example.nunepc.beautyblinkbeautician.PostPromotion;
+import com.example.nunepc.beautyblinkbeautician.Promotion;
+import com.example.nunepc.beautyblinkbeautician.PromotionDetails;
 import com.example.nunepc.beautyblinkbeautician.R;
+import com.example.nunepc.beautyblinkbeautician.model.DataGallery;
+import com.example.nunepc.beautyblinkbeautician.model.DataPromotion;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -46,20 +62,13 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class GalleryFragment extends Fragment {
-    private GridView gallery;
-    private Button addP,takeP,chooseP,can;
-    private AlertDialog dialog;
-    private int REQUEST_CAMERA =0,SELECT_FILE=1;
-    private Bitmap bm =null;
-    private ImageView testP;
-    private ArrayList<Bitmap> mylist = new ArrayList<>();
 
-    private FirebaseAuth mFirebaseAuth;
+    private RecyclerView recyclerView;
+    private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
-
-
-    private StorageReference storageReference,filepath;
-    private DatabaseReference databaseReference;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference databaseReference,databaseOrder;
+    private FloatingActionButton add_photo;
 
     public GalleryFragment(){ super(); }
 
@@ -81,205 +90,86 @@ public class GalleryFragment extends Fragment {
 
     private void initInstance(View rootView){
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mAuth.getCurrentUser();
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Gallery");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
 
-        addP =(Button)rootView.findViewById(R.id.add_photo);
-        testP = (ImageView)rootView.findViewById(R.id.imageView);
+        //professor promotion feeds
+        recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
+        recyclerView.setHasFixedSize(true);
 
-        gallery=(GridView)rootView.findViewById(R.id.gal_photo);
-        gallery.setAdapter(new ImageAdapter(getActivity()));
-        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+        //Order from latest data
+        final GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),3);
+        mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
-                //Keep photo that we chose in this
-                Bitmap bmp = (Bitmap) parent.getItemAtPosition(position);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
+        final FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
+                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,databaseReference) {
 
-                Intent intent = new Intent(getActivity(), OpenPhoto.class);
-                intent.putExtra("image",byteArray);
+            @Override
+            protected void populateViewHolder(GalleryViewHolder viewHolder, final DataGallery model, final int position) {
 
-                //Start details activity
+                viewHolder.setImage(getActivity().getApplicationContext(),model.getImage());
+
+                viewHolder.mview.setOnClickListener(new View.OnClickListener() {
+                    //private static final String TAG = "Promotion";
+                    final String cshow = getRef(position).getKey();
+                    @Override
+                    public void onClick(View view) {
+                        //Log.w(TAG, "You clicked on "+position);
+                        //firebaseRecyclerAdapter.getRef(position).removeValue();
+                        //Toast.makeText(Promotion.this, "This is my Toast message!",
+                        // Toast.LENGTH_LONG).show();
+                        HashMap<String, Object> galleryValues = new HashMap<>();
+                        galleryValues.put("key",cshow);
+                        galleryValues.put("caption",model.getCaption());
+                        galleryValues.put("image",model.getImage());
+                        galleryValues.put("uid",model.getUid());
+                        galleryValues.put("name",model.getName());
+                        Intent cPro = new Intent(getActivity(),GalleryDetails.class);
+                        cPro.putExtra("promotion",  galleryValues);
+                        startActivity(cPro);
+                    }
+                });
+
+            }
+
+
+        };
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
+                int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    recyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
+
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+
+        add_photo = (FloatingActionButton) rootView.findViewById(R.id.add_photo);
+        add_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PostGallery.class);
                 startActivity(intent);
             }
         });
 
-        addP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //Initialize dialog gallery
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                View mView = getActivity().getLayoutInflater().inflate(R.layout.dialog_menu,null);
-
-                takeP = (Button)mView.findViewById(R.id.takephoto);
-                chooseP =(Button)mView.findViewById(R.id.choosephoto);
-                can = (Button)mView.findViewById(R.id.canc);
-
-                takeP.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        cameraIntent();
-                    }
-
-                    private void cameraIntent() {
-
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent,REQUEST_CAMERA);
-                    }
-                });
-
-                chooseP.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        galleryIntent();
-                    }
-
-                    private void galleryIntent() {
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent,"Select File"),SELECT_FILE);
-                    }
-                });
-
-                can.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                dialog=mBuilder.create();
-                dialog.show();
-            }
-        });
-
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-
-        if(requestCode == SELECT_FILE && resultCode == RESULT_OK){
-
-            onSelectFromGalleryResult(data);
-
-        }
-        else if(requestCode == REQUEST_CAMERA && requestCode == RESULT_OK){
-            onCaptureImageResult(data);
-        }
-
-    }
-    private void onCaptureImageResult(Intent data) {
-
-        Uri imageUri = data.getData();
-
-        /*Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);*/
-
-        filepath = storageReference.child("Gallery/"+mFirebaseUser.getUid()).child(data.getData().getLastPathSegment());
-
-        filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri dowloadUrl = taskSnapshot.getDownloadUrl();
-
-                //create root of Promotion
-                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference mGalleryRef = mRootRef.child("gallery");
-
-                String key = mGalleryRef.push().getKey();
-
-                final HashMap<String, Object> GalleryValues = new HashMap<>();
-                GalleryValues.put("image", dowloadUrl.toString());
 
 
-                Map<String,Object> childUpdate = new HashMap<>();
-                childUpdate.put("/gallery/"+key, GalleryValues);
-                childUpdate.put("/beautician-promotion/"+mFirebaseUser.getUid().toString()+"/"+key, GalleryValues);
-
-                mRootRef.updateChildren(childUpdate);
-            }
-        });
-
-        /*File destination = new File(Environment.getExternalStorageDirectory(),
-                System.currentTimeMillis() + ".jpg");
-
-        FileOutputStream fo;
-        try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-    private void onSelectFromGalleryResult(Intent data) {
-
-        /*if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        mylist.add(bm);
-        testP.setImageBitmap(bm);*/
-
-    }
-    public class ImageAdapter extends BaseAdapter {
-        private Context mContext;
-        public ImageAdapter(Context c) {mContext = c;
-        }
-
-        @Override
-        public int getCount() {
-            return mylist.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mylist.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            ImageView imageView;
-
-            if (view == null) {
-
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setVisibility(View.VISIBLE);
-            }
-            else
-            {
-                imageView = (ImageView) view;
-            }
-
-            imageView.setImageBitmap(mylist.get(i));
-
-            return imageView;
-        }
-    }
     @Override
     public void onStart(){ super.onStart(); }
 
@@ -297,6 +187,23 @@ public class GalleryFragment extends Fragment {
 
         if(savedInstanceState != null){
             //Restore Instance State here
+        }
+    }
+
+    public static class GalleryViewHolder extends RecyclerView.ViewHolder  {
+
+        View mview;
+
+        public GalleryViewHolder(View itemView){
+            super(itemView);
+            mview=itemView;
+
+        }
+
+        public void setImage(Context context, String image){
+            ImageView img = (ImageView)mview.findViewById(R.id.post_gall);
+
+            Picasso.with(context).load(image).fit().centerCrop().into(img);
         }
     }
 }

@@ -152,6 +152,8 @@ public class EditPromotion extends AppCompatActivity implements View.OnClickList
 
 
                     final HashMap<String, Object> PromotionValues = new HashMap<>();
+                    PromotionValues.put("service",promotionValues.get("service"));
+                    PromotionValues.put("status", "active");
                     PromotionValues.put("promotion", promotion);
                     PromotionValues.put("image", dowloadUrl.toString());
                     PromotionValues.put("price", price);

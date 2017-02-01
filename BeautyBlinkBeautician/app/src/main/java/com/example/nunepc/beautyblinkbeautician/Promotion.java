@@ -67,10 +67,11 @@ public class Promotion extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //Order from latest data
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this,3);
-        mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
+        final FirebaseRecyclerAdapter<DataPromotion,PromotionViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataPromotion, PromotionViewHolder>
                 (DataPromotion.class,R.layout.promotion_row,PromotionViewHolder.class,databaseReference) {
 
             @Override
@@ -101,6 +102,8 @@ public class Promotion extends AppCompatActivity {
                         promotionValues.put("dateTo",model.getDateTo());
                         promotionValues.put("uid",model.getUid());
                         promotionValues.put("name",model.getName());
+                        promotionValues.put("service",model.getService());
+                        promotionValues.put("status",model.getStatus());
                         Intent cPro = new Intent(Promotion.this,PromotionDetails.class);
                         cPro.putExtra("promotion",  promotionValues);
                         startActivity(cPro);
@@ -109,6 +112,23 @@ public class Promotion extends AppCompatActivity {
 
             }
         };
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = firebaseRecyclerAdapter.getItemCount();
+                int lastVisiblePosition = mLayoutManager.findLastVisibleItemPosition();
+                // If the recycler view is initially being loaded or the
+                // user is at the bottom of the list, scroll to the bottom
+                // of the list to show the newly added message.
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    recyclerView.scrollToPosition(positionStart);
+                }
+            }
+        });
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -136,7 +156,7 @@ public class Promotion extends AppCompatActivity {
 
     public static class PromotionViewHolder extends RecyclerView.ViewHolder  {
 
-        View mview;
+        public View mview;
 
         public PromotionViewHolder(View itemView){
             super(itemView);

@@ -9,7 +9,7 @@ import com.google.firebase.database.Exclude;
 
 public class DataProfilePromote {
 
-    public String sub_district,district,province,name,picture1,picture2,picture3,profile,rating,uid;
+    public String sub_district,district,province,name,picture1,picture2,picture3,BeauticianProfile,rating,uid;
     public Integer S01,S02,S03,S04;
 
     @Exclude
@@ -19,7 +19,7 @@ public class DataProfilePromote {
 
     }
 
-    public DataProfilePromote(Integer S01,Integer S02,Integer S03,Integer S04,String sub_district, String district, String province,String name,String picture1,String picture2,String picture3, String profile, String rating, String uid){
+    public DataProfilePromote(Integer S01,Integer S02,Integer S03,Integer S04,String sub_district, String district, String province,String name,String picture1,String picture2,String picture3, String BeauticianProfile, String rating, String uid){
 
         this.S01 = S01;
         this.S02 = S02;
@@ -32,7 +32,7 @@ public class DataProfilePromote {
         this.picture1 = picture1;
         this.picture2 = picture2;
         this.picture3 = picture3;
-        this.profile = profile;
+        this.BeauticianProfile = BeauticianProfile;
         this.rating = rating;
         this.uid = uid;
     }

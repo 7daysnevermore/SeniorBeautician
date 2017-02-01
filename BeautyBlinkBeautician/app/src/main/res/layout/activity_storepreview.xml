@@ -42,9 +42,9 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    android:src="@mipmap/store_70"/>
+                    android:src="@mipmap/profile"/>
 
             </LinearLayout>
             <LinearLayout

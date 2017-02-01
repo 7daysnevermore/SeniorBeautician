@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,13 +44,15 @@ public class PostPromotion extends AppCompatActivity {
     private EditText input_promotion,input_price,input_sale,input_df_day,input_df_month,input_df_year,
             input_dt_day,input_dt_month,input_dt_year,input_details;
     private TextView input_name;
-    String username;
+    String username,input_service,serviceID,profile;
     private ImageView btn_createpromotion;
     private Integer[] mThumbsId;
     private Uri imageUri = null;
     private ProgressDialog progressDialog;
     private StorageReference storageReference,filepath;
     private DatabaseReference databaseReference;
+    private RadioGroup radioGroup_service;
+    private RadioButton button_service;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -62,6 +67,27 @@ public class PostPromotion extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+        mRootRef.child("beautician").child(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(PostPromotion.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+                    username = user.firstname;
+                    profile = user.profile;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Promotion");
@@ -115,6 +141,27 @@ public class PostPromotion extends AppCompatActivity {
         progressDialog.setMessage("Posting...");
         progressDialog.show();
 
+        radioGroup_service = (RadioGroup) findViewById(R.id.service);
+        int selectedId = radioGroup_service.getCheckedRadioButtonId();
+
+        // find the radiobutton by returned id
+        button_service = (RadioButton) findViewById(selectedId);
+        input_service = button_service.getText().toString();
+
+
+        if(input_service.equals("MakeupandHair")){
+            serviceID ="S01";
+        }
+        if(input_service.equals("Makeup")){
+            serviceID ="S02";
+        }
+        if(input_service.equals("Hairstyle")){
+            serviceID ="S03";
+        }
+        if(input_service.equals("Hairdressing")){
+            serviceID ="S04";
+        }
+
         final String promotion = input_promotion.getText().toString();
         final String price = input_price.getText().toString();
         final String sale = input_sale.getText().toString();
@@ -148,6 +195,7 @@ public class PostPromotion extends AppCompatActivity {
                     final HashMap<String, Object> PromotionValues = new HashMap<>();
                     PromotionValues.put("promotion", promotion);
                     PromotionValues.put("image", dowloadUrl.toString());
+                    PromotionValues.put("service",serviceID);
                     PromotionValues.put("price", price);
                     PromotionValues.put("sale", sale);
                     PromotionValues.put("datefrom", df_day + "/" + df_month + "/" + df_year);
@@ -155,6 +203,8 @@ public class PostPromotion extends AppCompatActivity {
                     PromotionValues.put("details", details);
                     PromotionValues.put("uid", mFirebaseUser.getUid().toString());
                     PromotionValues.put("name", username);
+                    PromotionValues.put("status", "active");
+                    PromotionValues.put("profile", profile);
 
 
                     Map<String,Object> childUpdate = new HashMap<>();

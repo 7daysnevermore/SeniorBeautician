@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class ProfilePromote extends AppCompatActivity {
 
-    ImageView  addpromotepic1, addpromotepic2, addpromotepic3;
+    ImageView  addpromotepic1, addpromotepic2, addpromotepic3,profile;
     private ProgressDialog progressDialog;
     String pic;
     Button promotenow;
@@ -77,6 +77,7 @@ public class ProfilePromote extends AppCompatActivity {
         addpromotepic1 = (ImageView) findViewById(R.id.addpromotepic1);
         addpromotepic2 = (ImageView) findViewById(R.id.addpromotepic2);
         addpromotepic3 = (ImageView) findViewById(R.id.addpromotepic3);
+        profile = (ImageView) findViewById(R.id.picpromote);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
@@ -95,6 +96,10 @@ public class ProfilePromote extends AppCompatActivity {
 
                         namepromote.setText(promote.name);
                         locationpromote.setText(promote.district+promote.province+" ...");
+
+                        if(!promote.BeauticianProfile.equals("")){
+                            Picasso.with(ProfilePromote.this).load(promote.BeauticianProfile).into(profile);
+                        }
 
                         if(!promote.picture1.equals("")){
                             Picasso.with(ProfilePromote.this).load(promote.picture1).into(addpromotepic1);

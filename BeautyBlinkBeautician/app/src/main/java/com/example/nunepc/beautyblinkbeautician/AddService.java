@@ -112,14 +112,10 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         //checkbox
-        CheckBox S01check = (CheckBox) findViewById(R.id.makeupandhair);
-        final boolean S01checked = S01check.isChecked();
-        CheckBox S02check = (CheckBox) findViewById(R.id.makeup);
-        final boolean S02checked = S02check.isChecked();
-        CheckBox S03check = (CheckBox) findViewById(R.id.hairstyle);
-        final boolean S03checked = S03check.isChecked();
-        CheckBox S04check = (CheckBox) findViewById(R.id.hairdress);
-        final boolean S04checked = S04check.isChecked();
+        final CheckBox S01check = (CheckBox) findViewById(R.id.makeupandhair);
+        final CheckBox S02check = (CheckBox) findViewById(R.id.makeup);
+        final CheckBox S03check = (CheckBox) findViewById(R.id.hairstyle);
+        final CheckBox S04check = (CheckBox) findViewById(R.id.hairdress);
 
         //starting price of each service
         inputS01 = (EditText) findViewById(R.id.makeupandhair_price);
@@ -168,7 +164,7 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
                     final DatabaseReference mPromoteRefB = mRootRef.child("beautician-profilepromote/").child(mFirebaseUser.getUid()).child(keypro);
 
 
-                    if (S01checked) {
+                    if (S01check.isChecked()) {
                         DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
                         HashMap<String, Object> UserValues = new HashMap<>();
                         UserValues.put("price", s01_price);
@@ -180,7 +176,7 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
                         mPromoteRef.child("S01").setValue(s01_price);
                         mPromoteRefB.child("S01").setValue(s01_price);
                     }
-                    if (S02checked) {
+                    if (S02check.isChecked()) {
                         DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
                         HashMap<String, Object> UserValues = new HashMap<>();
                         UserValues.put("price", s02_price);
@@ -192,7 +188,7 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
                         mPromoteRef.child("S02").setValue(s02_price);
                         mPromoteRefB.child("S02").setValue(s02_price);
                     }
-                    if (S03checked) {
+                    if (S03check.isChecked()) {
                         DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
                         HashMap<String, Object> UserValues = new HashMap<>();
                         UserValues.put("price", s03_price);
@@ -204,7 +200,7 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
                         mPromoteRef.child("S03").setValue(s03_price);
                         mPromoteRefB.child("S03").setValue(s03_price);
                     }
-                    if (S04checked) {
+                    if (S04check.isChecked()) {
                         DatabaseReference mUsersRefService = mUsersRef.child(mFirebaseUser.getUid());
                         HashMap<String, Object> UserValues = new HashMap<>();
                         UserValues.put("price", s04_price);
