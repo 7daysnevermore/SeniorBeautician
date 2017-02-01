@@ -26,8 +26,6 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
-import static com.example.nunepc.beautyblinkbeautician.R.id.changeProfilePicture;
-
 /**
  * Created by NunePC on 12/1/2560.
  */
@@ -59,13 +57,15 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         uid = mFirebaseUser.getUid().toString();
 
+
+
         fname = (TextView) findViewById(R.id.firstname);
         lname = (TextView) findViewById(R.id.lastname);
         birthday = (TextView) findViewById(R.id.birthday);
         gender = (TextView) findViewById(R.id.gender);
         phone = (TextView) findViewById(R.id.phone);
         addr = (TextView) findViewById(R.id.address);
-        profilePicture = (ImageView) findViewById(changeProfilePicture);
+        profilePicture = (ImageView) findViewById(R.id.changeProfilePicture);
 
         btn_changePic = (TextView) findViewById(R.id.btn_changeProfilePicture);
 
@@ -112,6 +112,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                 Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, SELECT_FILE);
+
             }
         });
     }
@@ -135,13 +136,52 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
             imageUri = data.getData();
             profilePicture.setImageURI(imageUri);
             filepath = storageReference.child("BeauticianProfile").child(imageUri.getLastPathSegment());
+
             filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+                    final Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                }
-            });
+                    final DatabaseReference mProfilePromoteRef = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference mBeautician = mProfilePromoteRef.child("beautician/" + mFirebaseUser.getUid());
+                    mBeautician.child("profile").setValue(downloadUrl.toString());
+
+
+                    //create root of ProfilePromote
+
+                    final DatabaseReference mProRef = mProfilePromoteRef.child("beautician-profilepromote/" + mFirebaseUser.getUid());
+                    mProRef.orderByChild("uid").equalTo(mFirebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            String keypro = null;
+
+                            for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                                keypro = childSnapshot.getKey();
+                            }
+
+                            if (!keypro.equals(null)) {
+
+                                //Add to profile promote
+                                final DatabaseReference mPromoteRef = mProfilePromoteRef.child("profilepromote").child(keypro);
+                                final DatabaseReference mPromoteRefB = mProfilePromoteRef.child("beautician-profilepromote/").child(mFirebaseUser.getUid()).child(keypro);
+
+                                mPromoteRef.child("BeauticianProfile").setValue(downloadUrl.toString());
+                                mPromoteRefB.child("BeauticianProfile").setValue(downloadUrl.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+
+                        }
+
+                    });
+                }// onsuccess
+
+            });//putfile
+
         }
 
     }
