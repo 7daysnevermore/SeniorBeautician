@@ -35,6 +35,7 @@ import com.example.nunepc.beautyblinkbeautician.PromotionDetails;
 import com.example.nunepc.beautyblinkbeautician.R;
 import com.example.nunepc.beautyblinkbeautician.model.DataGallery;
 import com.example.nunepc.beautyblinkbeautician.model.DataPromotion;
+import com.example.nunepc.beautyblinkbeautician.model.GalleryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -190,20 +191,5 @@ public class GalleryFragment extends Fragment {
         }
     }
 
-    public static class GalleryViewHolder extends RecyclerView.ViewHolder  {
 
-        View mview;
-
-        public GalleryViewHolder(View itemView){
-            super(itemView);
-            mview=itemView;
-
-        }
-
-        public void setImage(Context context, String image){
-            ImageView img = (ImageView)mview.findViewById(R.id.post_gall);
-
-            Picasso.with(context).load(image).fit().centerCrop().into(img);
-        }
-    }
 }
