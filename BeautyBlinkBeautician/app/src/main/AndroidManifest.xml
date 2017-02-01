@@ -28,7 +28,10 @@
         <activity android:name=".AddService" />
         <activity android:name=".EditPromotion" />
         <activity android:name=".StorePreview" />
-        <activity android:name=".OpenPhoto"></activity>
+        <activity android:name=".OpenPhoto" />
+        <activity android:name=".OfferPage" />
+        <activity android:name=".Toprovide" />
+        <activity android:name=".Confirm"></activity>
     </application>
 
 </manifest>
