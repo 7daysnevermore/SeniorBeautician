@@ -4,8 +4,8 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nunepc.beautyblinkbeautician.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.nunepc.beautyblinkbeautician.MainActivity">
 
     <!--HomeMenu-->
     <LinearLayout
@@ -24,10 +24,9 @@
                 android:id="@+id/showname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text=""
                 android:gravity="center_vertical"
-                android:textSize="30dp"
-                />
+                android:text=""
+                android:textSize="30dp" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -35,77 +34,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:orientation="horizontal"
-            android:background="#BEBEBE">
+            android:background="#BEBEBE"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/bt_request"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:clickable="true"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/selector_btn_menu" />
 
-                <ImageView
-                    android:id="@+id/bt_request"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/request_70"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/bt_gallery"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@mipmap/camera_70" />
 
-                <ImageView
-                    android:id="@+id/bt_gallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/camera_70"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/bt_planner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@mipmap/calendar_70" />
 
-                <ImageView
-                    android:id="@+id/bt_planner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/calendar_70"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/bt_noti"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@mipmap/noti_70" />
 
-                <ImageView
-                    android:id="@+id/bt_noti"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/noti_70"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/bt_setting"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/bt_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/setting_70"/>
-            </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@mipmap/setting_70" />
 
         </LinearLayout>
 
@@ -123,10 +96,10 @@
     <!--Menu-->
 
     <LinearLayout
-        android:layout_gravity="start"
-        android:background="#ffffff"
         android:layout_width="@dimen/drawer_menu_width"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#ffffff"
         android:orientation="vertical">
 
 
