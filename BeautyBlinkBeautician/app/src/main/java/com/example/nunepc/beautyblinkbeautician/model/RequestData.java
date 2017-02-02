@@ -7,13 +7,14 @@ package com.example.nunepc.beautyblinkbeautician.model;
 public class RequestData {
     private String date,event,location,maxprice,numberofperson,service,
     specialrequest,status,time,uid,name,image;
+    private String currenttime;
     private String color;
     public RequestData(){
 
     }
 
     public RequestData(String date,String event,String location,String maxprice,String numberofperson
-            , String service,String specialrequest, String image, String status,String time,String uid, String name,String color){
+            , String service,String specialrequest, String image, String status,String time,String uid, String name,String color,String currenttime ){
 
         this.date=date;
         this.event=event;
@@ -28,8 +29,11 @@ public class RequestData {
         this.uid = uid;
         this.name = name;
         this.color = color;
+        this.currenttime=currenttime;
 
     }
+    public String getCurrenttime(){return this.currenttime;}
+    public void setCurrenttime(String currenttime){this.currenttime=currenttime;}
     public String getDate(){
         return this.date;
     }

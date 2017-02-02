@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,7 +37,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by NunePC on 18/11/2559.
@@ -99,13 +107,14 @@ public class RequestFragment extends Fragment {
                 viewHolder.setMaxprice(model.getMaxprice());
                 viewHolder.setService(model.getService());
                 viewHolder.setColor(model.getColor());
+                viewHolder.setCurrenttime(model.getCurrenttime());
                 //viewHolder.setName(model.getName());
 
                 btnStatus = (Button)viewHolder.mview.findViewById(R.id.btnStat);
                 String s = btnStatus.getText().toString();
                 RequestData rd = new RequestData();
                 rd.setStatus(s);
-
+                //Log.d("GG","="+rd.getTimes());
                 String k ="offer";
                 Log.d("GG","="+rd.getStatus());
                 switch (rd.getStatus()){
@@ -248,7 +257,34 @@ public class RequestFragment extends Fragment {
                 cC.setBackgroundColor(Color.parseColor(color));
 
         }
+        public void setCurrenttime(String currenttime){
+            TextView tm= (TextView)mview.findViewById(R.id.btnTime);
+            RequestData r = new RequestData();
+            r.setCurrenttime(currenttime);
+            //String d = "JAN 31 2017 10:11 PM";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy hh:mm a");
+            Date convertedDate = null;
+            try{
+                convertedDate = dateFormat.parse(r.getCurrenttime());
+                //convertedDate = dateFormat.parse(d);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
+            PrettyTime p = new PrettyTime();
+            String datetime = p.format(convertedDate);
+            Log.d("Bye","="+datetime);
+            Log.d("test","="+convertedDate);
+            String a = null;
+            if(datetime.contains("minutes")){
+                a =datetime.replace("minutes","mins");
+            }else{
+                a = datetime;
+            }
+            tm.setText(""+a);
+
+
+        }
 
     }
 
