@@ -91,6 +91,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
 
+    private ImageView marker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         inputFirstname = (EditText) findViewById(R.id.fname);
         inputLastname = (EditText) findViewById(R.id.lname);
         inputPhoneNo = (EditText) findViewById(R.id.phone);
+        marker = (ImageView) findViewById(R.id.marker);
         inputAddr_num = (EditText) findViewById(R.id.addressnum);
         inputAddr_s_dist = (EditText) findViewById(R.id.sub_district);
         inputAddr_dist = (EditText) findViewById(R.id.district);
@@ -191,6 +194,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.marker:
+                startActivity(new Intent(Register.this, MapCurrentLocation.class));
+                break;
             case R.id.btn_continue:
                 addNewUser();
                 break;
