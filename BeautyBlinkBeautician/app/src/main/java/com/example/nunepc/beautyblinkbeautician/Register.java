@@ -138,6 +138,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+        findViewById(R.id.marker).setOnClickListener(this);
         findViewById(R.id.btn_continue).setOnClickListener(this);
 
     }

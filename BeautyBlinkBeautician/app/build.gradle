@@ -7,6 +7,10 @@ android {
         applicationId "com.example.nunepc.beautyblinkbeautician"
         minSdkVersion 18
         targetSdkVersion 24
+
+        // Enabling multidex support.
+        multiDexEnabled true
+
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,8 +29,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.google.android.gms:play-services-cast:10.0.1'
+
+    // Enabling multidex support.
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.google.android.gms:play-services:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
