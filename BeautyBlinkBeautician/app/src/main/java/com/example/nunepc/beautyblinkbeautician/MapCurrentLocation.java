@@ -1,6 +1,9 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +38,23 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 public class MapCurrentLocation extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,View.OnClickListener  {
 
     private static final String TAG = MapCurrentLocation.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
+    Button uselocation;
+
+    Double lat,lng;
+    String zip;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
@@ -72,6 +85,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        uselocation =(Button) findViewById(R.id.uselocation);
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -80,10 +94,25 @@ public class MapCurrentLocation extends AppCompatActivity implements
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+        findViewById(R.id.uselocation).setOnClickListener(this);
 
         // Build the Play services client for use by the Fused Location Provider and the Places API.
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.uselocation:
+
+                Intent cPro = new Intent(MapCurrentLocation.this,Register.class);
+                cPro.putExtra("lat",  String.valueOf(lat));
+                cPro.putExtra("lng",  String.valueOf(lng));
+                cPro.putExtra("zip", zip);
+                startActivity(cPro);
+                break;
+        }
     }
 
     /**
@@ -215,6 +244,11 @@ public class MapCurrentLocation extends AppCompatActivity implements
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(mCurrentLocation.getLatitude(),
                             mCurrentLocation.getLongitude()), DEFAULT_ZOOM));
+            lat = mCurrentLocation.getLatitude();
+            lng = mCurrentLocation.getLongitude();
+            convertLatLng();
+
+
         } else {
             Log.d(TAG, "Current location is null. Using defaults.");
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
@@ -371,6 +405,30 @@ public class MapCurrentLocation extends AppCompatActivity implements
                     .title(getString(R.string.default_info_title))
                     .snippet(getString(R.string.default_info_snippet)));
         }
+    }
+
+    protected void convertLatLng(){
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses  = null;
+        try {
+            addresses = geocoder.getFromLocation(lat,lng, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                String address = addresses.get(0).getAddressLine(2);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                // String country = addresses.get(0).g;
+                zip = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
     /**

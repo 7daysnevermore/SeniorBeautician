@@ -94,6 +94,9 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     break;
                 case R.id.register:
                     Intent intent = new Intent(this, Register.class);
+                    intent.putExtra("lat",  "");
+                    intent.putExtra("lng",  "");
+                    intent.putExtra("zip", "");
                     startActivity(intent);
 
                     break;
