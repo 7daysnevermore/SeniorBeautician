@@ -7,9 +7,14 @@ android {
         applicationId "com.example.nunepc.beautyblinkbeautician"
         minSdkVersion 18
         targetSdkVersion 24
+
+        // Enabling multidex support.
+        multiDexEnabled true
+
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resValue "string", "AIzaSyAphpnX6j4T3hjOIU01YeuBR_suQKZxV10", (project.findProperty("AIzaSyAphpnX6j4T3hjOIU01YeuBR_suQKZxV10") ?: "")
     }
     buildTypes {
         release {
@@ -24,7 +29,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.2.1'
+
+    // Enabling multidex support.
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.google.android.gms:play-services:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-storage:10.0.1'
@@ -43,6 +52,7 @@ dependencies {
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'org.parceler:parceler-api:1.1.1'
     testCompile 'junit:junit:4.12'
 

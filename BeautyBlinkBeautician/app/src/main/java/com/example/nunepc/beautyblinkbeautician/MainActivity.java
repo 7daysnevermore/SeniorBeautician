@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,9 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    private TextView namename;
+    private TextView namename,noti;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private int count = -1;
 
     String uid;
 
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private  void initInstances(){
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
+        noti = (TextView)findViewById(R.id.family_hub_tv_count);
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -111,6 +113,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_planner).setOnClickListener(this);
         findViewById(R.id.bt_noti).setOnClickListener(this);
         findViewById(R.id.bt_setting).setOnClickListener(this);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("customer-request");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int countt = (int) dataSnapshot.getChildrenCount();
+
+                noti.setVisibility(View.VISIBLE);
+                noti.setText(""+countt);
+                Log.d("countnum","="+countt);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -152,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
+                noti.setVisibility(View.GONE);
                 break;
             case R.id.bt_setting:
                 getSupportFragmentManager().beginTransaction()
