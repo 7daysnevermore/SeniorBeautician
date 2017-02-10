@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.nunepc.beautyblinkbeautician.Confirm;
 import com.example.nunepc.beautyblinkbeautician.EditProfile;
 import com.example.nunepc.beautyblinkbeautician.MainActivity;
+import com.example.nunepc.beautyblinkbeautician.MessagePage;
 import com.example.nunepc.beautyblinkbeautician.OfferPage;
 import com.example.nunepc.beautyblinkbeautician.Promotion;
 import com.example.nunepc.beautyblinkbeautician.PromotionDetails;
@@ -59,7 +60,9 @@ public class RequestFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference, dref;
     private LinearLayout createReq;
+    private String test;
     private Button btnStatus;
+    private ImageView btnMsg;
 
     public RequestFragment(){ super(); }
 
@@ -78,6 +81,7 @@ public class RequestFragment extends Fragment {
         initInstance(rootView);
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
+        //test= ""+mFirebaseUser.getUid().toString();
        //dref = FirebaseDatabase.getInstance().getReference().child("customer-request/0XIvXEgxomQqZ5XHYiNmuJ7MZfy1"+"/"+mFirebaseUser.getUid().toString() +"/"+"status");
 
         return rootView;
@@ -85,7 +89,9 @@ public class RequestFragment extends Fragment {
 
     private void initInstance(View rootView){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("customer-request/W5mxjrCK4wXr1rm79gIe9gvrCtI3");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("request");
+
+        Log.d("GG","="+test);
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -109,7 +115,16 @@ public class RequestFragment extends Fragment {
                 viewHolder.setColor(model.getColor());
                 viewHolder.setCurrenttime(model.getCurrenttime());
                 //viewHolder.setName(model.getName());
+                btnMsg = (ImageView) viewHolder.mview.findViewById(R.id.btnMessage);
+                btnMsg.setOnClickListener(new View.OnClickListener() {
+                    final String key = getRef(position).getKey();
+                    @Override
+                    public void onClick(View v) {
 
+                        Intent intent = new Intent(getActivity(), MessagePage.class);
+                        startActivity(intent);
+                    }
+                });
                 btnStatus = (Button)viewHolder.mview.findViewById(R.id.btnStat);
                 String s = btnStatus.getText().toString();
                 RequestData rd = new RequestData();

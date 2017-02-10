@@ -31,10 +31,11 @@
         <activity android:name=".OpenPhoto" />
         <activity android:name=".OfferPage" />
         <activity android:name=".Toprovide" />
-        <activity android:name=".Confirm"></activity>
+        <activity android:name=".Confirm" />
         <activity android:name=".GalleryDetails" />
-        <activity android:name=".PostGallery"/>
-        <activity android:name=".OpenPhoto"></activity>
+        <activity android:name=".PostGallery" />
+        <activity android:name=".OpenPhoto" />
+        <activity android:name=".MessagePage"></activity>
     </application>
 
 </manifest>

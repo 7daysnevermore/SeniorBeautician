@@ -64,13 +64,32 @@
                 android:layout_weight="1"
                 android:src="@mipmap/calendar_70" />
 
-            <ImageView
-                android:id="@+id/bt_noti"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="@mipmap/noti_70" />
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bt_noti"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/noti_70"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/family_hub_tv_count"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/red_circle"
+                    android:padding="3dp"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="30dp" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/bt_setting"
