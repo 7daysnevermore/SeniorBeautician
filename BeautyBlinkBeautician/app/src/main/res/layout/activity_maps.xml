@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/uselocation"
+        android:layout_alignBottom="@+id/map"
+        android:layout_margin="10dp"
+        android:text="Use this location"/>
+
     <fragment
         class="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"

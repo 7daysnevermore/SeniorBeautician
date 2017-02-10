@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 
 import android.content.Intent;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.model.User;
+import com.google.android.gms.identity.intents.Address;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,8 +36,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -56,16 +61,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private RadioGroup radioGroup_gender;
     private RadioButton button_gender;
 
-    private TextView inputEmail;
-    private TextView inputPassword;
-    private TextView inputFirstname;
-    private TextView inputLastname;
-    private TextView inputPhoneNo;
-    private TextView inputAddr_num;
-    private TextView inputAddr_s_dist;
-    private TextView inputAddr_dist;
-    private TextView inputAddr_province;
-    private TextView inputAddr_code;
+    private EditText inputEmail;
+    private EditText inputPassword;
+    private EditText inputFirstname;
+    private EditText inputLastname;
+    private EditText inputPhoneNo;
+    private EditText inputAddr_num;
+    private EditText inputAddr_s_dist;
+    private EditText inputAddr_dist;
+    private EditText inputAddr_province;
+    private EditText inputAddr_code;
     private String input_gender;
     private ImageView imageprofile;
     Uri imageUri;
@@ -84,6 +89,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private EditText inputS02;
     private EditText inputS03;
     private EditText inputS04;
+
+    String lat,lng,zip;
 
 
     private FirebaseAuth mFirebaseAuth;
@@ -127,6 +134,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         inputAddr_province = (EditText) findViewById(R.id.province);
         inputAddr_code = (EditText) findViewById(R.id.code);
 
+        lat = getIntent().getStringExtra("lat");
+        lng = getIntent().getStringExtra("lng");
+        zip = getIntent().getStringExtra("zip");
+
+        if(!lat.equals("")&&!lng.equals("")) {
+            convertLatLng();
+            //inputAddr_num.setText(lat);
+            //inputAddr_s_dist.setText(lng);
+        }
+
         imageprofile = (ImageView) findViewById(R.id.imageprofile);
         imageprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +157,33 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         findViewById(R.id.marker).setOnClickListener(this);
         findViewById(R.id.btn_continue).setOnClickListener(this);
+
+    }
+
+    protected void convertLatLng(){
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<android.location.Address> addresses  = null;
+        try {
+            addresses = geocoder.getFromLocation(Double.parseDouble(lat),Double.parseDouble(lng), 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                String address = addresses.get(0).getAddressLine(2);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                // String country = addresses.get(0).g;
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+
+                inputAddr_dist.setText(address);
+                inputAddr_province.setText(state);
+                inputAddr_code.setText(postalCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
