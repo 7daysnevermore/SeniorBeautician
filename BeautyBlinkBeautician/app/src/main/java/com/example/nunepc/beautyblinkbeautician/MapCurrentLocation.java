@@ -380,7 +380,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
             return;
         }
 
-        /*if (mLocationPermissionGranted) {
+        if (mLocationPermissionGranted) {
             // Get the businesses and other points of interest located
             // nearest to the device's current location.
             @SuppressWarnings("MissingPermission") final
@@ -397,11 +397,11 @@ public class MapCurrentLocation extends AppCompatActivity implements
                         if (attributions != null) {
                             snippet = snippet + "\n" + attributions;
                         }
-
-                        mMap.addMarker(new MarkerOptions()
+                        zip = snippet.substring(Math.max(0, snippet.length() - 15),Math.max(0, snippet.length() - 10));
+                        /*mMap.addMarker(new MarkerOptions()
                                 .position(placeLikelihood.getPlace().getLatLng())
                                 .title((String) placeLikelihood.getPlace().getName())
-                                .snippet(snippet));
+                                .snippet(snippet));*/
 
 
 
@@ -411,12 +411,12 @@ public class MapCurrentLocation extends AppCompatActivity implements
                 }
             });
         } else {
-            mMap.addMarker(new MarkerOptions()
+            /*mMap.addMarker(new MarkerOptions()
                     .position(mDefaultLocation)
                     .title(getString(R.string.default_info_title))
-                    .snippet(getString(R.string.default_info_snippet)));
+                    .snippet(getString(R.string.default_info_snippet)));*/
 
-        }*/
+        }
     }
 
 

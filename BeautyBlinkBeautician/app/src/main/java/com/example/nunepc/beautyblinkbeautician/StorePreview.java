@@ -57,7 +57,7 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
                 if (user == null) {
                     Toast.makeText(StorePreview.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    previewname.setText(user.firstname+" "+user.lastname);
+                    previewname.setText(user.username);
                 }
             }
 

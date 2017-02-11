@@ -33,7 +33,7 @@ import org.w3c.dom.Text;
 public class ViewProfile extends AppCompatActivity implements View.OnClickListener {
 
     private static final int SELECT_FILE = 1;
-    TextView fname,lname,birthday,gender,phone,addr,btn_changePic;
+    TextView fname,lname,birthday,gender,phone,addr,btn_changePic,username;
     Button edit;
 
     ImageView profilePicture;
@@ -58,7 +58,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
         uid = mFirebaseUser.getUid().toString();
 
 
-
+        username = (TextView) findViewById(R.id.username);
         fname = (TextView) findViewById(R.id.firstname);
         lname = (TextView) findViewById(R.id.lastname);
         birthday = (TextView) findViewById(R.id.birthday);
@@ -88,12 +88,13 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                     if (!user.profile.equals("")) {
                         Picasso.with(ViewProfile.this).load(user.profile).fit().centerCrop().into(profilePicture);
                     }
+                    username.setText(user.username);
                     fname.setText(user.firstname);
                     lname.setText(user.lastname);
                     birthday.setText(user.birthday);
                     gender.setText(user.gender);
                     phone.setText(user.phone);
-                    addr.setText(user.address_number+" "+user.address_sub_district+", "+user.address_district+", "
+                    addr.setText(user.address_number+" "+user.building+","+user.address_sub_district+", "+user.address_district+", "
                     +user.address_province+" "+user.address_code);
                 }
             }

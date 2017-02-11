@@ -139,6 +139,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         lat = getIntent().getStringExtra("lat");
         lng = getIntent().getStringExtra("lng");
+        zip = getIntent().getStringExtra("zip");
 
         if(!lat.equals("")&&!lng.equals("")) {
             convertLatLng();
@@ -172,12 +173,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String address = addresses.get(0).getSubLocality();
                 String city = addresses.get(0).getLocality();
                 String state = addresses.get(0).getAdminArea();
-                String postalCode = addresses.get(0).getPostalCode();
 
                 inputAddr_s_dist.setText(address);
                 inputAddr_dist.setText(city);
                 inputAddr_province.setText(state);
-                inputAddr_code.setText(postalCode);
+                inputAddr_code.setText(zip);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -281,12 +281,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         final String addr_code = inputAddr_code.getText().toString();
         final String building = input_building.getText().toString();
 
-        /*if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        if (TextUtils.isEmpty(pass)) {
+        if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -329,7 +333,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         if (TextUtils.isEmpty(addr_code)) {
             Toast.makeText(getApplicationContext(), "Enter code!", Toast.LENGTH_SHORT).show();
             return;
-        }*/
+        }
 
 
 
@@ -400,8 +404,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                                 ProfilePromoteValues.put("sub_district", addr_s_dist);
                                                 ProfilePromoteValues.put("district", addr_dist);
                                                 ProfilePromoteValues.put("province", addr_province);
-                                                UserValues.put("latitude", lat);
-                                                UserValues.put("longitude", lng);
+                                                ProfilePromoteValues.put("latitude", lat);
+                                                ProfilePromoteValues.put("longitude", lng);
                                                 ProfilePromoteValues.put("S01", 0);
                                                 ProfilePromoteValues.put("S02", 0);
                                                 ProfilePromoteValues.put("S03", 0);
@@ -439,6 +443,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                                         HashMap<String, Object> UserValues = new HashMap<>();
                                         UserValues.put("profile", "");
+                                        UserValues.put("username", username);
                                         UserValues.put("email", email);
                                         UserValues.put("firstname", fname);
                                         UserValues.put("lastname", lname);
@@ -450,6 +455,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         UserValues.put("address_district", addr_dist);
                                         UserValues.put("address_province", addr_province);
                                         UserValues.put("address_code", addr_code);
+                                        UserValues.put("latitude", lat);
+                                        UserValues.put("longitude", lng);
                                         Map<String, Object> childUpdates = new HashMap<>();
                                         childUpdates.put(mFirebaseUser.getUid(), UserValues);
 
@@ -463,10 +470,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
                                         ProfilePromoteValues.put("BeauticianProfile", "");
                                         ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
-                                        ProfilePromoteValues.put("name", fname);
+                                        ProfilePromoteValues.put("username", username);
                                         ProfilePromoteValues.put("sub_district", addr_s_dist);
                                         ProfilePromoteValues.put("district", addr_dist);
                                         ProfilePromoteValues.put("province", addr_province);
+                                        ProfilePromoteValues.put("latitude", lat);
+                                        ProfilePromoteValues.put("longitude", lng);
                                         ProfilePromoteValues.put("S01", 0);
                                         ProfilePromoteValues.put("S02", 0);
                                         ProfilePromoteValues.put("S03", 0);

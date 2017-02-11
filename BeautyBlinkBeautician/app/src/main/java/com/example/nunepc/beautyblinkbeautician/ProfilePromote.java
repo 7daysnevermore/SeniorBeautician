@@ -94,7 +94,7 @@ public class ProfilePromote extends AppCompatActivity {
                         Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                     } else {
 
-                        namepromote.setText(promote.name);
+                        namepromote.setText(promote.username);
                         locationpromote.setText(promote.district+promote.province+" ...");
 
                         if(!promote.BeauticianProfile.equals("")){
