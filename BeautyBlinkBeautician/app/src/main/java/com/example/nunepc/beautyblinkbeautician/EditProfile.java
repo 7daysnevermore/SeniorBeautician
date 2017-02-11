@@ -28,8 +28,10 @@ import java.util.Map;
 
 public class EditProfile extends AppCompatActivity implements View.OnClickListener {
 
-    EditText firstname, lastname, phone, address_number,
+    EditText username,firstname, lastname, phone, address_number, address_building,
             address_sub_district, address_district, address_province, address_code;
+
+    String latitude, longitude;
 
     Button editprofile;
 
@@ -52,10 +54,12 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         uid = mFirebaseUser.getUid().toString();
 
+        username = (EditText) findViewById(R.id.username);
         firstname = (EditText) findViewById(R.id.fname);
         lastname = (EditText) findViewById(R.id.lname);
         phone = (EditText) findViewById(R.id.phone);
         address_number = (EditText) findViewById(R.id.addressnum);
+
         address_sub_district = (EditText) findViewById(R.id.sub_district);
         address_district = (EditText) findViewById(R.id.district);
         address_province = (EditText) findViewById(R.id.province);
@@ -76,10 +80,12 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
                     Toast.makeText(EditProfile.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
 
+                    username.setText(user.username);
                     firstname.setText(user.firstname);
                     lastname.setText(user.lastname);
                     phone.setText(user.phone);
                     address_number.setText(user.address_number);
+                    address_building.setText(user.building);
                     address_sub_district.setText(user.address_sub_district);
                     address_district.setText(user.address_district);
                     address_province.setText(user.address_province);
@@ -119,8 +125,10 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
     public void Editprofile(){
 
-        final String fname = firstname.getText().toString();
-        final String lname = lastname.getText().toString();
+        final String user = username.getText().toString().toLowerCase();
+        final String addr_building = address_building.getText().toString();
+        final String fname = firstname.getText().toString().toLowerCase();
+        final String lname = lastname.getText().toString().toLowerCase();
         final String in_phone = phone.getText().toString();
         final String addr_num = address_number.getText().toString();
         final String addr_s_dist = address_sub_district.getText().toString();
@@ -138,14 +146,18 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         DatabaseReference mUsersRef = mRootRef.child("beautician");
 
         HashMap<String, Object> UserUpdate = new HashMap<>();
+        UserUpdate.put("username", user);
         UserUpdate.put("firstname", fname);
         UserUpdate.put("lastname", lname);
         UserUpdate.put("phone", in_phone);
         UserUpdate.put("address_number", addr_num);
+        UserUpdate.put("building", addr_building);
         UserUpdate.put("address_sub_district", addr_s_dist);
         UserUpdate.put("address_district", addr_dist);
         UserUpdate.put("address_province", addr_province);
         UserUpdate.put("address_code", addr_code);
+        UserUpdate.put("latitude", latitude);
+        UserUpdate.put("longitude", longitude);
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(mFirebaseUser.getUid(), UserUpdate);
 

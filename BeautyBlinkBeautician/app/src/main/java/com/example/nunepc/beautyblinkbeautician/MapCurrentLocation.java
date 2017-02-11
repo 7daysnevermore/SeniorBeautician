@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.annotation.NonNull;
@@ -33,6 +34,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -246,7 +248,12 @@ public class MapCurrentLocation extends AppCompatActivity implements
                             mCurrentLocation.getLongitude()), DEFAULT_ZOOM));
             lat = mCurrentLocation.getLatitude();
             lng = mCurrentLocation.getLongitude();
-            convertLatLng();
+
+
+            // Add marker to current location
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title("Address"));
 
 
         } else {
@@ -342,6 +349,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
         );
     }
 
+
     /**
      * Handles the result of the request for location permissions.
      */
@@ -372,10 +380,10 @@ public class MapCurrentLocation extends AppCompatActivity implements
             return;
         }
 
-        if (mLocationPermissionGranted) {
+        /*if (mLocationPermissionGranted) {
             // Get the businesses and other points of interest located
             // nearest to the device's current location.
-            @SuppressWarnings("MissingPermission")
+            @SuppressWarnings("MissingPermission") final
             PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                     .getCurrentPlace(mGoogleApiClient, null);
             result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
@@ -394,6 +402,9 @@ public class MapCurrentLocation extends AppCompatActivity implements
                                 .position(placeLikelihood.getPlace().getLatLng())
                                 .title((String) placeLikelihood.getPlace().getName())
                                 .snippet(snippet));
+
+
+
                     }
                     // Release the place likelihood buffer.
                     likelyPlaces.release();
@@ -404,32 +415,11 @@ public class MapCurrentLocation extends AppCompatActivity implements
                     .position(mDefaultLocation)
                     .title(getString(R.string.default_info_title))
                     .snippet(getString(R.string.default_info_snippet)));
-        }
+
+        }*/
     }
 
-    protected void convertLatLng(){
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-        List<Address> addresses  = null;
-        try {
-            addresses = geocoder.getFromLocation(lat,lng, 1);
-
-            if (addresses != null && addresses.size() > 0) {
-                String address = addresses.get(0).getAddressLine(2);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                // String country = addresses.get(0).g;
-                zip = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
 
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.

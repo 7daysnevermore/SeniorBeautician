@@ -61,12 +61,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private RadioGroup radioGroup_gender;
     private RadioButton button_gender;
 
+    private EditText inputUsername;
     private EditText inputEmail;
     private EditText inputPassword;
     private EditText inputFirstname;
     private EditText inputLastname;
     private EditText inputPhoneNo;
     private EditText inputAddr_num;
+    private EditText input_building;
     private EditText inputAddr_s_dist;
     private EditText inputAddr_dist;
     private EditText inputAddr_province;
@@ -133,15 +135,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         inputAddr_dist = (EditText) findViewById(R.id.district);
         inputAddr_province = (EditText) findViewById(R.id.province);
         inputAddr_code = (EditText) findViewById(R.id.code);
+        input_building = (EditText) findViewById(R.id.building);
 
         lat = getIntent().getStringExtra("lat");
         lng = getIntent().getStringExtra("lng");
-        zip = getIntent().getStringExtra("zip");
 
         if(!lat.equals("")&&!lng.equals("")) {
             convertLatLng();
-            //inputAddr_num.setText(lat);
-            //inputAddr_s_dist.setText(lng);
         }
 
         imageprofile = (ImageView) findViewById(R.id.imageprofile);
@@ -168,14 +168,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             addresses = geocoder.getFromLocation(Double.parseDouble(lat),Double.parseDouble(lng), 1);
 
             if (addresses != null && addresses.size() > 0) {
-                String address = addresses.get(0).getAddressLine(2);
+
+                String address = addresses.get(0).getSubLocality();
                 String city = addresses.get(0).getLocality();
                 String state = addresses.get(0).getAdminArea();
-                // String country = addresses.get(0).g;
                 String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
 
-                inputAddr_dist.setText(address);
+                inputAddr_s_dist.setText(address);
+                inputAddr_dist.setText(city);
                 inputAddr_province.setText(state);
                 inputAddr_code.setText(postalCode);
             }
@@ -268,16 +268,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         day = calendar.get(Calendar.DAY_OF_MONTH);
         //showDate(year, month + 1, day);
 
+        final String username = inputUsername.getText().toString().toLowerCase();
         final String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
-        final String fname = inputFirstname.getText().toString();
-        final String lname = inputLastname.getText().toString();
+        final String fname = inputFirstname.getText().toString().toLowerCase();
+        final String lname = inputLastname.getText().toString().toLowerCase();
         final String phone = inputPhoneNo.getText().toString();
         final String addr_num = inputAddr_num.getText().toString();
         final String addr_s_dist = inputAddr_s_dist.getText().toString();
         final String addr_dist = inputAddr_dist.getText().toString();
         final String addr_province = inputAddr_province.getText().toString();
         final String addr_code = inputAddr_code.getText().toString();
+        final String building = input_building.getText().toString();
 
         /*if (TextUtils.isEmpty(email)) {
             Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -366,6 +368,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
                                                 HashMap<String, Object> UserValues = new HashMap<>();
                                                 UserValues.put("profile", dowloadUrl.toString());
+                                                UserValues.put("username", username);
                                                 UserValues.put("email", email);
                                                 UserValues.put("firstname", fname);
                                                 UserValues.put("lastname", lname);
@@ -373,10 +376,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                                 UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
                                                 UserValues.put("gender", input_gender);
                                                 UserValues.put("address_number", addr_num);
+                                                UserValues.put("address_building", building);
                                                 UserValues.put("address_sub_district", addr_s_dist);
                                                 UserValues.put("address_district", addr_dist);
                                                 UserValues.put("address_province", addr_province);
                                                 UserValues.put("address_code", addr_code);
+                                                UserValues.put("latitude", lat);
+                                                UserValues.put("longitude", lng);
                                                 Map<String, Object> childUpdates = new HashMap<>();
                                                 childUpdates.put(mFirebaseUser.getUid(), UserValues);
 
@@ -390,10 +396,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                                 final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
                                                 ProfilePromoteValues.put("BeauticianProfile", dowloadUrl.toString());
                                                 ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
-                                                ProfilePromoteValues.put("name", fname);
+                                                ProfilePromoteValues.put("username", username);
                                                 ProfilePromoteValues.put("sub_district", addr_s_dist);
                                                 ProfilePromoteValues.put("district", addr_dist);
                                                 ProfilePromoteValues.put("province", addr_province);
+                                                UserValues.put("latitude", lat);
+                                                UserValues.put("longitude", lng);
                                                 ProfilePromoteValues.put("S01", 0);
                                                 ProfilePromoteValues.put("S02", 0);
                                                 ProfilePromoteValues.put("S03", 0);
