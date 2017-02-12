@@ -111,6 +111,12 @@ public class MapCurrentLocation extends AppCompatActivity implements
                 Intent cPro = new Intent(MapCurrentLocation.this,Register.class);
                 cPro.putExtra("lat",  String.valueOf(lat));
                 cPro.putExtra("lng",  String.valueOf(lng));
+                cPro.putExtra("save_username", getIntent().getStringExtra("save_username"));
+                cPro.putExtra("save_email", getIntent().getStringExtra("save_email"));
+                cPro.putExtra("save_password", getIntent().getStringExtra("save_password"));
+                cPro.putExtra("save_firstname", getIntent().getStringExtra("save_firstname"));
+                cPro.putExtra("save_lastname", getIntent().getStringExtra("save_lastname"));
+                cPro.putExtra("save_birthday", getIntent().getStringExtra("save_birthday"));
                 cPro.putExtra("zip", zip);
                 startActivity(cPro);
                 break;

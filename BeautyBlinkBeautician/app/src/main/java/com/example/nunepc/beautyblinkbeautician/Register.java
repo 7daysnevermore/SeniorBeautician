@@ -78,6 +78,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     Uri imageUri;
 
     String key;
+    String username1, email1, password1, firstname1, lastname1, birthday1;
 
     private int s01_price;
     private int s02_price;
@@ -124,6 +125,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         year = calendar.get(Calendar.YEAR);
         birthday = (TextView) findViewById(R.id.birthdate);
 
+        inputUsername = (EditText) findViewById(R.id.username);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.pass);
         inputFirstname = (EditText) findViewById(R.id.fname);
@@ -136,6 +138,32 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         inputAddr_province = (EditText) findViewById(R.id.province);
         inputAddr_code = (EditText) findViewById(R.id.code);
         input_building = (EditText) findViewById(R.id.building);
+
+        username1 = getIntent().getStringExtra("save_username");
+        email1 = getIntent().getStringExtra("save_email");
+        password1 = getIntent().getStringExtra("save_password");
+        firstname1 = getIntent().getStringExtra("save_firstname");
+        lastname1 = getIntent().getStringExtra("save_lastname");
+        birthday1 = getIntent().getStringExtra("save_birthday");
+
+        if (!username1.equals("")){
+            inputUsername.setText(username1);
+        }
+        if (!email1.equals("")){
+            inputEmail.setText(email1);
+        }
+        if (!password1.equals("")){
+            inputPassword.setText(password1);
+        }
+        if (!firstname1.equals("")){
+            inputFirstname.setText(firstname1);
+        }
+        if (!lastname1.equals("")){
+            inputLastname.setText(lastname1);
+        }
+        if (!birthday1.equals("")){
+            birthday.setText(birthday1);
+        }
 
         lat = getIntent().getStringExtra("lat");
         lng = getIntent().getStringExtra("lng");
@@ -178,13 +206,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 inputAddr_dist.setText(city);
                 inputAddr_province.setText(state);
                 inputAddr_code.setText(zip);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     @Override
@@ -240,7 +266,23 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.marker:
-                startActivity(new Intent(Register.this, MapCurrentLocation.class));
+                String input1 = inputUsername.getText().toString();
+                String input2 = inputEmail.getText().toString();
+                String input3 = inputPassword.getText().toString();
+                String input4 = inputFirstname.getText().toString();
+                String input5 = inputLastname.getText().toString();
+                String input6 = birthday.getText().toString();
+
+                if (!input1.equals(null)){
+                    Intent i = new Intent(this, MapCurrentLocation.class);
+                    i.putExtra("save_username", input1);
+                    i.putExtra("save_email", input2);
+                    i.putExtra("save_password", input3);
+                    i.putExtra("save_firstname", input4);
+                    i.putExtra("save_lastname", input5);
+                    i.putExtra("save_birthday", input6);
+                    startActivity(i);
+                }
                 break;
             case R.id.btn_continue:
                 addNewUser();
@@ -337,102 +379,31 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
 
 
-                //create user
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(Register.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
+        //create user
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(Register.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(Register.this, "Authentication failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
 
-                                    if (imageUri != null) {
-                                        storageReference = FirebaseStorage.getInstance().getReference();
-                                        databaseReference = FirebaseDatabase.getInstance().getReference().child("BeauticianProfile");
+                            if (imageUri != null) {
+                                storageReference = FirebaseStorage.getInstance().getReference();
+                                databaseReference = FirebaseDatabase.getInstance().getReference().child("BeauticianProfile");
 
-                                        filepath = storageReference.child("BeauticianProfile").child(imageUri.getLastPathSegment());
+                                filepath = storageReference.child("BeauticianProfile").child(imageUri.getLastPathSegment());
 
-                                        filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                            @Override
-                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                final Uri dowloadUrl = taskSnapshot.getDownloadUrl();
-                                                //Get current to pull UID and email
-                                                mFirebaseAuth = FirebaseAuth.getInstance();
-                                                mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
-                                                //create root of Beautician
-                                                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
-                                                DatabaseReference mUsersRef = mRootRef.child("beautician");
-
-                                                HashMap<String, Object> UserValues = new HashMap<>();
-                                                UserValues.put("profile", dowloadUrl.toString());
-                                                UserValues.put("username", username);
-                                                UserValues.put("email", email);
-                                                UserValues.put("firstname", fname);
-                                                UserValues.put("lastname", lname);
-                                                UserValues.put("phone", phone);
-                                                UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
-                                                UserValues.put("gender", input_gender);
-                                                UserValues.put("address_number", addr_num);
-                                                UserValues.put("address_building", building);
-                                                UserValues.put("address_sub_district", addr_s_dist);
-                                                UserValues.put("address_district", addr_dist);
-                                                UserValues.put("address_province", addr_province);
-                                                UserValues.put("address_code", addr_code);
-                                                UserValues.put("latitude", lat);
-                                                UserValues.put("longitude", lng);
-                                                Map<String, Object> childUpdates = new HashMap<>();
-                                                childUpdates.put(mFirebaseUser.getUid(), UserValues);
-
-                                                mUsersRef.updateChildren(childUpdates);
-
-                                                //Add to profile promote
-                                                DatabaseReference mPromoteRef = mRootRef.child("profilepromote");
-
-                                                key = mPromoteRef.push().getKey();
-
-                                                final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
-                                                ProfilePromoteValues.put("BeauticianProfile", dowloadUrl.toString());
-                                                ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
-                                                ProfilePromoteValues.put("username", username);
-                                                ProfilePromoteValues.put("sub_district", addr_s_dist);
-                                                ProfilePromoteValues.put("district", addr_dist);
-                                                ProfilePromoteValues.put("province", addr_province);
-                                                ProfilePromoteValues.put("latitude", lat);
-                                                ProfilePromoteValues.put("longitude", lng);
-                                                ProfilePromoteValues.put("S01", 0);
-                                                ProfilePromoteValues.put("S02", 0);
-                                                ProfilePromoteValues.put("S03", 0);
-                                                ProfilePromoteValues.put("S04", 0);
-                                                ProfilePromoteValues.put("picture1", "");
-                                                ProfilePromoteValues.put("picture2", "");
-                                                ProfilePromoteValues.put("picture3", "");
-                                                ProfilePromoteValues.put("rating", "");
-
-
-                                                Map<String, Object> childUpdate = new HashMap<>();
-                                                childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
-                                                childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
-
-                                                mRootRef.updateChildren(childUpdate);
-
-                                                //continue to add service
-                                                setContentView(R.layout.activity_regist2);
-                                                findViewById(R.id.btn_register).setOnClickListener(Register.this);
-
-                                            }
-                                        });
-
-                                    }
-
-                                    if (imageUri == null){
-
+                                filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+                                        //Get current to pull UID and email
                                         mFirebaseAuth = FirebaseAuth.getInstance();
                                         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
@@ -442,7 +413,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         DatabaseReference mUsersRef = mRootRef.child("beautician");
 
                                         HashMap<String, Object> UserValues = new HashMap<>();
-                                        UserValues.put("profile", "");
+                                        UserValues.put("profile", dowloadUrl.toString());
                                         UserValues.put("username", username);
                                         UserValues.put("email", email);
                                         UserValues.put("firstname", fname);
@@ -451,6 +422,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
                                         UserValues.put("gender", input_gender);
                                         UserValues.put("address_number", addr_num);
+                                        UserValues.put("address_building", building);
                                         UserValues.put("address_sub_district", addr_s_dist);
                                         UserValues.put("address_district", addr_dist);
                                         UserValues.put("address_province", addr_province);
@@ -468,7 +440,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         key = mPromoteRef.push().getKey();
 
                                         final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
-                                        ProfilePromoteValues.put("BeauticianProfile", "");
+                                        ProfilePromoteValues.put("BeauticianProfile", dowloadUrl.toString());
                                         ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
                                         ProfilePromoteValues.put("username", username);
                                         ProfilePromoteValues.put("sub_district", addr_s_dist);
@@ -497,13 +469,83 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         findViewById(R.id.btn_register).setOnClickListener(Register.this);
 
                                     }
-                                }
+                                });
 
                             }
-                        });
+
+                            if (imageUri == null){
+
+                                mFirebaseAuth = FirebaseAuth.getInstance();
+                                mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+                                //create root of Beautician
+                                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+                                DatabaseReference mUsersRef = mRootRef.child("beautician");
+
+                                HashMap<String, Object> UserValues = new HashMap<>();
+                                UserValues.put("profile", "");
+                                UserValues.put("username", username);
+                                UserValues.put("email", email);
+                                UserValues.put("firstname", fname);
+                                UserValues.put("lastname", lname);
+                                UserValues.put("phone", phone);
+                                UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                UserValues.put("gender", input_gender);
+                                UserValues.put("address_number", addr_num);
+                                UserValues.put("address_sub_district", addr_s_dist);
+                                UserValues.put("address_district", addr_dist);
+                                UserValues.put("address_province", addr_province);
+                                UserValues.put("address_code", addr_code);
+                                UserValues.put("latitude", lat);
+                                UserValues.put("longitude", lng);
+                                Map<String, Object> childUpdates = new HashMap<>();
+                                childUpdates.put(mFirebaseUser.getUid(), UserValues);
+
+                                mUsersRef.updateChildren(childUpdates);
+
+                                //Add to profile promote
+                                DatabaseReference mPromoteRef = mRootRef.child("profilepromote");
+
+                                key = mPromoteRef.push().getKey();
+
+                                final HashMap<String, Object> ProfilePromoteValues = new HashMap<>();
+                                ProfilePromoteValues.put("BeauticianProfile", "");
+                                ProfilePromoteValues.put("uid", mFirebaseUser.getUid());
+                                ProfilePromoteValues.put("username", username);
+                                ProfilePromoteValues.put("sub_district", addr_s_dist);
+                                ProfilePromoteValues.put("district", addr_dist);
+                                ProfilePromoteValues.put("province", addr_province);
+                                ProfilePromoteValues.put("latitude", lat);
+                                ProfilePromoteValues.put("longitude", lng);
+                                ProfilePromoteValues.put("S01", 0);
+                                ProfilePromoteValues.put("S02", 0);
+                                ProfilePromoteValues.put("S03", 0);
+                                ProfilePromoteValues.put("S04", 0);
+                                ProfilePromoteValues.put("picture1", "");
+                                ProfilePromoteValues.put("picture2", "");
+                                ProfilePromoteValues.put("picture3", "");
+                                ProfilePromoteValues.put("rating", "");
 
 
-            }
+                                Map<String, Object> childUpdate = new HashMap<>();
+                                childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
+                                childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
+
+                                mRootRef.updateChildren(childUpdate);
+
+                                //continue to add service
+                                setContentView(R.layout.activity_regist2);
+                                findViewById(R.id.btn_register).setOnClickListener(Register.this);
+
+                            }
+                        }
+
+                    }
+                });
+
+
+    }
 
 
 

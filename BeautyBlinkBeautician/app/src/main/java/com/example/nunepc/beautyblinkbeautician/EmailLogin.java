@@ -97,6 +97,13 @@ public class EmailLogin extends AppCompatActivity implements View.OnClickListene
                     intent.putExtra("lat", "");
                     intent.putExtra("lng", "");
                     intent.putExtra("zip", "");
+                    intent.putExtra("save_username", "");
+                    intent.putExtra("save_email", "");
+                    intent.putExtra("save_password", "");
+                    intent.putExtra("save_firstname", "");
+                    intent.putExtra("save_lastname", "");
+                    intent.putExtra("save_birthday", "");
+                    intent.putExtra("test","");
                     startActivity(intent);
 
                     break;
