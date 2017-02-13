@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * Created by NunePC on 11/2/2560.
  */
-
+//Current date and time
 public class OneDayDecorator implements DayViewDecorator {
 
     private CalendarDay date;

@@ -12,14 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.GalleryFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.SettingFragment;
-import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser mFirebaseUser;
     private int count = -1;
 
-    String uid;
+    public String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-
+        uid = mFirebaseUser.getUid();
 
         if(mFirebaseUser == null){
             // Not signed in, launch the sign in activity.
@@ -164,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.bt_planner:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,PlannerFragment.newInstance())
+                        .replace(R.id.contentcontainer, PlannerFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;

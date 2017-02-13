@@ -262,12 +262,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         button_gender = (RadioButton) findViewById(selectedId);
         input_gender = button_gender.getText().toString();
 
-
-        //Get value
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        //showDate(year, month + 1, day);
-
         final String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
         final String fname = inputFirstname.getText().toString();
