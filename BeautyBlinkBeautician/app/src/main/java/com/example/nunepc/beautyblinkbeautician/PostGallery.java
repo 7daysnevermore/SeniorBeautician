@@ -47,7 +47,7 @@ public class PostGallery extends AppCompatActivity {
     private AlertDialog dialog;
     Uri imageUri = null;
     private ProgressDialog progressDialog;
-    String uid,name,propic;
+    String uid,uname,propic;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -81,7 +81,7 @@ public class PostGallery extends AppCompatActivity {
                 if (user == null) {
                     Toast.makeText(PostGallery.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    name = user.firstname;
+                    uname = user.username;
                     propic = user.profile;
 
                 }
@@ -199,7 +199,7 @@ public class PostGallery extends AppCompatActivity {
                     GalleryValues.put("image", dowloadUrl.toString());
                     GalleryValues.put("caption", post_caption);
                     GalleryValues.put("uid", uid);
-                    GalleryValues.put("name", name);
+                    GalleryValues.put("username", uname);
                     GalleryValues.put("propic", propic);
 
 

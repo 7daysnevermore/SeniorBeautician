@@ -78,7 +78,7 @@ public class PostPromotion extends AppCompatActivity {
                 if (user == null) {
                     Toast.makeText(PostPromotion.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    username = user.firstname;
+                    username = user.username;
                     profile = user.profile;
                 }
             }
