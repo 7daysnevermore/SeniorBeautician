@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
     private static final int SELECT_FILE = 1;
     TextView fname,lname,birthday,gender,phone,addr,btn_changePic,username;
     Button edit;
+    Toolbar toolbar;
 
     ImageView profilePicture;
 
@@ -51,6 +54,11 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewprofile);
+
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -84,8 +92,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                 if (user == null) {
                     Toast.makeText(ViewProfile.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-
-                    if (!user.profile.equals("")) {
+                    if (user.profile != null) {
                         Picasso.with(ViewProfile.this).load(user.profile).fit().centerCrop().into(profilePicture);
                     }
                     username.setText(user.username);
@@ -113,9 +120,22 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                 Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, SELECT_FILE);
-
             }
         });
+    }
+
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
