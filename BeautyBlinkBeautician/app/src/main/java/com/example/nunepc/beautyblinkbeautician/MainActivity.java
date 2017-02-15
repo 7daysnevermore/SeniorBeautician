@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.example.nunepc.beautyblinkbeautician.fragment.NotiFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
 import com.example.nunepc.beautyblinkbeautician.fragment.SettingFragment;
+import com.example.nunepc.beautyblinkbeautician.model.DataPlanner;
 import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +28,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,11 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    private TextView namename;
+    private TextView namename,noti;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    private int count = -1;
+    public ArrayList<DataPlanner> plan = new ArrayList<>();
 
-    String uid;
+    public String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
-
         if(mFirebaseUser == null){
             // Not signed in, launch the sign in activity.
             startActivity(new Intent(this, EmailLogin.class));
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else {
 
             uid = mFirebaseUser.getUid().toString();
+
             //fragment
             if(savedInstanceState==null){
                 //first create
@@ -65,13 +73,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
             }
 
+            initInstances();
+
         }
-        initInstances();
+
     }
 
     private  void initInstances(){
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-
+        noti = (TextView)findViewById(R.id.family_hub_tv_count);
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -91,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
 
-        });*/
+        });
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -105,12 +115,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 R.string.close_drawer
         );
 
+
         //tab button
         findViewById(R.id.bt_gallery).setOnClickListener(this);
         findViewById(R.id.bt_request).setOnClickListener(this);
         findViewById(R.id.bt_planner).setOnClickListener(this);
         findViewById(R.id.bt_noti).setOnClickListener(this);
         findViewById(R.id.bt_setting).setOnClickListener(this);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("customer-request");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                int countt = (int) dataSnapshot.getChildrenCount();
+
+                noti.setVisibility(View.VISIBLE);
+                noti.setText(""+countt);
+                Log.d("countnum","="+countt);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -142,8 +172,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
                 break;
             case R.id.bt_planner:
+
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,PlannerFragment.newInstance())
+                        .replace(R.id.contentcontainer, PlannerFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -152,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
+                noti.setVisibility(View.GONE);
                 break;
             case R.id.bt_setting:
                 getSupportFragmentManager().beginTransaction()

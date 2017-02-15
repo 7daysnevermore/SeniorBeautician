@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -98,7 +100,11 @@ public class OfferPage extends AppCompatActivity {
                     DatabaseReference mRequestRef = mRootRef.child("offer");
 
                     String key = mRequestRef.push().getKey();
-                    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("customer-request/W5mxjrCK4wXr1rm79gIe9gvrCtI3"+"/"+ke);
+
+                    Calendar c= Calendar.getInstance();
+                    SimpleDateFormat currenttime = new SimpleDateFormat("MMM dd yyyy hh:mm a");
+                    String dateform = currenttime.format(c.getTime());
+                    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("request"+"/"+ke);
                     mRef.child("status").setValue("toprovide");
                     mRef.child("color").setValue("#ffeef3");
                     final HashMap<String, Object> RequestValues = new HashMap<String, Object>();
@@ -112,6 +118,8 @@ public class OfferPage extends AppCompatActivity {
                     RequestValues.put("beauticianoffer", spebeau);
                     RequestValues.put("location",locate);
                     RequestValues.put("status",status);
+                    //RequestValues.put("beauid",)
+                    RequestValues.put("dateform",dateform);
                     //RequestValues.put("uid", mFirebaseUser.getUid().toString());
                     //RequestValues.put("name", username);
                     RequestValues.put("color", 0xFFFFFF);

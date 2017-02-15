@@ -1,11 +1,9 @@
 package com.example.nunepc.beautyblinkbeautician.decorators;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 
 import com.example.nunepc.beautyblinkbeautician.R;
-import com.example.nunepc.beautyblinkbeautician.fragment.PlannerFragment;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
