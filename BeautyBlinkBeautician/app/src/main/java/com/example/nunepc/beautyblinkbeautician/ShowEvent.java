@@ -3,6 +3,8 @@ package com.example.nunepc.beautyblinkbeautician;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,10 +19,17 @@ public class ShowEvent extends AppCompatActivity implements View.OnClickListener
     HashMap<String, Object> plannerValues;
     private TextView edit,title,location,note,date,time_start,time_end,answer;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_showevent);
+
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         title = (TextView) findViewById(R.id.title);
         location = (TextView) findViewById(R.id.location);
@@ -61,5 +70,18 @@ public class ShowEvent extends AppCompatActivity implements View.OnClickListener
                 break;
 
         }
+    }
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

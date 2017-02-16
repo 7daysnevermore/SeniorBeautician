@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -57,6 +59,8 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
+    Toolbar toolbar;
+
     EditText title,location,note;
     HashMap<String, Object> plannerValues;
 
@@ -64,6 +68,11 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editevent);
+
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         plannerValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("planner");
         //find view by id
@@ -97,6 +106,19 @@ public class EditEvent extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.editevent).setOnClickListener(this);
         findViewById(R.id.delete).setOnClickListener(this);
 
+    }
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setTime1(View view){

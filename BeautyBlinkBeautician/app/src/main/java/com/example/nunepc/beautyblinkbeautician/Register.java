@@ -78,7 +78,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     Uri imageUri;
 
     String key;
-    String username1, email1, password1, firstname1, lastname1, birthday1;
+    String username1, email1, password1, firstname1, lastname1, birthday1, phoneno1;
 
     private int s01_price;
     private int s02_price;
@@ -145,6 +145,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         firstname1 = getIntent().getStringExtra("save_firstname");
         lastname1 = getIntent().getStringExtra("save_lastname");
         birthday1 = getIntent().getStringExtra("save_birthday");
+        phoneno1 = getIntent().getStringExtra("save_phone");
 
         if (!username1.equals("")){
             inputUsername.setText(username1);
@@ -163,6 +164,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         }
         if (!birthday1.equals("")){
             birthday.setText(birthday1);
+        }
+        if (phoneno1 != ""){
+            inputPhoneNo.setText(phoneno1);
         }
 
         lat = getIntent().getStringExtra("lat");
@@ -272,6 +276,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String input4 = inputFirstname.getText().toString();
                 String input5 = inputLastname.getText().toString();
                 String input6 = birthday.getText().toString();
+                String input7 = inputPhoneNo.getText().toString();
 
                 if (!input1.equals(null)){
                     Intent i = new Intent(this, MapCurrentLocation.class);
@@ -281,6 +286,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     i.putExtra("save_firstname", input4);
                     i.putExtra("save_lastname", input5);
                     i.putExtra("save_birthday", input6);
+                    i.putExtra("save_phone", input7);
                     startActivity(i);
                 }
                 break;
@@ -493,6 +499,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                 UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
                                 UserValues.put("gender", input_gender);
                                 UserValues.put("address_number", addr_num);
+                                UserValues.put("address_building", building);
                                 UserValues.put("address_sub_district", addr_s_dist);
                                 UserValues.put("address_district", addr_dist);
                                 UserValues.put("address_province", addr_province);
