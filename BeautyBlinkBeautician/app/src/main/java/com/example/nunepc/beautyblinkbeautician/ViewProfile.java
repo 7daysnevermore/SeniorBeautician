@@ -92,7 +92,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                 if (user == null) {
                     Toast.makeText(ViewProfile.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    if (user.profile != null) {
+                    if (user.profile != "") {
                         Picasso.with(ViewProfile.this).load(user.profile).fit().centerCrop().into(profilePicture);
                     }
                     username.setText(user.username);

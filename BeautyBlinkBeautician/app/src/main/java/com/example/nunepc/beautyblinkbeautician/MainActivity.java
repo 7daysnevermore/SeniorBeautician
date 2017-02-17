@@ -107,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);*/
 
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        /*drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 MainActivity.this,
                 drawerLayout,
                 R.string.open_drawer,
                 R.string.close_drawer
-        );
+        );*/
 
 
         //tab button
@@ -147,13 +147,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState){
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        //actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig){
         super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+        //actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
