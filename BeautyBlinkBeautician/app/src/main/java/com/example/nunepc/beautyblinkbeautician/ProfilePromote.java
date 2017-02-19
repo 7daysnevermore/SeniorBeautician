@@ -92,7 +92,7 @@ public class ProfilePromote extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        mRootRef.child("profilepromote").addListenerForSingleValueEvent(new ValueEventListener() {
+        mRootRef.child("beautician-profilepromote").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
