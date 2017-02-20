@@ -24,21 +24,25 @@
                 android:layout_height="340dp"
                 android:layout_centerInParent="true" />
 
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:id="@+id/add_event"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/add"
-                    android:layout_weight="6"/>
+                    android:src="@mipmap/addevenicon"
+                    android:layout_weight="5"/>
 
                 <TextView
                     android:gravity="center_vertical"
