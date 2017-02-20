@@ -149,7 +149,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
+            android:layout_height="0.3dp"
             android:background="@android:color/darker_gray"/>
 
         <!--Menu-->
@@ -157,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:orientation="horizontal"
-            android:background="#BEBEBE">
+            android:background="#ffffff">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request_70"/>
+                    android:src="@mipmap/request_702"/>
 
             </LinearLayout>
 
@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/calendar_70"/>
+                    android:src="@mipmap/calendar_702"/>
 
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/noti_70"/>
+                    android:src="@mipmap/noti_702"/>
 
             </LinearLayout>
 
@@ -211,10 +211,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/setting_70"/>
+                    android:src="@mipmap/setting_703"/>
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@android:color/darker_gray"/>
 
         <FrameLayout
             android:id="@+id/previewContainer"
