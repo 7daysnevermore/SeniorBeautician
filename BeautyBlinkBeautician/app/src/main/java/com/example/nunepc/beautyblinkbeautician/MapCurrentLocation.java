@@ -117,6 +117,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
                 cPro.putExtra("save_firstname", getIntent().getStringExtra("save_firstname"));
                 cPro.putExtra("save_lastname", getIntent().getStringExtra("save_lastname"));
                 cPro.putExtra("save_birthday", getIntent().getStringExtra("save_birthday"));
+                cPro.putExtra("save_phone", getIntent().getStringExtra("save_phone"));
                 cPro.putExtra("zip", zip);
                 startActivity(cPro);
                 break;

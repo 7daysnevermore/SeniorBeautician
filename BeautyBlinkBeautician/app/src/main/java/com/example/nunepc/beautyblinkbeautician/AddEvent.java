@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -40,6 +42,8 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
     Button date,set_time_start,set_time_end;
     private int mHour, mMinute;
 
+    Toolbar toolbar;
+
     String input_ans;
 
     private RadioGroup radioGroup_ques;
@@ -54,6 +58,11 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addevent);
+
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -78,6 +87,19 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
         note = (EditText) findViewById(R.id.note);
 
         findViewById(R.id.add).setOnClickListener(this);
+    }
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setTime1(View view){
