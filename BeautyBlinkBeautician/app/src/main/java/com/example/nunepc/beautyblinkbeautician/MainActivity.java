@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView namename,noti;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
+    ImageView bt_request,bt_gallery,bt_planner,bt_noti,bt_setting,tab_req,tab_gal,tab_plan,tab_noti,tab_set;
     private int count = -1;
     private Button notiBtn;
+    private String previous = null;
 
     public String uid;
 
@@ -56,6 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        bt_request = (ImageView) findViewById(R.id.bt_request);
+        bt_gallery = (ImageView) findViewById(R.id.bt_gallery);
+        bt_planner = (ImageView) findViewById(R.id.bt_planner);
+        bt_noti = (ImageView) findViewById(R.id.bt_noti);
+        bt_setting = (ImageView) findViewById(R.id.bt_setting);
+        tab_req = (ImageView) findViewById(R.id.tap_req);
+        tab_gal = (ImageView) findViewById(R.id.tap_gal);
+        tab_plan = (ImageView) findViewById(R.id.tap_plan);
+        tab_noti = (ImageView) findViewById(R.id.tap_noti);
+        tab_set = (ImageView) findViewById(R.id.tap_set);
 
         if(mFirebaseUser == null){
             // Not signed in, launch the sign in activity.
@@ -69,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(savedInstanceState==null){
                 //first create
                 //Place fragment
+                previous = "request";
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.contentcontainer,new GalleryFragment())
+                        .add(R.id.contentcontainer,new RequestFragment())
                         .commit();
             }
 
@@ -169,18 +184,62 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_gallery:
+                if(previous.equals("request")){
+                    tab_req.setVisibility(View.GONE);
+                }
+                if(previous.equals("planner")){
+                    tab_plan.setVisibility(View.GONE);
+                }
+                if (previous.equals("noti")) {
+                    tab_noti.setVisibility(View.GONE);
+                }
+                if (previous.equals("setting")) {
+                    tab_set.setVisibility(View.GONE);
+                }
+                previous = "gallery";
+                tab_gal.setVisibility(View.VISIBLE);
+
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,GalleryFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_request:
+                if(previous.equals("gallery")){
+                    tab_gal.setVisibility(View.GONE);
+                }
+                if(previous.equals("planner")){
+                    tab_plan.setVisibility(View.GONE);
+                }
+                if (previous.equals("noti")) {
+                    tab_noti.setVisibility(View.GONE);
+                }
+                if (previous.equals("setting")) {
+                    tab_set.setVisibility(View.GONE);
+                }
+                previous = "request";
+                tab_req.setVisibility(View.VISIBLE);
+
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,RequestFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_planner:
+                if(previous.equals("gallery")){
+                    tab_gal.setVisibility(View.GONE);
+                }
+                if(previous.equals("request")){
+                    tab_req.setVisibility(View.GONE);
+                }
+                if (previous.equals("noti")) {
+                    tab_noti.setVisibility(View.GONE);
+                }
+                if (previous.equals("setting")) {
+                    tab_set.setVisibility(View.GONE);
+                }
+                previous = "planner";
+                tab_plan.setVisibility(View.VISIBLE);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer, PlannerFragment.newInstance())
@@ -188,6 +247,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
                 break;
             case R.id.bt_noti:
+                if(previous.equals("gallery")){
+                    tab_gal.setVisibility(View.GONE);
+                }
+                if(previous.equals("request")){
+                    tab_req.setVisibility(View.GONE);
+                }
+                if (previous.equals("planner")) {
+                    tab_plan.setVisibility(View.GONE);
+                }
+                if (previous.equals("setting")) {
+                    tab_set.setVisibility(View.GONE);
+                }
+                previous = "noti";
+                tab_noti.setVisibility(View.VISIBLE);
+
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .addToBackStack(null)
@@ -195,6 +269,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 noti.setVisibility(View.GONE);
                 break;
             case R.id.bt_setting:
+                if(previous.equals("gallery")){
+                    tab_gal.setVisibility(View.GONE);
+                }
+                if(previous.equals("request")){
+                    tab_req.setVisibility(View.GONE);
+                }
+                if (previous.equals("planner")) {
+                    tab_plan.setVisibility(View.GONE);
+                }
+                if (previous.equals("noti")) {
+                    tab_noti.setVisibility(View.GONE);
+                }
+                previous = "setting";
+                tab_set.setVisibility(View.VISIBLE);
+
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer, SettingFragment.newInstance())
                         .addToBackStack(null)
