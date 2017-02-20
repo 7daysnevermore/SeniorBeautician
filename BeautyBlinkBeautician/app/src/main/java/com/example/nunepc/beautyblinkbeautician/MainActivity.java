@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private int count = -1;
-    public ArrayList<DataPlanner> plan = new ArrayList<>();
+    private Button notiBtn;
 
     public String uid;
 
@@ -82,6 +83,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  void initInstances(){
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         noti = (TextView)findViewById(R.id.family_hub_tv_count);
+        notiBtn=(Button)findViewById(R.id.noti);
+        notiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,TestNoti.class);
+                startActivity(intent);
+            }
+        });
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
