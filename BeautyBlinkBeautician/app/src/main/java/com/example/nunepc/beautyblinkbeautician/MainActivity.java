@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //first create
                 //Place fragment
                 previous = "request";
+                bt_request.setImageResource(R.mipmap.request_702_click);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.contentcontainer,new RequestFragment())
                         .commit();
@@ -186,18 +187,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_gallery:
                 if(previous.equals("request")){
                     tab_req.setVisibility(View.GONE);
+                    bt_request.setImageResource(R.mipmap.request_702);
                 }
                 if(previous.equals("planner")){
                     tab_plan.setVisibility(View.GONE);
+                    bt_planner.setImageResource(R.mipmap.camera_703);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
+                    bt_noti.setImageResource(R.mipmap.noti_702);
                 }
                 if (previous.equals("setting")) {
                     tab_set.setVisibility(View.GONE);
+                    bt_setting.setImageResource(R.mipmap.setting_703);
                 }
                 previous = "gallery";
                 tab_gal.setVisibility(View.VISIBLE);
+                bt_gallery.setImageResource(R.mipmap.camera_703_click);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,GalleryFragment.newInstance())
@@ -207,18 +213,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_request:
                 if(previous.equals("gallery")){
                     tab_gal.setVisibility(View.GONE);
+                    bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
                 if(previous.equals("planner")){
                     tab_plan.setVisibility(View.GONE);
+                    bt_planner.setImageResource(R.mipmap.camera_703);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
+                    bt_noti.setImageResource(R.mipmap.noti_702);
                 }
                 if (previous.equals("setting")) {
                     tab_set.setVisibility(View.GONE);
+                    bt_setting.setImageResource(R.mipmap.setting_703);
                 }
                 previous = "request";
                 tab_req.setVisibility(View.VISIBLE);
+                bt_request.setImageResource(R.mipmap.request_702_click);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,RequestFragment.newInstance())
@@ -228,18 +239,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_planner:
                 if(previous.equals("gallery")){
                     tab_gal.setVisibility(View.GONE);
+                    bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
                 if(previous.equals("request")){
                     tab_req.setVisibility(View.GONE);
+                    bt_request.setImageResource(R.mipmap.request_702);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
+                    bt_noti.setImageResource(R.mipmap.noti_702);
                 }
                 if (previous.equals("setting")) {
                     tab_set.setVisibility(View.GONE);
+                    bt_setting.setImageResource(R.mipmap.setting_703);
                 }
                 previous = "planner";
                 tab_plan.setVisibility(View.VISIBLE);
+                bt_planner.setImageResource(R.mipmap.calendar_702_click);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer, PlannerFragment.newInstance())
@@ -249,40 +265,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_noti:
                 if(previous.equals("gallery")){
                     tab_gal.setVisibility(View.GONE);
+                    bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
                 if(previous.equals("request")){
                     tab_req.setVisibility(View.GONE);
+                    bt_request.setImageResource(R.mipmap.request_702);
                 }
                 if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
+                    bt_planner.setImageResource(R.mipmap.camera_703);
                 }
                 if (previous.equals("setting")) {
                     tab_set.setVisibility(View.GONE);
+                    bt_setting.setImageResource(R.mipmap.setting_703);
                 }
                 previous = "noti";
                 tab_noti.setVisibility(View.VISIBLE);
+                bt_noti.setImageResource(R.mipmap.noti_702_click);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer,NotiFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
-                noti.setVisibility(View.GONE);
                 break;
             case R.id.bt_setting:
                 if(previous.equals("gallery")){
                     tab_gal.setVisibility(View.GONE);
+                    bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
                 if(previous.equals("request")){
                     tab_req.setVisibility(View.GONE);
+                    bt_request.setImageResource(R.mipmap.request_702);
                 }
                 if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
+                    bt_planner.setImageResource(R.mipmap.camera_703);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
+                    bt_noti.setImageResource(R.mipmap.noti_702);
                 }
                 previous = "setting";
                 tab_set.setVisibility(View.VISIBLE);
+                bt_setting.setImageResource(R.mipmap.setting_703_click);
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.contentcontainer, SettingFragment.newInstance())
