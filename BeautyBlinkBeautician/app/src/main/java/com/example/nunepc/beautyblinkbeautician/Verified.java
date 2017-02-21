@@ -46,10 +46,9 @@ public class Verified extends AppCompatActivity implements View.OnClickListener 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        verifynow = (Button) findViewById(R.id.verify_now);
-        verifynow.setOnClickListener(this);
+        citizenimg = (ImageView) findViewById(R.id.identity_img);
 
-        uploadimg = (Button) findViewById(R.id.uploadcitizenid);
+        uploadimg = (Button) findViewById(R.id.identity);
 
         uploadimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +76,9 @@ public class Verified extends AppCompatActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.verify_now:
+            /*case R.id.identity:
                 startActivity(new Intent(Verified.this, MainActivity.class));
-                break;
+                break;*/
         }
     }
 
