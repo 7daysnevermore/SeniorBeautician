@@ -425,7 +425,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         UserValues.put("firstname", fname);
                                         UserValues.put("lastname", lname);
                                         UserValues.put("phone", phone);
-                                        UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                        if(dd!=0){
+                                            UserValues.put("birthday", getIntent().getStringExtra("save_birthday"));
+                                        }else{
+                                            UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                        }
                                         UserValues.put("gender", input_gender);
                                         UserValues.put("address_number", addr_num);
                                         UserValues.put("address_building", building);
@@ -496,8 +500,13 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                 UserValues.put("firstname", fname);
                                 UserValues.put("lastname", lname);
                                 UserValues.put("phone", phone);
-                                UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                if(dd!=0){
+                                    UserValues.put("birthday", getIntent().getStringExtra("save_birthday"));
+                                }else{
+                                    UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
+                                }
                                 UserValues.put("gender", input_gender);
+                                UserValues.put("address_building", building);
                                 UserValues.put("address_number", addr_num);
                                 UserValues.put("address_building", building);
                                 UserValues.put("address_sub_district", addr_s_dist);
