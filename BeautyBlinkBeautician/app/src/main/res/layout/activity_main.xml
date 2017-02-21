@@ -71,16 +71,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/bt_noti"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:src="@mipmap/noti_702"
-                    android:layout_gravity="center"
-                    android:layout_weight="1" />
-
                 <TextView
                     android:id="@+id/family_hub_tv_count"
                     android:layout_width="20dp"
@@ -94,6 +84,18 @@
                     android:visibility="gone"
                     android:textStyle="bold"
                     android:layout_marginRight="12dp" />
+
+                <ImageView
+                    android:id="@+id/bt_noti"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:src="@mipmap/noti_702"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
 
             </RelativeLayout>
 
