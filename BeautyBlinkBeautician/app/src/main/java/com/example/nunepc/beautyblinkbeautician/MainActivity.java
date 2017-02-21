@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if(previous.equals("planner")){
                     tab_plan.setVisibility(View.GONE);
-                    bt_planner.setImageResource(R.mipmap.camera_703);
+                    bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if(previous.equals("planner")){
                     tab_plan.setVisibility(View.GONE);
-                    bt_planner.setImageResource(R.mipmap.camera_703);
+                    bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
-                    bt_planner.setImageResource(R.mipmap.camera_703);
+                    bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
                 if (previous.equals("setting")) {
                     tab_set.setVisibility(View.GONE);
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
-                    bt_planner.setImageResource(R.mipmap.camera_703);
+                    bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
                 if (previous.equals("noti")) {
                     tab_noti.setVisibility(View.GONE);
