@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -71,6 +72,8 @@ public class GalleryFragment extends Fragment {
     private DatabaseReference databaseReference,databaseOrder;
     private FloatingActionButton add_photo;
 
+    Query query1,query2;
+
     public GalleryFragment(){ super(); }
 
     public static GalleryFragment newInstance(){
@@ -96,6 +99,9 @@ public class GalleryFragment extends Fragment {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
 
+        query1 = databaseReference.orderByChild("timestamp");
+        final DatabaseReference databaseRef = query1.getRef();
+        query2 = databaseRef.orderByValue();
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
         recyclerView.setHasFixedSize(true);
@@ -105,7 +111,7 @@ public class GalleryFragment extends Fragment {
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
         final FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
-                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,databaseReference) {
+                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,query2) {
 
             @Override
             protected void populateViewHolder(GalleryViewHolder viewHolder, final DataGallery model, final int position) {
@@ -127,6 +133,7 @@ public class GalleryFragment extends Fragment {
                         galleryValues.put("image",model.getImage());
                         galleryValues.put("uid",model.getUid());
                         galleryValues.put("name",model.getName());
+                        galleryValues.put("timestamp",model.getTimestamp());
                         Intent cPro = new Intent(getActivity(),GalleryDetails.class);
                         cPro.putExtra("promotion",  galleryValues);
                         startActivity(cPro);

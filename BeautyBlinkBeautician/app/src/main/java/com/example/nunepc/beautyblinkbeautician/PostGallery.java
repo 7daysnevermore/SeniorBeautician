@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -195,12 +196,15 @@ public class PostGallery extends AppCompatActivity {
 
                     String key = mGalleryRef.push().getKey();
 
+                    Long timestamp = System.currentTimeMillis() *-1;
+
                     final HashMap<String, Object> GalleryValues = new HashMap<>();
                     GalleryValues.put("image", dowloadUrl.toString());
                     GalleryValues.put("caption", post_caption);
                     GalleryValues.put("uid", uid);
                     GalleryValues.put("username", uname);
                     GalleryValues.put("propic", propic);
+                    GalleryValues.put("timestamp",timestamp);
 
 
                     Map<String,Object> childUpdate = new HashMap<>();
