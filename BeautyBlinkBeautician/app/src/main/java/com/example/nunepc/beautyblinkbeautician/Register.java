@@ -467,7 +467,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         ProfilePromoteValues.put("picture3", "");
                                         ProfilePromoteValues.put("rating", "");
 
-
                                         Map<String, Object> childUpdate = new HashMap<>();
                                         childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
                                         childUpdate.put("/beautician-profilepromote/" + mFirebaseUser.getUid().toString() + "/" + key, ProfilePromoteValues);
