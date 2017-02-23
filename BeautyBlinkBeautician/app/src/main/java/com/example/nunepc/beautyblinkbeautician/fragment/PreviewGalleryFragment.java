@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.HashMap;
 
@@ -35,7 +36,8 @@ public class PreviewGalleryFragment extends Fragment{
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference,databaseOrder;
-    private FloatingActionButton add_photo;
+
+    Query query1,query2;
 
     public PreviewGalleryFragment(){ super(); }
 
@@ -46,12 +48,11 @@ public class PreviewGalleryFragment extends Fragment{
         return fragment;
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_gallery,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_preview_gallery,container,false);
         initInstance(rootView);
         return rootView;
     }
@@ -63,6 +64,9 @@ public class PreviewGalleryFragment extends Fragment{
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
 
+        query1 = databaseReference.orderByChild("timestamp");
+        //final DatabaseReference databaseRef = query1.getRef();
+        //query2 = databaseRef.orderByValue();
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
         recyclerView.setHasFixedSize(true);
@@ -72,7 +76,7 @@ public class PreviewGalleryFragment extends Fragment{
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
         final FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
-                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,databaseReference) {
+                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,query1) {
 
             @Override
             protected void populateViewHolder(GalleryViewHolder viewHolder, final DataGallery model, final int position) {
@@ -88,15 +92,16 @@ public class PreviewGalleryFragment extends Fragment{
                         //firebaseRecyclerAdapter.getRef(position).removeValue();
                         //Toast.makeText(Promotion.this, "This is my Toast message!",
                         // Toast.LENGTH_LONG).show();
-                        HashMap<String, Object> galleryValues = new HashMap<>();
+                        /*HashMap<String, Object> galleryValues = new HashMap<>();
                         galleryValues.put("key",cshow);
                         galleryValues.put("caption",model.getCaption());
                         galleryValues.put("image",model.getImage());
                         galleryValues.put("uid",model.getUid());
-                        galleryValues.put("name",model.getName());
+                        galleryValues.put("username",model.getName());
+                        galleryValues.put("timestamp",model.getTimestamp());
                         Intent cPro = new Intent(getActivity(),GalleryDetails.class);
-                        cPro.putExtra("promotion",  galleryValues);
-                        startActivity(cPro);
+                        cPro.putExtra("gallery",  galleryValues);
+                        startActivity(cPro);*/
                     }
                 });
 
@@ -125,16 +130,8 @@ public class PreviewGalleryFragment extends Fragment{
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         recyclerView.setLayoutManager(mLayoutManager);
 
-
-        add_photo = (FloatingActionButton) rootView.findViewById(R.id.add_photo);
-        add_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),PostGallery.class);
-                startActivity(intent);
-            }
-        });
     }
+
 
     @Override
     public void onStart(){ super.onStart(); }

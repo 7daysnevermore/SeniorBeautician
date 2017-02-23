@@ -152,6 +152,43 @@
             android:layout_height="0.3dp"
             android:background="@android:color/darker_gray"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@mipmap/verification"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:text="Completed .. verification"
+                android:id="@+id/textView4" />
+
+            <TextView
+                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:textSize="11sp"
+                android:text="See detail..." />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@android:color/darker_gray"/>
+
         <!--Menu-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,9 +204,9 @@
                 <ImageView
                     android:id="@+id/bt_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@mipmap/request_702"/>
+                    android:src="@mipmap/camera_703"/>
 
             </LinearLayout>
 
@@ -183,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/calendar_702"/>
+                    android:src="@mipmap/request_702"/>
 
             </LinearLayout>
 
@@ -197,7 +234,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@mipmap/noti_702"/>
+                    android:src="@mipmap/calendar_702"/>
 
             </LinearLayout>
 

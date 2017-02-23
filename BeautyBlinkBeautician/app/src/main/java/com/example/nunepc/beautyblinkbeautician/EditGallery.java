@@ -1,30 +1,24 @@
 package com.example.nunepc.beautyblinkbeautician;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,73 +30,50 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by NunePC on 26/1/2560.
+ * Created by NunePC on 23/2/2560.
  */
 
-public class PostGallery extends AppCompatActivity {
+public class EditGallery extends AppCompatActivity {
 
-    ImageView picpost;
+    HashMap<String, Object> galleryValue;
+    ImageView picpost,edit_image;
     EditText caption;
-    TextView share;
-    private Button takeP,chooseP,can;
+    TextView edit;
+    private Button takeP,chooseP,can,delete;
     private int REQUEST_CAMERA =0,SELECT_FILE=1;
     private AlertDialog dialog;
     Uri imageUri = null;
-    private ProgressDialog progressDialog;
-    String uid,uname,propic;
-
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
-
-
     private StorageReference storageReference,filepath;
     private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_gallery);
+        setContentView(R.layout.activity_editgallery);
 
         caption = (EditText) findViewById(R.id.caption);
-        share = (TextView) findViewById(R.id.share);
+        edit = (TextView) findViewById(R.id.edit_gallery);
+        picpost = (ImageView) findViewById(R.id.picpost);
+        delete = (Button) findViewById(R.id.delete);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        uid = mFirebaseUser.getUid().toString();
+        galleryValue = (HashMap<String, Object>) getIntent().getExtras().getSerializable("gallery");
+
+        Picasso.with(this).load(galleryValue.get("image").toString()).into(picpost);
+        caption.setText(galleryValue.get("caption").toString());
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Gallery");
 
-        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null) {
-                    Toast.makeText(PostGallery.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
-                } else {
-                    uname = user.username;
-                    propic = user.profile;
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        picpost = (ImageView) findViewById(R.id.picpost);
-        picpost.setOnClickListener(new View.OnClickListener() {
+        edit_image = (ImageView) findViewById(R.id.edit_image);
+        edit_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //Initialize dialog gallery
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(PostGallery.this);
-                final View mView = PostGallery.this.getLayoutInflater().inflate(R.layout.dialog_menu,null);
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(EditGallery.this);
+                final View mView = EditGallery.this.getLayoutInflater().inflate(R.layout.dialog_menu,null);
 
                 takeP = (Button)mView.findViewById(R.id.takephoto);
                 chooseP =(Button)mView.findViewById(R.id.choosephoto);
@@ -148,13 +119,18 @@ public class PostGallery extends AppCompatActivity {
             }
         });
 
-        share.setOnClickListener(new View.OnClickListener() {
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startPost();
+                editPost();
             }
         });
-
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deletePost();
+            }
+        });
 
     }
 
@@ -177,8 +153,7 @@ public class PostGallery extends AppCompatActivity {
 
     }
 
-    private void startPost(){
-
+    public void editPost(){
 
         final String post_caption = caption.getText().toString();
 
@@ -195,27 +170,24 @@ public class PostGallery extends AppCompatActivity {
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference mGalleryRef = mRootRef.child("gallery");
 
-                    String key = mGalleryRef.push().getKey();
+                    String key = galleryValue.get("key").toString();
 
-                    Date date = new Date();
-
-                    Long timestamp =  Long.MAX_VALUE - date.getTime();
 
                     final HashMap<String, Object> GalleryValues = new HashMap<>();
                     GalleryValues.put("image", dowloadUrl.toString());
                     GalleryValues.put("caption", post_caption);
-                    GalleryValues.put("uid", uid);
-                    GalleryValues.put("username", uname);
-                    GalleryValues.put("timestamp",timestamp);
+                    GalleryValues.put("uid", galleryValue.get("uid").toString());
+                    GalleryValues.put("username", galleryValue.get("username").toString());
+                    GalleryValues.put("timestamp",Long.parseLong(galleryValue.get("timestamp").toString()));
 
 
                     Map<String,Object> childUpdate = new HashMap<>();
                     childUpdate.put("/gallery/"+key, GalleryValues);
-                    childUpdate.put("/beautician-gallery/"+mFirebaseUser.getUid().toString()+"/"+key, GalleryValues);
+                    childUpdate.put("/beautician-gallery/"+galleryValue.get("uid").toString()+"/"+key, GalleryValues);
 
                     mRootRef.updateChildren(childUpdate);
 
-                    Intent intent = new Intent(PostGallery.this,MainActivity.class);
+                    Intent intent = new Intent(EditGallery.this,MainActivity.class);
                     intent.putExtra("menu","gallery");
                     startActivity(intent);
 
@@ -225,6 +197,52 @@ public class PostGallery extends AppCompatActivity {
 
 
         }
+
+
+
+    }
+
+    public void deletePost() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("beautician-gallery/"+galleryValue.get("uid").toString()+"/"+galleryValue.get("key").toString());
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+
+                    snapshot.getRef().removeValue();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
+
+        ref = FirebaseDatabase.getInstance().getReference().child("gallery/"+galleryValue.get("key").toString());
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+
+                    snapshot.getRef().removeValue();
+                    Intent intent = new Intent(EditGallery.this,MainActivity.class);
+                    intent.putExtra("menu","gallery");
+                    startActivity(intent);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
+
+
 
     }
 

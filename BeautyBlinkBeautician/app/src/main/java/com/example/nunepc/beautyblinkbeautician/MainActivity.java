@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String previous = null;
 
     public String uid;
+    String menu = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +80,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             uid = mFirebaseUser.getUid().toString();
 
-            //fragment
-            if(savedInstanceState==null){
-                //first create
-                //Place fragment
-                previous = "request";
-                bt_request.setImageResource(R.mipmap.request_702_click);
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.contentcontainer,new RequestFragment())
-                        .commit();
+            menu = getIntent().getStringExtra("menu");
+            if(menu != null) {
+                if (menu.equals("gallery")) {
+                    previous = "gallery";
+                    bt_gallery.setImageResource(R.mipmap.camera_703_click);
+                    tab_gal.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new GalleryFragment())
+                            .commit();
+                } else {
+                    //fragment
+                    if (savedInstanceState == null) {
+                        //first create
+                        //Place fragment
+                        previous = "request";
+                        bt_request.setImageResource(R.mipmap.request_702_click);
+                        tab_gal.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction()
+                                .add(R.id.contentcontainer, new RequestFragment())
+                                .commit();
+                    }
+                }
+            }else{
+                //fragment
+                if (savedInstanceState == null) {
+                    //first create
+                    //Place fragment
+                    previous = "request";
+                    bt_request.setImageResource(R.mipmap.request_702_click);
+                    tab_req.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new RequestFragment())
+                            .commit();
+                }
             }
+
+
 
             initInstances();
 

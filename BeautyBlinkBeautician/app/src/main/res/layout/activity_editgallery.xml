@@ -47,15 +47,29 @@
         android:padding="25dp"
         android:orientation="vertical">
 
-
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:id="@+id/picpost"
-            android:src="@mipmap/add_200"
-            android:background="@drawable/add_picture"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true" />
+            android:layout_height="220dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:id="@+id/picpost"
+                android:src="@mipmap/add_200"
+                android:background="@drawable/add_picture"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/edit_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/picpost"
+                android:layout_alignRight="@+id/picpost"
+                android:src="@mipmap/editimage"/>
+        </RelativeLayout>
+
+
 
         <EditText
             android:layout_width="match_parent"
@@ -71,6 +85,7 @@
             android:padding="10dp" />
 
         <Button
+            android:id="@+id/delete"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

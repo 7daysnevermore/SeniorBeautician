@@ -100,8 +100,8 @@ public class GalleryFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-gallery"+"/"+mFirebaseUser.getUid().toString());
 
         query1 = databaseReference.orderByChild("timestamp");
-        final DatabaseReference databaseRef = query1.getRef();
-        query2 = databaseRef.orderByValue();
+        //final DatabaseReference databaseRef = query1.getRef();
+        //query2 = databaseRef.orderByValue();
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recyclerview_gall);
         recyclerView.setHasFixedSize(true);
@@ -111,7 +111,7 @@ public class GalleryFragment extends Fragment {
         mLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
 
         final FirebaseRecyclerAdapter<DataGallery,GalleryViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<DataGallery, GalleryViewHolder>
-                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,query2) {
+                (DataGallery.class,R.layout.gallery_row,GalleryViewHolder.class,query1) {
 
             @Override
             protected void populateViewHolder(GalleryViewHolder viewHolder, final DataGallery model, final int position) {
@@ -132,10 +132,10 @@ public class GalleryFragment extends Fragment {
                         galleryValues.put("caption",model.getCaption());
                         galleryValues.put("image",model.getImage());
                         galleryValues.put("uid",model.getUid());
-                        galleryValues.put("name",model.getName());
+                        galleryValues.put("username",model.getName());
                         galleryValues.put("timestamp",model.getTimestamp());
                         Intent cPro = new Intent(getActivity(),GalleryDetails.class);
-                        cPro.putExtra("promotion",  galleryValues);
+                        cPro.putExtra("gallery",  galleryValues);
                         startActivity(cPro);
                     }
                 });

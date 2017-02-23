@@ -60,7 +60,7 @@
 
 
                 <ImageView
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:id="@+id/tap_req"
                     android:layout_alignBottom="@+id/bt_request"
                     android:layout_width="match_parent"
