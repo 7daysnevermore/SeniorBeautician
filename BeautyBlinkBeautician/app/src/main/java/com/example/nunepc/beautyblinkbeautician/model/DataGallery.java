@@ -6,17 +6,19 @@ package com.example.nunepc.beautyblinkbeautician.model;
 
 public class DataGallery {
 
-    public String image,caption,name,uid;
+    public String image,caption,username,uid;
+    public Long timestamp;
 
     public DataGallery() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-    public DataGallery(String image,String caption,String name,String uid) {
+    public DataGallery(String image,String caption,String username,String uid,Long timestamp) {
 
         this.image = image;
         this.caption = caption;
-        this.name = name;
+        this.username = username;
         this.uid = uid;
+        this.timestamp = timestamp;
 
     }
 
@@ -30,11 +32,19 @@ public class DataGallery {
 
     public String getCaption(){ return this.caption; }
 
-    public void setName(String name){ this.name = name; }
+    public void setName(String username){ this.username = username; }
 
-    public String getName(){ return this.name; }
+    public String getName(){ return this.username; }
 
     public void setUid(String uid){this.uid = uid;}
 
     public String getUid(){ return this.uid;}
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Long getTimestamp() {
+        return this.timestamp;
+    }
 }

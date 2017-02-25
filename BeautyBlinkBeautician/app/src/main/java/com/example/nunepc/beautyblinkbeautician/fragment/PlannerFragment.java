@@ -75,7 +75,6 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
         View rootView = inflater.inflate(R.layout.fragment_planner,container,false);
         initInstance(rootView);
         return rootView;
@@ -112,6 +111,8 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
                 new HighlightWeekendsDecorator(),
                 oneDayDecorator
         );
+
+        new ApiSimulator().executeOnExecutor(Executors.newSingleThreadExecutor());
 
 
         rootView.findViewById(R.id.add_event).setOnClickListener(this);
@@ -284,6 +285,7 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
         }
     }
 
+
     private class ApiSimulator extends AsyncTask<Void, Void, List<CalendarDay>> {
 
         @Override
@@ -298,7 +300,6 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
             final Calendar calendar = Calendar.getInstance();
             final ArrayList<CalendarDay> dates = new ArrayList<>();
 
-            MainActivity plan = (MainActivity) getActivity();
 
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference().child("beautician-planner").child(mFirebaseUser.getUid());
 
@@ -325,6 +326,7 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
                                 calendar.set(Integer.parseInt(planner.getYear()),mon,da);
                                 day[0] = CalendarDay.from(calendar);
                                 dates.add(day[0]);
+                                Toast.makeText(getActivity(), " "+day[0], Toast.LENGTH_LONG).show();
 
                             }
 

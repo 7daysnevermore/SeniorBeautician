@@ -6,14 +6,33 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.nunepc.beautyblinkbeautician.PostGallery;
 import com.example.nunepc.beautyblinkbeautician.R;
+import com.example.nunepc.beautyblinkbeautician.model.BeauticianService;
+import com.example.nunepc.beautyblinkbeautician.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by CaptainPC on 15/1/2560.
  */
 
 public class PreviewDetailFragment extends Fragment{
+
+    TextView address,makeupandhair,makeup,hairstyle,hairdress,makeupandhair_price,makeup_price,hairstyle_price,hairdress_price;
+    LinearLayout price01,price02,price03,price04;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+
     public PreviewDetailFragment(){ super(); }
 
     public static PreviewDetailFragment newInstance(){
@@ -33,7 +52,136 @@ public class PreviewDetailFragment extends Fragment{
     }
 
     private void initInstance(View rootView){
-        // Start Code Here
+
+        //Initialize Firebase Auth
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+
+        address = (TextView) rootView.findViewById(R.id.address);
+        makeupandhair = (TextView) rootView.findViewById(R.id.makeupandhair);
+        makeup = (TextView) rootView.findViewById(R.id.makeup);
+        hairstyle = (TextView) rootView.findViewById(R.id.hairstyle);
+        hairdress = (TextView) rootView.findViewById(R.id.hairdress);
+        makeupandhair_price = (TextView) rootView.findViewById(R.id.makeupandhair_price);
+        makeup_price = (TextView) rootView.findViewById(R.id.makeup_price);
+        hairstyle_price = (TextView) rootView.findViewById(R.id.hairstyle_price);
+        hairdress_price = (TextView) rootView.findViewById(R.id.hairdress_price);
+        price01 = (LinearLayout) rootView.findViewById(R.id.price01);
+        price02 = (LinearLayout) rootView.findViewById(R.id.price02);
+        price03 = (LinearLayout) rootView.findViewById(R.id.price03);
+        price04 = (LinearLayout) rootView.findViewById(R.id.price04);
+
+        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+        mRootRef.child("beautician").child(mFirebaseUser.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user == null) {
+                    Toast.makeText(getActivity(), "Error: could not fetch user.", Toast.LENGTH_LONG).show();
+                } else {
+
+                    String build;
+                    if(user.building==null){
+                        build = "";
+                    }
+                    else{
+                        build = user.building;
+                    }
+                    address.setText(user.address_number +" "+build+", "+user.address_sub_district+
+                    ", "+user.address_district+", "+user.address_province+", "+user.address_code);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        DatabaseReference mRootRef01 = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mRootRef02 = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mRootRef03 = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mRootRef04 = FirebaseDatabase.getInstance().getReference();
+
+        mRootRef01.child("beautician-service").child(mFirebaseUser.getUid().toString()+"/S01").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BeauticianService services = dataSnapshot.getValue(BeauticianService.class);
+                if (services == null) {
+                } else {
+                    makeupandhair.setVisibility(View.VISIBLE);
+                    price01.setVisibility(View.VISIBLE);
+                    makeupandhair_price.setText(services.price+" Bath");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRootRef02.child("beautician-service").child(mFirebaseUser.getUid().toString() + "/S02").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BeauticianService services = dataSnapshot.getValue(BeauticianService.class);
+                if (services == null) {
+                } else {
+                    makeup.setVisibility(View.VISIBLE);
+                    price02.setVisibility(View.VISIBLE);
+                    makeup_price.setText(services.price+" Bath");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRootRef03.child("beautician-service").child(mFirebaseUser.getUid().toString() + "/S03").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BeauticianService services = dataSnapshot.getValue(BeauticianService.class);
+                if (services == null) {
+                } else {
+                    hairstyle.setVisibility(View.VISIBLE);
+                    price03.setVisibility(View.VISIBLE);
+                    hairstyle_price.setText(services.price+" Bath");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mRootRef04.child("beautician-service").child(mFirebaseUser.getUid().toString() + "/S04").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                BeauticianService services = dataSnapshot.getValue(BeauticianService.class);
+                if (services == null) {
+                } else {
+                    hairdress.setVisibility(View.VISIBLE);
+                    price04.setVisibility(View.VISIBLE);
+                    hairdress_price.setText(services.price+" Bath");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
