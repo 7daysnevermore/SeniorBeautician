@@ -320,7 +320,6 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
                             if (planner == null) {
                                 Toast.makeText(getActivity(), "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                             } else {
-
                                 int mon = Integer.parseInt(planner.getMonth())-1;
                                 int da = Integer.parseInt(planner.getDay());
                                 calendar.set(Integer.parseInt(planner.getYear()),mon,da);

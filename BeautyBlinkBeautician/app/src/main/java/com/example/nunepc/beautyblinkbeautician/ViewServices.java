@@ -198,7 +198,9 @@ public class ViewServices extends AppCompatActivity implements View.OnClickListe
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 //NavUtils.navigateUpFromSameTask(this);
-                onBackPressed();
+                Intent intent = new Intent(ViewServices.this,MainActivity.class);
+                intent.putExtra("menu","setting");
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

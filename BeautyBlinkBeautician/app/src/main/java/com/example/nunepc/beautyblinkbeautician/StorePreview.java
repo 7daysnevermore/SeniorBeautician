@@ -155,7 +155,9 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 //NavUtils.navigateUpFromSameTask(this);
-                onBackPressed();
+                Intent intent = new Intent(StorePreview.this,MainActivity.class);
+                intent.putExtra("menu","setting");
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

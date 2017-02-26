@@ -244,7 +244,8 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
 
             mRootRef.updateChildren(childUpdate);
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(AddEvent.this,MainActivity.class);
+            intent.putExtra("menu","planner");
             startActivity(intent);
 
         }

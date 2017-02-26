@@ -425,7 +425,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         UserValues.put("firstname", fname);
                                         UserValues.put("lastname", lname);
                                         UserValues.put("phone", phone);
-                                        if(dd!=0){
+                                        if(dd==0){
                                             UserValues.put("birthday", getIntent().getStringExtra("save_birthday"));
                                         }else{
                                             UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);
@@ -499,7 +499,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                 UserValues.put("firstname", fname);
                                 UserValues.put("lastname", lname);
                                 UserValues.put("phone", phone);
-                                if(dd!=0){
+                                if(dd==0){
                                     UserValues.put("birthday", getIntent().getStringExtra("save_birthday"));
                                 }else{
                                     UserValues.put("birthday", dd + "/" + mm + "/" + yyyy);

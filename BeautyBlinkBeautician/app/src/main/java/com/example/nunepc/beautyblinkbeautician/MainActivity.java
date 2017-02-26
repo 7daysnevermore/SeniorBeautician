@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
 
-    private TextView namename,noti;
+    private TextView namename, noti;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-    ImageView bt_request,bt_gallery,bt_planner,bt_noti,bt_setting,tab_req,tab_gal,tab_plan,tab_noti,tab_set;
+    ImageView bt_request, bt_gallery, bt_planner, bt_noti, bt_setting, tab_req, tab_gal, tab_plan, tab_noti, tab_set;
     private int count = -1;
     private Button notiBtn;
     private String previous = null;
@@ -72,16 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tab_noti = (ImageView) findViewById(R.id.tap_noti);
         tab_set = (ImageView) findViewById(R.id.tap_set);
 
-        if(mFirebaseUser == null){
+        if (mFirebaseUser == null) {
             // Not signed in, launch the sign in activity.
             startActivity(new Intent(this, EmailLogin.class));
 
-        }else {
+        } else {
 
             uid = mFirebaseUser.getUid().toString();
 
             menu = getIntent().getStringExtra("menu");
-            if(menu != null) {
+            if (menu != null) {
                 if (menu.equals("gallery")) {
                     previous = "gallery";
                     bt_gallery.setImageResource(R.mipmap.camera_703_click);
@@ -89,20 +89,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     getSupportFragmentManager().beginTransaction()
                             .add(R.id.contentcontainer, new GalleryFragment())
                             .commit();
-                } else {
-                    //fragment
-                    if (savedInstanceState == null) {
-                        //first create
-                        //Place fragment
-                        previous = "request";
-                        bt_request.setImageResource(R.mipmap.request_702_click);
-                        tab_gal.setVisibility(View.VISIBLE);
-                        getSupportFragmentManager().beginTransaction()
-                                .add(R.id.contentcontainer, new RequestFragment())
-                                .commit();
-                    }
                 }
-            }else{
+                if (menu.equals("request")) {
+                    previous = "request";
+                    bt_request.setImageResource(R.mipmap.request_702_click);
+                    tab_req.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new RequestFragment())
+                            .commit();
+                }
+                if (menu.equals("planner")) {
+                    previous = "planner";
+                    bt_planner.setImageResource(R.mipmap.calendar_702_click);
+                    tab_plan.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new PlannerFragment())
+                            .commit();
+                }
+                if (menu.equals("noti")) {
+                    previous = "noti";
+                    bt_noti.setImageResource(R.mipmap.noti_702_click);
+                    tab_noti.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new NotiFragment())
+                            .commit();
+                }
+                if (menu.equals("setting")) {
+                    previous = "setting";
+                    bt_setting.setImageResource(R.mipmap.setting_703_click);
+                    tab_set.setVisibility(View.VISIBLE);
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.contentcontainer, new SettingFragment())
+                            .commit();
+                }
+            } else {
                 //fragment
                 if (savedInstanceState == null) {
                     //first create
@@ -117,21 +137,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
 
-
             initInstances();
 
         }
 
     }
 
-    private  void initInstances(){
+    private void initInstances() {
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        noti = (TextView)findViewById(R.id.family_hub_tv_count);
-        notiBtn=(Button)findViewById(R.id.noti);
+        noti = (TextView) findViewById(R.id.family_hub_tv_count);
+        notiBtn = (Button) findViewById(R.id.noti);
         notiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,TestNoti.class);
+                Intent intent = new Intent(MainActivity.this, TestNoti.class);
                 startActivity(intent);
             }
         });
@@ -184,8 +203,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int countt = (int) dataSnapshot.getChildrenCount();
 
                 noti.setVisibility(View.VISIBLE);
-                noti.setText(""+countt);
-                Log.d("countnum","="+countt);
+                noti.setText("" + countt);
+                Log.d("countnum", "=" + countt);
 
             }
 
@@ -198,13 +217,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState){
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         //actionBarDrawerToggle.syncState();
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig){
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         //actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
@@ -213,11 +232,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_gallery:
-                if(previous.equals("request")){
+                if (previous.equals("request")) {
                     tab_req.setVisibility(View.GONE);
                     bt_request.setImageResource(R.mipmap.request_702);
                 }
-                if(previous.equals("planner")){
+                if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
                     bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
@@ -234,16 +253,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt_gallery.setImageResource(R.mipmap.camera_703_click);
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,GalleryFragment.newInstance())
+                        .replace(R.id.contentcontainer, GalleryFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_request:
-                if(previous.equals("gallery")){
+                if (previous.equals("gallery")) {
                     tab_gal.setVisibility(View.GONE);
                     bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
-                if(previous.equals("planner")){
+                if (previous.equals("planner")) {
                     tab_plan.setVisibility(View.GONE);
                     bt_planner.setImageResource(R.mipmap.calendar_702);
                 }
@@ -260,16 +279,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt_request.setImageResource(R.mipmap.request_702_click);
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,RequestFragment.newInstance())
+                        .replace(R.id.contentcontainer, RequestFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_planner:
-                if(previous.equals("gallery")){
+                if (previous.equals("gallery")) {
                     tab_gal.setVisibility(View.GONE);
                     bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
-                if(previous.equals("request")){
+                if (previous.equals("request")) {
                     tab_req.setVisibility(View.GONE);
                     bt_request.setImageResource(R.mipmap.request_702);
                 }
@@ -291,11 +310,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .commit();
                 break;
             case R.id.bt_noti:
-                if(previous.equals("gallery")){
+                if (previous.equals("gallery")) {
                     tab_gal.setVisibility(View.GONE);
                     bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
-                if(previous.equals("request")){
+                if (previous.equals("request")) {
                     tab_req.setVisibility(View.GONE);
                     bt_request.setImageResource(R.mipmap.request_702);
                 }
@@ -312,16 +331,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bt_noti.setImageResource(R.mipmap.noti_702_click);
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.contentcontainer,NotiFragment.newInstance())
+                        .replace(R.id.contentcontainer, NotiFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.bt_setting:
-                if(previous.equals("gallery")){
+                if (previous.equals("gallery")) {
                     tab_gal.setVisibility(View.GONE);
                     bt_gallery.setImageResource(R.mipmap.camera_703);
                 }
-                if(previous.equals("request")){
+                if (previous.equals("request")) {
                     tab_req.setVisibility(View.GONE);
                     bt_request.setImageResource(R.mipmap.request_702);
                 }
