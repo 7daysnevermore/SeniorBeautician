@@ -34,6 +34,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,7 +125,11 @@ public class PostPromotion extends AppCompatActivity {
         btn_createpromotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startPost();
+                try {
+                    startPost();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -151,10 +159,8 @@ public class PostPromotion extends AppCompatActivity {
         }
 
     }
-    private void startPost(){
+    private void startPost() throws ParseException {
 
-        progressDialog.setMessage("Posting...");
-        progressDialog.show();
 
         radioGroup_service = (RadioGroup) findViewById(R.id.service);
         int selectedId = radioGroup_service.getCheckedRadioButtonId();
@@ -188,6 +194,43 @@ public class PostPromotion extends AppCompatActivity {
         final String dt_year = input_dt_year.getText().toString();
         final String details = input_details.getText().toString();
 
+        if (TextUtils.isEmpty(promotion)) {
+            Toast.makeText(getApplicationContext(), "Enter promotion name!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(price)) {
+            Toast.makeText(getApplicationContext(), "Enter price!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(sale)) {
+            Toast.makeText(getApplicationContext(), "Enter sale!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(df_day)||TextUtils.isEmpty(df_month)||TextUtils.isEmpty(df_year)) {
+            Toast.makeText(getApplicationContext(), "Enter date from!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date currentDate = sdf.parse(String.valueOf(new Date()));
+        Date date_From = sdf.parse(df_day+"/"+df_month+"/"+df_year);
+        Date date_To = sdf.parse(dt_day+"/"+dt_month+"/"+dt_year);
+        Toast.makeText(getApplicationContext(), "Current "+currentDate, Toast.LENGTH_SHORT).show();
+
+        if (date_From.compareTo(date_To)<0) {
+            Toast.makeText(getApplicationContext(), "Date from is out of date!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if (date_To.before(currentDate)) {
+            Toast.makeText(getApplicationContext(), "Date to is out of date!", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+
+
         if(!TextUtils.isEmpty(promotion) && !TextUtils.isEmpty(price) &&
                 !TextUtils.isEmpty(sale) && !TextUtils.isEmpty(df_day) &&
                 !TextUtils.isEmpty(df_month) && !TextUtils.isEmpty(df_year) &&
@@ -207,6 +250,10 @@ public class PostPromotion extends AppCompatActivity {
 
                     String key = mPromotionRef.push().getKey();
 
+                    Date date = new Date();
+
+                    Long timestamp =  Long.MAX_VALUE - date.getTime();
+
                     final HashMap<String, Object> PromotionValues = new HashMap<>();
                     PromotionValues.put("promotion", promotion);
                     PromotionValues.put("image", dowloadUrl.toString());
@@ -220,6 +267,7 @@ public class PostPromotion extends AppCompatActivity {
                     PromotionValues.put("name", username);
                     PromotionValues.put("status", "active");
                     PromotionValues.put("profile", profile);
+                    PromotionValues.put("timestamp",timestamp);
 
 
                     Map<String,Object> childUpdate = new HashMap<>();

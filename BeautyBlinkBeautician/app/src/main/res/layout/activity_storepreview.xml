@@ -204,7 +204,7 @@
                 <ImageView
                     android:id="@+id/bt_gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:src="@mipmap/camera_703"/>
 
