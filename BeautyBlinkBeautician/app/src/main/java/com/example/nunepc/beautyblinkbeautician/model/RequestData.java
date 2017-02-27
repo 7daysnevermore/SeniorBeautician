@@ -6,7 +6,7 @@ package com.example.nunepc.beautyblinkbeautician.model;
 
 public class RequestData {
     private String date,event,location,maxprice,numberofperson,service,
-    specialrequest,status,time,uid,name,image;
+    specialrequest,status,time,uid,name,image,kC,af;
     private String currenttime;
     private String color;
     public RequestData(){
@@ -14,7 +14,7 @@ public class RequestData {
     }
 
     public RequestData(String date,String event,String location,String maxprice,String numberofperson
-            , String service,String specialrequest, String image, String status,String time,String uid, String name,String color,String currenttime ){
+            , String service,String specialrequest, String image, String status,String time,String uid, String name,String color,String currenttime,String kC,String af ){
 
         this.date=date;
         this.event=event;
@@ -30,7 +30,20 @@ public class RequestData {
         this.name = name;
         this.color = color;
         this.currenttime=currenttime;
-
+        this.kC=kC;
+        this.af=af;
+    }
+    public String getAfterofferstatus(){
+        return this.af;
+    }
+    public void setAfterofferstatus(String af){
+        this.af=af;
+    }
+    public String getKeyrequest(){
+        return this.kC;
+    }
+    public void setKeyrequest(String kC){
+        this.kC=kC;
     }
     public String getCurrenttime(){return this.currenttime;}
     public void setCurrenttime(String currenttime){this.currenttime=currenttime;}

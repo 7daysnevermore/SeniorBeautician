@@ -20,7 +20,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!--              The API key for Google Maps-based APIs. -->
+        <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAphpnX6j4T3hjOIU01YeuBR_suQKZxV10" />
@@ -65,7 +65,9 @@
         <activity android:name=".OpenPhoto" />
         <activity android:name=".MessagePage" />
         <activity android:name=".MapCurrentLocation" />
-        <activity android:name=".TestNoti"></activity>
+        <activity android:name=".TestNoti" />
+        <activity android:name=".Noti_Receive" />
+        <activity android:name=".MyBusiness"></activity>
     </application>
 
 </manifest>

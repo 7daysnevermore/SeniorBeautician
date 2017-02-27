@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,7 +57,7 @@ import java.util.Locale;
 
 public class RequestFragment extends Fragment {
 
-    private TextView postP;
+    private TextView postP,statusDes;
     private RecyclerView recyclerView;
     private FirebaseAuth mAuth;
     private FirebaseUser mFirebaseUser;
@@ -82,7 +86,7 @@ public class RequestFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
         //test= ""+mFirebaseUser.getUid().toString();
-       //dref = FirebaseDatabase.getInstance().getReference().child("customer-request/0XIvXEgxomQqZ5XHYiNmuJ7MZfy1"+"/"+mFirebaseUser.getUid().toString() +"/"+"status");
+        //dref = FirebaseDatabase.getInstance().getReference().child("customer-request/0XIvXEgxomQqZ5XHYiNmuJ7MZfy1"+"/"+mFirebaseUser.getUid().toString() +"/"+"status");
 
         return rootView;
     }
@@ -95,7 +99,7 @@ public class RequestFragment extends Fragment {
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        btnStatus = (Button)rootView.findViewById(R.id.btnStat);
+       // btnStatus = (Button)rootView.findViewById(R.id.btnStat);
         //Order from latest data
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -112,9 +116,11 @@ public class RequestFragment extends Fragment {
                 viewHolder.setEvent(model.getEvent());
                 viewHolder.setMaxprice(model.getMaxprice());
                 viewHolder.setService(model.getService());
-                viewHolder.setColor(model.getColor());
+                //viewHolder.setColor(model.getColor());
+                viewHolder.setColorcircle(model.getColor());
                 viewHolder.setCurrenttime(model.getCurrenttime());
-                //viewHolder.setName(model.getName());
+                viewHolder.setName(model.getName());
+                viewHolder.setKeyrequest(model.getKeyrequest());
                 btnMsg = (ImageView) viewHolder.mview.findViewById(R.id.btnMessage);
                 btnMsg.setOnClickListener(new View.OnClickListener() {
                     final String key = getRef(position).getKey();
@@ -125,8 +131,9 @@ public class RequestFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
-                btnStatus = (Button)viewHolder.mview.findViewById(R.id.btnStat);
-                String s = btnStatus.getText().toString();
+                //btnStatus = (Button)viewHolder.mview.findViewById(R.id.btnStat);
+                statusDes = (TextView)viewHolder.mview.findViewById(R.id.desStatus);
+                String s = statusDes.getText().toString();
                 RequestData rd = new RequestData();
                 rd.setStatus(s);
                 //Log.d("GG","="+rd.getTimes());
@@ -135,10 +142,12 @@ public class RequestFragment extends Fragment {
                 switch (rd.getStatus()){
                     case "offer":
                         Log.d("Please","="+rd.getStatus());
-                        btnStatus.setOnClickListener(new View.OnClickListener() {
+                        // btnStatus.setOnClickListener(new View.OnClickListener() {
+                        viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                             final String cshow = getRef(position).getKey();
                             @Override
                             public void onClick(View v) {
+
                                 HashMap<String, Object> RequestValues = new HashMap<>();
                                 RequestValues.put("key",cshow);
                                 RequestValues.put("service", model.getService());
@@ -160,7 +169,7 @@ public class RequestFragment extends Fragment {
                         break;
                     case "confirm":
                         Log.d("Bye","="+rd.getStatus());
-                        btnStatus.setOnClickListener(new View.OnClickListener() {
+                        viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                             final String cshow = getRef(position).getKey();
                             @Override
                             public void onClick(View v) {
@@ -173,7 +182,7 @@ public class RequestFragment extends Fragment {
                         break;
                     case "toprovide":
                         Log.d("provide","="+rd.getStatus());
-                        btnStatus.setOnClickListener(new View.OnClickListener() {
+                        viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                             final String cshow = getRef(position).getKey();
                             @Override
                             public void onClick(View v) {
@@ -236,6 +245,10 @@ public class RequestFragment extends Fragment {
             mview=itemView;
 
         }
+        public void setKeyrequest(String keyrequest){
+            TextView tv = (TextView)mview.findViewById(R.id.keyC);
+            tv.setText(keyrequest);
+        }
         public void setName(String name){
             TextView n = (TextView)mview.findViewById(R.id.tname);
             n.setText(name);
@@ -263,13 +276,25 @@ public class RequestFragment extends Fragment {
         }
         public void setStatus(String status){
             KeepStatus kt = new KeepStatus(status);
-            Button post_service = (Button)mview.findViewById(R.id.btnStat);
-            post_service.setText(kt.getStatus());
-
+            //Button post_service = (Button)mview.findViewById(R.id.btnStat);
+            //post_service.setText(kt.getStatus());
+            TextView tx = (TextView)mview.findViewById(R.id.desStatus);
+            tx.setText(status);
         }
+        public void setColorcircle(String color){
+                ImageView cC = (ImageView)mview.findViewById(R.id.cirNoti);
+                int colorc = Color.parseColor(color);
+                //PorterDuffColorFilter greyFilter = new PorterDuffColorFilter(colorc, PorterDuff.Mode.MULTIPLY);
+                GradientDrawable drawable = (GradientDrawable) cC.getBackground();
+                drawable.setColor(colorc);
+                //((GradientDrawable)cC.getBackground().setColorFilter(greyFilter);
+                //cC.setBackgroundColor(Color.parseColor(color));
+                //GradientDrawable bgShape = (GradientDrawable)cC.getBackground();
+                //bgShape.setColor(Color.parseColor(color));
+            }
         public void setColor(String color){
             LinearLayout cC = (LinearLayout)mview.findViewById(R.id.ch_color);
-                cC.setBackgroundColor(Color.parseColor(color));
+            cC.setBackgroundColor(Color.parseColor(color));
 
         }
         public void setCurrenttime(String currenttime){
@@ -285,7 +310,6 @@ public class RequestFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             PrettyTime p = new PrettyTime();
             String datetime = p.format(convertedDate);
             Log.d("Bye","="+datetime);
@@ -296,9 +320,7 @@ public class RequestFragment extends Fragment {
             }else{
                 a = datetime;
             }
-            tm.setText(""+a);
-
-
+            tm.setText(""+a+", ");
         }
 
     }

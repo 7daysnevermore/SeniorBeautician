@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.bt_noti).setOnClickListener(this);
         findViewById(R.id.bt_setting).setOnClickListener(this);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("customer-request");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("requestnotifromcus");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
