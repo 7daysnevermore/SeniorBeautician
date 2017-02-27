@@ -34,6 +34,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int count = -1;
     private Button notiBtn;
     private String previous = null;
+
+    public HashMap<String,Integer> eventday;
+    public ArrayList<HashMap<String,Integer>> listevent;
 
     public String uid;
     String menu = null;
@@ -136,6 +140,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
+
+            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("beautician-planner").child(uid);
+
+            listevent = new ArrayList<>();
+
+            mRef.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot dateChild : dataSnapshot.getChildren()){
+
+
+                        for (DataSnapshot startChild : dateChild.getChildren()){
+
+                            DataPlanner planner = startChild.getValue(DataPlanner.class);
+
+                            eventday = new HashMap<>();
+                            eventday.put("month",Integer.parseInt(planner.getMonth()));
+                            eventday.put("day",Integer.parseInt(planner.getDay()));
+                            eventday.put("year", Integer.parseInt(planner.getYear()));
+
+                            listevent.add(eventday);
+
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getMessage());
+                }
+
+            });
 
             initInstances();
 
