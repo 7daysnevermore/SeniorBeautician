@@ -19,6 +19,7 @@ import com.example.nunepc.beautyblinkbeautician.AddEvent;
 import com.example.nunepc.beautyblinkbeautician.MainActivity;
 import com.example.nunepc.beautyblinkbeautician.R;
 import com.example.nunepc.beautyblinkbeautician.ShowEvent;
+import com.example.nunepc.beautyblinkbeautician.StorePreview;
 import com.example.nunepc.beautyblinkbeautician.decorators.EventDecorator;
 import com.example.nunepc.beautyblinkbeautician.decorators.HighlightWeekendsDecorator;
 import com.example.nunepc.beautyblinkbeautician.decorators.MySelectorDecorator;
@@ -57,6 +58,8 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
     private RecyclerView recyclerView;
     View view;
 
+    MainActivity beauti;
+
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private DatabaseReference databaseReference;
@@ -83,6 +86,8 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
     private void initInstance(View rootView){
 
         view = rootView;
+
+        beauti = (MainActivity) getActivity();
         //Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -198,6 +203,8 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
 
     private void PlannerAdapter(int day,int month,int year) {
 
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-planner")
                 .child(mFirebaseUser.getUid().toString()).child(day+"-"+month+"-"+year);
 
@@ -214,7 +221,6 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
 
             @Override
             protected void populateViewHolder(PlannerViewHolder viewHolder, final DataPlanner model, final int position) {
-
 
                     viewHolder.setTitle(model.title);
                     viewHolder.setStart(model.start);
@@ -300,51 +306,18 @@ public class PlannerFragment extends Fragment implements OnDateSelectedListener,
             final Calendar calendar = Calendar.getInstance();
             final ArrayList<CalendarDay> dates = new ArrayList<>();
 
+            for (int i=0;i<beauti.listevent.size();i++){
 
-            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference().child("beautician-planner").child(mFirebaseUser.getUid());
-
-            mRootRef.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                    for (DataSnapshot dateChild : dataSnapshot.getChildren()){
+                int mo = beauti.listevent.get(i).get("month")-1;
+                int da = beauti.listevent.get(i).get("day");
+                int ye = beauti.listevent.get(i).get("year");
+                calendar.set(ye,mo,da);
+                day[0] = CalendarDay.from(calendar);
+                dates.add(day[0]);
 
 
+            }
 
-                        for (DataSnapshot startChild : dateChild.getChildren()){
-
-                            DataPlanner planner = startChild.getValue(DataPlanner.class);
-
-                            if (planner == null) {
-                                Toast.makeText(getActivity(), "Error: could not fetch user.", Toast.LENGTH_LONG).show();
-                            } else {
-
-                                int mon = Integer.parseInt(planner.getMonth())-1;
-                                int da = Integer.parseInt(planner.getDay());
-                                calendar.set(Integer.parseInt(planner.getYear()),mon,da);
-                                day[0] = CalendarDay.from(calendar);
-                                dates.add(day[0]);
-                                Toast.makeText(getActivity(), " "+day[0], Toast.LENGTH_LONG).show();
-
-                            }
-
-
-                        }
-
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getMessage());
-                }
-
-            });
-
-            mRootRef.onDisconnect();
 
 
             return dates;
