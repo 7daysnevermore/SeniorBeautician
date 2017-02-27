@@ -64,7 +64,7 @@ public class PostGallery extends AppCompatActivity {
         setContentView(R.layout.activity_add_gallery);
 
         caption = (EditText) findViewById(R.id.caption);
-        share = (TextView) findViewById(R.id.share);
+        share = (TextView) findViewById(R.id.post);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
