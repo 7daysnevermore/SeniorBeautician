@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.nunepc.beautyblinkbeautician.EmailLogin;
+import com.example.nunepc.beautyblinkbeautician.MyBusiness;
 import com.example.nunepc.beautyblinkbeautician.ProfilePromote;
 import com.example.nunepc.beautyblinkbeautician.Promotion;
 import com.example.nunepc.beautyblinkbeautician.R;
@@ -37,7 +38,7 @@ public class SettingFragment extends Fragment {
     private TextView service;
     private TextView accountsetting;
     private TextView support;
-    private TextView logout;
+    private TextView logout,offer;
 
     public SettingFragment(){ super(); }
 
@@ -68,6 +69,15 @@ public class SettingFragment extends Fragment {
         promotion = (TextView) rootView.findViewById(R.id.promotion);
         accountsetting = (TextView) rootView.findViewById(R.id.accountSetting);
         support = (TextView) rootView.findViewById(R.id.support);
+        offer = (TextView)rootView.findViewById(R.id.business);
+
+        offer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MyBusiness.class));
+            }
+        });
+
 
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
