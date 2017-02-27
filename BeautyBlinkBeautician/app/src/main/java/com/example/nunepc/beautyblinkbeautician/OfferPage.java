@@ -4,11 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +37,7 @@ import java.util.Objects;
 
 public class OfferPage extends AppCompatActivity {
 
-    private TextView date,service,event,time,special,location,maxprice,numofPer,name;
+    private TextView date, service, event, time, special, location, maxprice, numofPer, name;
     HashMap<String, Object> requestValues;
     private ImageView btnOffer;
     private EditText spe_b;
@@ -43,11 +47,20 @@ public class OfferPage extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ProgressDialog progressDialog;
+    private Button accept, decline, send_offer;
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_page);
+
+        //up button
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         requestValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("request");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -72,17 +85,17 @@ public class OfferPage extends AppCompatActivity {
             }
         });
 
+        date = (TextView) findViewById(R.id.cusD);
+        service = (TextView) findViewById(R.id.cusSer);
+        event = (TextView) findViewById(R.id.cusEv);
+        time = (TextView) findViewById(R.id.cusTime);
+        special = (TextView) findViewById(R.id.cusSpe);
+        location = (TextView) findViewById(R.id.cusLo);
+        maxprice = (TextView) findViewById(R.id.cusMax);
+        name = (TextView) findViewById(R.id.tname);
+        numofPer = (TextView) findViewById(R.id.cusNum);
+        //spe_b = (EditText)findViewById(R.id.speB);
 
-        date= (TextView)findViewById(R.id.cusD);
-        service =(TextView)findViewById(R.id.cusSer);
-        event =(TextView)findViewById(R.id.cusEv);
-        time = (TextView)findViewById(R.id.cusTime);
-        special = (TextView)findViewById(R.id.cusSpe);
-        location = (TextView)findViewById(R.id.cusLo);
-        maxprice = (TextView)findViewById(R.id.cusMax);
-        name = (TextView)findViewById(R.id.tname);
-        numofPer = (TextView)findViewById(R.id.cusNum);
-        spe_b = (EditText)findViewById(R.id.speB);
 
         k = requestValues.get("key").toString();
         date.setText(requestValues.get("date").toString());
@@ -99,8 +112,51 @@ public class OfferPage extends AppCompatActivity {
         //DatabaseReference r = FirebaseDatabase.getInstance().getReference().child("request");
 
         //location.setText(requestValues.get("location").toString());
-       // findViewById(R.id.btn_editpromotion).setOnClickListener((View.OnClickListener) this);
-            btnOffer = (ImageView)findViewById(R.id.btn_offer);
+        // findViewById(R.id.btn_editpromotion).setOnClickListener((View.OnClickListener) this);
+        btnOffer = (ImageView) findViewById(R.id.btn_offer);
+
+        accept = (Button) findViewById(R.id.accept);
+        decline = (Button) findViewById(R.id.decline);
+        final LinearLayout linear = (LinearLayout) findViewById(R.id.offer_detail);
+        send_offer = (Button) findViewById(R.id.send_offer);
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.accept:
+                        linear.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.decline:
+                        Intent intent = new Intent(OfferPage.this,MainActivity.class);
+                        intent.putExtra("menu","request");
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+
+        send_offer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.send_offer:
+                        Intent intent2 = new Intent(OfferPage.this,MainActivity.class);
+                        intent2.putExtra("menu","request");
+                        startActivity(intent2);
+                        break;
+                }
+            }
+        });
+
 
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,19 +174,18 @@ public class OfferPage extends AppCompatActivity {
                 final String ke = k;
                 final String status = "offer-pro";
 
-                if(!TextUtils.isEmpty(d) && !TextUtils.isEmpty(ser) &&
+                if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(ser) &&
                         !TextUtils.isEmpty(eve) && !TextUtils.isEmpty(ti) &&
                         !TextUtils.isEmpty(specus) && !TextUtils.isEmpty(locate) &&
-                        !TextUtils.isEmpty(spebeau) && !TextUtils.isEmpty(status)&&
-                        !TextUtils.isEmpty(maxP) && !TextUtils.isEmpty(numP)  )
-                {
+                        !TextUtils.isEmpty(spebeau) && !TextUtils.isEmpty(status) &&
+                        !TextUtils.isEmpty(maxP) && !TextUtils.isEmpty(numP)) {
                     //Create root of Request
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference mRequestRef = mRootRef.child("offer");
 
                     String key = mRequestRef.push().getKey();
 
-                    Calendar c= Calendar.getInstance();
+                    Calendar c = Calendar.getInstance();
                     SimpleDateFormat currenttime = new SimpleDateFormat("MMM dd yyyy hh:mm a");
                     String dateform = currenttime.format(c.getTime());
                     DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("request"+"/"+ke);
@@ -141,12 +196,12 @@ public class OfferPage extends AppCompatActivity {
                     RequestValues.put("service", ser);
                     RequestValues.put("event", eve);
                     RequestValues.put("maxprice", maxP);
-                    RequestValues.put("numberofcustomer",numP);
+                    RequestValues.put("numberofcustomer", numP);
                     RequestValues.put("time", ti);
                     RequestValues.put("specialcus", specus);
                     RequestValues.put("beauticianoffer", spebeau);
-                    RequestValues.put("location",locate);
-                    RequestValues.put("status",status);
+                    RequestValues.put("location", locate);
+                    RequestValues.put("status", status);
                     //RequestValues.put("beauid",)
                     RequestValues.put("dateform",dateform);
                     RequestValues.put("uid", uid);
@@ -192,9 +247,21 @@ public class OfferPage extends AppCompatActivity {
                     startActivity(intent);
 
                 }
-
-                }
+            }
 
         });
+
+    }
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                startActivity(new Intent(OfferPage.this, MainActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public class PostGallery extends AppCompatActivity {
     private AlertDialog dialog;
     Uri imageUri = null;
     private ProgressDialog progressDialog;
-    String uid,name,propic;
+    String uid,uname,propic;
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -62,7 +64,7 @@ public class PostGallery extends AppCompatActivity {
         setContentView(R.layout.activity_add_gallery);
 
         caption = (EditText) findViewById(R.id.caption);
-        share = (TextView) findViewById(R.id.share);
+        share = (TextView) findViewById(R.id.post);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -81,7 +83,7 @@ public class PostGallery extends AppCompatActivity {
                 if (user == null) {
                     Toast.makeText(PostGallery.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    name = user.firstname;
+                    uname = user.username;
                     propic = user.profile;
 
                 }
@@ -195,12 +197,16 @@ public class PostGallery extends AppCompatActivity {
 
                     String key = mGalleryRef.push().getKey();
 
+                    Date date = new Date();
+
+                    Long timestamp =  Long.MAX_VALUE - date.getTime();
+
                     final HashMap<String, Object> GalleryValues = new HashMap<>();
                     GalleryValues.put("image", dowloadUrl.toString());
                     GalleryValues.put("caption", post_caption);
                     GalleryValues.put("uid", uid);
-                    GalleryValues.put("name", name);
-                    GalleryValues.put("propic", propic);
+                    GalleryValues.put("username", uname);
+                    GalleryValues.put("timestamp",timestamp);
 
 
                     Map<String,Object> childUpdate = new HashMap<>();
@@ -209,8 +215,10 @@ public class PostGallery extends AppCompatActivity {
 
                     mRootRef.updateChildren(childUpdate);
 
+                    Intent intent = new Intent(PostGallery.this,MainActivity.class);
+                    intent.putExtra("menu","gallery");
+                    startActivity(intent);
 
-                    startActivity(new Intent(PostGallery.this,MainActivity.class));
 
                 }
             });

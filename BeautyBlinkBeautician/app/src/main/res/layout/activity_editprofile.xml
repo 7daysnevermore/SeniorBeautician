@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:text="Edit Profile"
             android:gravity="center"
+            android:paddingRight="50dp"
             android:textSize="25dp"
             android:layout_weight="0.84" />
 
@@ -39,6 +40,14 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/fname"
@@ -78,6 +87,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Number"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/building"
+                    android:paddingLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Building"
                     android:inputType="text"
                     android:maxLines="1" />
 

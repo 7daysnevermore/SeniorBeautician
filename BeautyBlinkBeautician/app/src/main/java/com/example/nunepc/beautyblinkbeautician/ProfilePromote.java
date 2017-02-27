@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -51,6 +53,8 @@ public class ProfilePromote extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
+    Toolbar toolbar;
+
     String uid;
     TextView namepromote ,locationpromote ,priceS01,priceS02,priceS03,priceS04;
 
@@ -60,6 +64,11 @@ public class ProfilePromote extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilepromote);
+
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressDialog = new ProgressDialog(this);
 
@@ -83,7 +92,7 @@ public class ProfilePromote extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ProfilePromote");
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-        mRootRef.child("profilepromote").addListenerForSingleValueEvent(new ValueEventListener() {
+        mRootRef.child("beautician-profilepromote").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -94,7 +103,7 @@ public class ProfilePromote extends AppCompatActivity {
                         Toast.makeText(ProfilePromote.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                     } else {
 
-                        namepromote.setText(promote.name);
+                        namepromote.setText(promote.username);
                         locationpromote.setText(promote.district+promote.province+" ...");
 
                         if(!promote.BeauticianProfile.equals("")){
@@ -168,6 +177,19 @@ public class ProfilePromote extends AppCompatActivity {
             }
         });
 
+    }
+
+    // up button method
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

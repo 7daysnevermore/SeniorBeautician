@@ -24,7 +24,6 @@ public class GalleryViewHolder extends RecyclerView.ViewHolder  {
 
     public void setImage(Context context, String image){
         ImageView img = (ImageView)mview.findViewById(R.id.post_gall);
-
         Picasso.with(context).load(image).fit().centerCrop().into(img);
     }
 }

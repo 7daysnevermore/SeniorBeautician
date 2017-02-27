@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="@color/row_color"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,188 +19,508 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/crpro"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Offer"
                 android:gravity="center_vertical"
-                android:id="@+id/crpro"
+                android:text="Offer"
                 android:textSize="25dp" />
 
             <ImageView
-                android:layout_width="50dp"
-                android:padding="10dp"
-                android:layout_height="match_parent"
                 android:id="@+id/btn_offer"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
                 android:layout_alignRight="@+id/crpro"
-                android:src="@mipmap/request_70"/>
+                android:padding="10dp"
+                android:src="@mipmap/request_70" />
 
         </RelativeLayout>
-
 
 
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20sp"
                 android:layout_marginRight="20sp"
-                android:layout_marginTop="20sp">
+                android:layout_marginTop="10sp"
+                android:orientation="vertical">
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/ic_launcher"
-                        android:id="@+id/pic_pro"
-                        android:layout_marginRight="52dp"
-                        android:layout_marginEnd="52dp"
-                        android:layout_centerVertical="true"
-                        android:foregroundGravity="center" />
-
-                    <TextView
-                        android:text="Name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tname"
-                        android:layout_gravity="center_vertical" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <TextView
-                        android:text="Service"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="24dp"
-                        android:id="@+id/cusSer"
-                        android:textColor="#FF424242"
-                        android:textStyle="bold"/>
-
-
-                    <TextView
-                        android:text="Event"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cusEv"
-                        android:textSize="16sp"
-                        android:textColor="#FF424242"
-                        android:padding="2dp" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:text="Date"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:textColor="@color/red"
-                            android:id="@+id/cusD"
-                            android:layout_weight="1"
-                            android:padding="5dp" />
-                        <TextView
-                            android:text="Time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:layout_weight="1"
-                            android:textColor="@color/red"
-                            android:id="@+id/cusTime"
-                            android:padding="5dp" />
-                    </LinearLayout>
+                            android:layout_height="match_parent"
+                            android:text="Request Details"
+                            android:gravity="center_vertical"
+                            android:textSize="18sp" />
 
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/down_big_arrow" />
 
-                    <TextView
-                        android:text="Number of person"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#FF424242"
-                        android:textSize="18sp"
-                        android:id="@+id/cusNum"
-                        android:padding="5dp" />
-                    <TextView
-                        android:text="Max price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#FF424242"
-                        android:textSize="18sp"
-                        android:id="@+id/cusMax"
-                        android:padding="5dp" />
-                    <TextView
-                        android:text="Location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:id="@+id/cusLo"
-                        android:textColor="#FF424242"
-                        android:padding="5dp" />
-                    <TextView
-                        android:text="Special Requirement"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:id="@+id/cusSpe"
-                        android:textColor="#FF424242"
-                        android:padding="5dp" />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/up_big_arrow"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/pic_pro"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:foregroundGravity="center"
+                        android:src="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/tname"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="#FF424242"
+                        android:gravity="center_vertical"
+                        android:textSize="18sp"
+                        android:text="Name"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Service: "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/cusSer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Service"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Event: "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/cusEv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Event"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:text="Date: "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/cusD"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Date"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:text="Time: "
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/cusTime"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Time"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:text="Number of person: "/>
+
+                        <TextView
+                            android:id="@+id/cusNum"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Number of person"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:text="Max price: "
+                            android:textSize="16sp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/cusMax"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Max price"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:text="Location: "/>
+
+                        <TextView
+                            android:id="@+id/cusLo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Location"
+                            android:minLines="2"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:text="Special Requirement: "/>
+
+                        <TextView
+                            android:id="@+id/cusSpe"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Special Requirement"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@android:color/darker_gray" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:text="Beautician offer"
+                <Button
+                    android:id="@+id/accept"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bOffer"
-                    android:textSize="20sp" />
+                    android:layout_height="match_parent"
+                    android:text="Accept"
+                    android:layout_weight="1"/>
 
-                <EditText
+                <Button
+                    android:id="@+id/decline"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    android:ems="10"
-                    android:background="@drawable/input_outline"
-                    android:padding="20dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/speB" />
+                    android:layout_height="match_parent"
+                    android:text="Decline"
+                    android:layout_weight="1"/>
 
-                android:id="@+id/edtOff" />
             </LinearLayout>
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/row_color" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/offer_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Offer Details"
+                            android:textSize="18sp"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Price: "
+                            android:textSize="16sp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/input_outline"
+                            android:maxLines="1"
+                            android:hint="x,xxx baht "
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Time: "
+                            android:textSize="16sp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:maxLines="1"
+                            android:hint="hh mm"
+                            android:background="@drawable/input_outline"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Location: "
+                            android:textSize="16sp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="city, province"
+                            android:background="@drawable/input_outline"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/send_offer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="50dp"
+                            android:text="Send Offer"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/row_color" />
+
+        </LinearLayout>
 
 
     </ScrollView>

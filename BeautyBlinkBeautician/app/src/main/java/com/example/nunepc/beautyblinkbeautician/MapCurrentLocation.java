@@ -1,6 +1,10 @@
 package com.example.nunepc.beautyblinkbeautician;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,19 +34,29 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 public class MapCurrentLocation extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,View.OnClickListener  {
 
     private static final String TAG = MapCurrentLocation.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
+    Button uselocation;
+
+    Double lat,lng;
+    String zip;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
@@ -72,6 +87,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        uselocation =(Button) findViewById(R.id.uselocation);
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
@@ -80,10 +96,32 @@ public class MapCurrentLocation extends AppCompatActivity implements
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+        findViewById(R.id.uselocation).setOnClickListener(this);
 
         // Build the Play services client for use by the Fused Location Provider and the Places API.
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.uselocation:
+
+                Intent cPro = new Intent(MapCurrentLocation.this,Register.class);
+                cPro.putExtra("lat",  String.valueOf(lat));
+                cPro.putExtra("lng",  String.valueOf(lng));
+                cPro.putExtra("save_username", getIntent().getStringExtra("save_username"));
+                cPro.putExtra("save_email", getIntent().getStringExtra("save_email"));
+                cPro.putExtra("save_password", getIntent().getStringExtra("save_password"));
+                cPro.putExtra("save_firstname", getIntent().getStringExtra("save_firstname"));
+                cPro.putExtra("save_lastname", getIntent().getStringExtra("save_lastname"));
+                cPro.putExtra("save_birthday", getIntent().getStringExtra("save_birthday"));
+                cPro.putExtra("save_phone", getIntent().getStringExtra("save_phone"));
+                cPro.putExtra("zip", zip);
+                startActivity(cPro);
+                break;
+        }
     }
 
     /**
@@ -215,6 +253,16 @@ public class MapCurrentLocation extends AppCompatActivity implements
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(mCurrentLocation.getLatitude(),
                             mCurrentLocation.getLongitude()), DEFAULT_ZOOM));
+            lat = mCurrentLocation.getLatitude();
+            lng = mCurrentLocation.getLongitude();
+
+
+            // Add marker to current location
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title("Address"));
+
+
         } else {
             Log.d(TAG, "Current location is null. Using defaults.");
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
@@ -308,6 +356,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
         );
     }
 
+
     /**
      * Handles the result of the request for location permissions.
      */
@@ -341,7 +390,7 @@ public class MapCurrentLocation extends AppCompatActivity implements
         if (mLocationPermissionGranted) {
             // Get the businesses and other points of interest located
             // nearest to the device's current location.
-            @SuppressWarnings("MissingPermission")
+            @SuppressWarnings("MissingPermission") final
             PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                     .getCurrentPlace(mGoogleApiClient, null);
             result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
@@ -355,23 +404,29 @@ public class MapCurrentLocation extends AppCompatActivity implements
                         if (attributions != null) {
                             snippet = snippet + "\n" + attributions;
                         }
-
-                        mMap.addMarker(new MarkerOptions()
+                        zip = snippet.substring(Math.max(0, snippet.length() - 15),Math.max(0, snippet.length() - 10));
+                        /*mMap.addMarker(new MarkerOptions()
                                 .position(placeLikelihood.getPlace().getLatLng())
                                 .title((String) placeLikelihood.getPlace().getName())
-                                .snippet(snippet));
+                                .snippet(snippet));*/
+
+
+
                     }
                     // Release the place likelihood buffer.
                     likelyPlaces.release();
                 }
             });
         } else {
-            mMap.addMarker(new MarkerOptions()
+            /*mMap.addMarker(new MarkerOptions()
                     .position(mDefaultLocation)
                     .title(getString(R.string.default_info_title))
-                    .snippet(getString(R.string.default_info_snippet)));
+                    .snippet(getString(R.string.default_info_snippet)));*/
+
         }
     }
+
+
 
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.

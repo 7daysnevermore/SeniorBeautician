@@ -68,6 +68,10 @@
         <activity android:name=".TestNoti" />
         <activity android:name=".Noti_Receive" />
         <activity android:name=".MyBusiness"></activity>
+        <activity android:name=".AddEvent" />
+        <activity android:name=".ShowEvent" />
+        <activity android:name=".EditEvent" />
+        <activity android:name=".EditGallery"></activity>
     </application>
 
 </manifest>

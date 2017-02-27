@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="#1111"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1.16">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Edit Event"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/editevent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="Edit"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:background="#FFFFFF"
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="5sp"
+                android:hint="Title"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <EditText
+                android:background="#FFFFFF"
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:maxLines="2"
+                android:padding="5sp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:background="#FFFFFF"
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notes"
+                android:minLines="3"
+                android:padding="5sp"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <LinearLayout
+                android:paddingLeft="5dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center|left"
+                    android:text="Date:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:id="@+id/date"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="date" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.3"
+                    android:gravity="center|left"
+                    android:text="Start:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/time_start"
+                    android:paddingLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/set_time_start"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1.8"
+                    android:background="@color/bg_grey"
+                    android:onClick="setTime1"
+                    android:text="SET TIME" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2.3"
+                    android:gravity="center|left"
+                    android:text="End:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:paddingLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:id="@+id/time_end"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textSize="22sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/set_time_end"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1.8"
+                    android:background="@color/bg_grey"
+                    android:onClick="setTime2"
+                    android:text="SET TIME" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:background="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Do you still provide services on this day?"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/available"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/yes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Yes"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/no"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="No"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="delete"/>
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</LinearLayout>
