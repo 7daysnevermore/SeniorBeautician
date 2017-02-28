@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@color/row_color"
     android:orientation="vertical">
 
@@ -42,12 +41,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/row_color">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
 
@@ -61,47 +61,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="Request Details"
-                            android:gravity="center_vertical"
-                            android:textSize="18sp" />
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="25dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@mipmap/down_big_arrow" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@mipmap/up_big_arrow"
-                            android:visibility="gone" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
 
@@ -269,7 +229,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textColor="#FF424242"
-                            android:text="Max price: "
+                            android:text="Max price/person: "
                             android:textSize="16sp"
                             android:gravity="center_vertical"
                             android:layout_weight="1"/>
@@ -281,6 +241,32 @@
                             android:layout_weight="1"
                             android:gravity="right"
                             android:text="Max price"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#FF424242"
+                            android:text="Total Amount: "
+                            android:textSize="16sp"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Total"
                             android:textSize="16sp" />
 
                     </LinearLayout>
@@ -334,22 +320,26 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="300dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/special_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/services"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray" />
-
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -376,15 +366,10 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="@color/row_color" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:orientation="vertical">
@@ -406,7 +391,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="Offer Details"
+                            android:text="Send your offer details"
                             android:textSize="18sp"/>
 
                     </LinearLayout>
@@ -432,6 +417,7 @@
                             android:layout_weight="1"/>
 
                         <EditText
+                            android:id="@+id/offer_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/input_outline"
@@ -458,6 +444,7 @@
                             android:layout_weight="1"/>
 
                         <EditText
+                            android:id="@+id/offer_time"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:maxLines="1"
@@ -472,7 +459,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -484,6 +471,7 @@
                             android:layout_weight="1"/>
 
                         <EditText
+                            android:id="@+id/offer_location"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="city, province"
@@ -517,11 +505,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="@color/row_color" />
 
         </LinearLayout>
 

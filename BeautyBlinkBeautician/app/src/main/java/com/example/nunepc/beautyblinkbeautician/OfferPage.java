@@ -47,6 +47,7 @@ public class OfferPage extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private ProgressDialog progressDialog;
     private Button accept, decline, send_offer;
+    private EditText offer_price, offer_time, offer_location;
 
     Toolbar toolbar;
 
@@ -119,6 +120,7 @@ public class OfferPage extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.accept:
                         linear.setVisibility(View.VISIBLE);
+                        offer_price.requestFocus();
                         break;
                 }
             }
