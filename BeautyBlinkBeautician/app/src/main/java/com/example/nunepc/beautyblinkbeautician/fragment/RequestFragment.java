@@ -83,19 +83,16 @@ public class RequestFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_request,container,false);
         initInstance(rootView);
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mAuth.getCurrentUser();
-        //test= ""+mFirebaseUser.getUid().toString();
-        //dref = FirebaseDatabase.getInstance().getReference().child("customer-request/0XIvXEgxomQqZ5XHYiNmuJ7MZfy1"+"/"+mFirebaseUser.getUid().toString() +"/"+"status");
 
         return rootView;
     }
 
     private void initInstance(View rootView){
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("request");
+        mAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("beautician-received").child(mFirebaseUser.getUid());
 
-        Log.d("GG","="+test);
         //professor promotion feeds
         recyclerView =(RecyclerView)rootView.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -111,16 +108,15 @@ public class RequestFragment extends Fragment {
             @Override
             protected void populateViewHolder(final RequestViewHolder viewHolder, final RequestData model, final int position) {
                 //viewHolder.setImage(getActivity().getApplicationContext(),model.getImage());
-                viewHolder.setStatus(model.getStatus());
-                viewHolder.setDate(model.getDate());
-                viewHolder.setEvent(model.getEvent());
-                viewHolder.setMaxprice(model.getMaxprice());
-                viewHolder.setService(model.getService());
+                viewHolder.setStatus(model.status);
+                viewHolder.setDate(model.date);
+                viewHolder.setEvent(model.event);
+                viewHolder.setMaxprice(model.maxprice);
+                viewHolder.setService(model.service);
                 //viewHolder.setColor(model.getColor());
-                viewHolder.setColorcircle(model.getColor());
-                viewHolder.setCurrenttime(model.getCurrenttime());
-                viewHolder.setName(model.getName());
-                viewHolder.setKeyrequest(model.getKeyrequest());
+                viewHolder.setColorcircle("#ff0000");
+                viewHolder.setCurrenttime(model.currenttime);
+                viewHolder.setName(model.username);
                 btnMsg = (ImageView) viewHolder.mview.findViewById(R.id.btnMessage);
                 btnMsg.setOnClickListener(new View.OnClickListener() {
                     final String key = getRef(position).getKey();
@@ -132,7 +128,7 @@ public class RequestFragment extends Fragment {
                     }
                 });
                 //btnStatus = (Button)viewHolder.mview.findViewById(R.id.btnStat);
-                statusDes = (TextView)viewHolder.mview.findViewById(R.id.desStatus);
+                /*statusDes = (TextView)viewHolder.mview.findViewById(R.id.desStatus);
                 String s = statusDes.getText().toString();
                 RequestData rd = new RequestData();
                 rd.setStatus(s);
@@ -140,8 +136,8 @@ public class RequestFragment extends Fragment {
                 String k ="offer";
                 Log.d("GG","="+rd.getStatus());
                 switch (rd.getStatus()){
-                    case "offer":
-                        Log.d("Please","="+rd.getStatus());
+                    case "offer":*/
+                        //Log.d("Please","="+rd.getStatus());
                         // btnStatus.setOnClickListener(new View.OnClickListener() {
                         viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                             final String cshow = getRef(position).getKey();
@@ -150,23 +146,27 @@ public class RequestFragment extends Fragment {
 
                                 HashMap<String, Object> RequestValues = new HashMap<>();
                                 RequestValues.put("key",cshow);
-                                RequestValues.put("service", model.getService());
-                                RequestValues.put("event", model.getEvent());
-                                RequestValues.put("numberofperson", model.getNumberofperson());
-                                RequestValues.put("maxprice", model.getMaxprice());
-                                RequestValues.put("date", model.getDate());
-                                RequestValues.put("time", model.getTime());
-                                RequestValues.put("location", model.getLocation());
-                                RequestValues.put("specialrequest", model.getSpecialrequest());
-                                RequestValues.put("offer",model.getStatus());
-                                RequestValues.put("uid", mFirebaseUser.getUid().toString());
-                                RequestValues.put("name", model.getName());
+                                RequestValues.put("service", model.service);
+                                RequestValues.put("event", model.event);
+                                RequestValues.put("numberofperson", model.numberofperson);
+                                RequestValues.put("maxprice", model.maxprice);
+                                RequestValues.put("date", model.date);
+                                RequestValues.put("time", model.time);
+                                RequestValues.put("location", model.location);
+                                RequestValues.put("specialrequest", model.specialrequest);
+                                RequestValues.put("status",model.status);
+                                RequestValues.put("beauid", mFirebaseUser.getUid().toString());
+                                RequestValues.put("custid", model.customerid);
+                                RequestValues.put("name", model.username);
+                                RequestValues.put("profilecust", model.userprofile);
+                                RequestValues.put("requestpic", model.reqpic);
+                                RequestValues.put("currenttime", model.currenttime);
                                 Intent intent = new Intent(getActivity(),OfferPage.class);
                                 intent.putExtra("request",  RequestValues);
                                 startActivity(intent);
                             }
                         });
-                        break;
+                        /*break;
                     case "confirm":
                         Log.d("Bye","="+rd.getStatus());
                         viewHolder.mview.setOnClickListener(new View.OnClickListener() {
@@ -189,10 +189,10 @@ public class RequestFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(), Toprovide.class);
                                 startActivity(intent);
 
-                            }
-                        });
-                }
-            }
+                            }*/
+                        }
+
+
 
         };
         firebaseRecyclerAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -245,10 +245,6 @@ public class RequestFragment extends Fragment {
             mview=itemView;
 
         }
-        public void setKeyrequest(String keyrequest){
-            TextView tv = (TextView)mview.findViewById(R.id.keyC);
-            tv.setText(keyrequest);
-        }
         public void setName(String name){
             TextView n = (TextView)mview.findViewById(R.id.tname);
             n.setText(name);
@@ -262,9 +258,9 @@ public class RequestFragment extends Fragment {
             post_event.setText(promotion);
 
         }
-        public void setMaxprice(String maxprice){
+        public void setMaxprice(Integer maxprice){
             TextView post_maxprice = (TextView)mview.findViewById(R.id.price_des);
-            post_maxprice.setText(maxprice);
+            post_maxprice.setText(String.valueOf(maxprice));
         }
         public void setService(String service){
             TextView post_service = (TextView)mview.findViewById(R.id.tService);
@@ -275,11 +271,19 @@ public class RequestFragment extends Fragment {
             String s = status;
         }
         public void setStatus(String status){
-            KeepStatus kt = new KeepStatus(status);
-            //Button post_service = (Button)mview.findViewById(R.id.btnStat);
-            //post_service.setText(kt.getStatus());
+            String finalstatus = null;
+            if(status.equals("1")||status.equals("2")){
+                finalstatus = "Offer";
+            }
+            if(status.equals("2")){ finalstatus = "To hire"; }
+            if(status.equals("3")){ finalstatus = "To pay"; }
+            if(status.equals("4")){ finalstatus = "To provide"; }
+            if(status.equals("5")){ finalstatus = "Completed"; }
+            if (status.equals("6")) {
+                finalstatus = "Cancel";
+            }
             TextView tx = (TextView)mview.findViewById(R.id.desStatus);
-            tx.setText(status);
+            tx.setText(finalstatus);
         }
         public void setColorcircle(String color){
                 ImageView cC = (ImageView)mview.findViewById(R.id.cirNoti);
@@ -292,11 +296,6 @@ public class RequestFragment extends Fragment {
                 //GradientDrawable bgShape = (GradientDrawable)cC.getBackground();
                 //bgShape.setColor(Color.parseColor(color));
             }
-        public void setColor(String color){
-            LinearLayout cC = (LinearLayout)mview.findViewById(R.id.ch_color);
-            cC.setBackgroundColor(Color.parseColor(color));
-
-        }
         public void setCurrenttime(String currenttime){
             TextView tm= (TextView)mview.findViewById(R.id.btnTime);
             RequestData r = new RequestData();

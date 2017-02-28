@@ -436,6 +436,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/input_outline"
                             android:maxLines="1"
+                            android:id="@+id/offer_price"
                             android:hint="x,xxx baht "
                             android:layout_weight="1"/>
 
@@ -461,6 +462,7 @@
                             android:layout_height="match_parent"
                             android:maxLines="1"
                             android:hint="hh mm"
+                            android:id="@+id/offer_time"
                             android:background="@drawable/input_outline"
                             android:layout_weight="1"/>
 
@@ -485,6 +487,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="city, province"
+                            android:id="@+id/offer_location"
                             android:background="@drawable/input_outline"
                             android:layout_weight="1"/>
 

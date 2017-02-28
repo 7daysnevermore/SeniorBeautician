@@ -39,10 +39,9 @@ public class OfferPage extends AppCompatActivity {
 
     private TextView date, service, event, time, special, location, maxprice, numofPer, name;
     HashMap<String, Object> requestValues;
+    private EditText offer_price,offer_time,offer_location;
     private ImageView btnOffer;
-    private EditText spe_b;
-    private String username;
-    private String k,keyC;
+    private String username,beaupic;
     String uid;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -73,9 +72,8 @@ public class OfferPage extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 if (user == null) {
                 } else {
-                    Toast.makeText(OfferPage.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
-                    username = user.firstname;
-                    Log.d("name1",""+username);
+                    username = user.username;
+                    beaupic = user.profile;
                 }
             }
 
@@ -94,9 +92,10 @@ public class OfferPage extends AppCompatActivity {
         maxprice = (TextView) findViewById(R.id.cusMax);
         name = (TextView) findViewById(R.id.tname);
         numofPer = (TextView) findViewById(R.id.cusNum);
-        //spe_b = (EditText)findViewById(R.id.speB);
+        offer_price = (EditText)findViewById(R.id.offer_price);
+        offer_time = (EditText) findViewById(R.id.offer_time);
+        offer_location = (EditText) findViewById(R.id.offer_location);
 
-        k = requestValues.get("key").toString();
         date.setText(requestValues.get("date").toString());
         service.setText(requestValues.get("service").toString());
         event.setText(requestValues.get("event").toString());
@@ -107,11 +106,6 @@ public class OfferPage extends AppCompatActivity {
         special.setText(requestValues.get("specialrequest").toString());
         name.setText(requestValues.get("name").toString());
 
-
-        //DatabaseReference r = FirebaseDatabase.getInstance().getReference().child("request");
-
-        //location.setText(requestValues.get("location").toString());
-        // findViewById(R.id.btn_editpromotion).setOnClickListener((View.OnClickListener) this);
         btnOffer = (ImageView) findViewById(R.id.btn_offer);
 
         accept = (Button) findViewById(R.id.accept);
@@ -135,6 +129,8 @@ public class OfferPage extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.decline:
+                        DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference().child("beautician-received").child(uid);
+                        mRootRef.child(requestValues.get("key").toString()).removeValue();
                         Intent intent = new Intent(OfferPage.this,MainActivity.class);
                         intent.putExtra("menu","request");
                         startActivity(intent);
@@ -146,109 +142,76 @@ public class OfferPage extends AppCompatActivity {
         send_offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.send_offer:
-                        Intent intent2 = new Intent(OfferPage.this,MainActivity.class);
-                        intent2.putExtra("menu","request");
-                        startActivity(intent2);
-                        break;
-                }
-            }
-        });
+                final String input_offer_price = offer_price.getText().toString();
+                final String input_offer_time = offer_time.getText().toString();
+                final String input_offer_location = offer_location.getText().toString();
 
-
-        btnOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final String d = date.getText().toString();
-                final String ser = service.getText().toString();
-                final String eve = event.getText().toString();
-                final String maxP = maxprice.getText().toString();
-                final String numP = numofPer.getText().toString();
-                final String ti = time.getText().toString();
-                final String specus = special.getText().toString();
-                final String locate = location.getText().toString();
-                final String spebeau = spe_b.getText().toString();
-                final String ke = k;
-                final String status = "offer-pro";
-
-                if (!TextUtils.isEmpty(d) && !TextUtils.isEmpty(ser) &&
-                        !TextUtils.isEmpty(eve) && !TextUtils.isEmpty(ti) &&
-                        !TextUtils.isEmpty(specus) && !TextUtils.isEmpty(locate) &&
-                        !TextUtils.isEmpty(spebeau) && !TextUtils.isEmpty(status) &&
-                        !TextUtils.isEmpty(maxP) && !TextUtils.isEmpty(numP)) {
+                if (!TextUtils.isEmpty(input_offer_price)) {
                     //Create root of Request
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference mRequestRef = mRootRef.child("offer");
+                    DatabaseReference mRequestRef = mRootRef.child("offer1");
 
                     String key = mRequestRef.push().getKey();
 
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat currenttime = new SimpleDateFormat("MMM dd yyyy hh:mm a");
                     String dateform = currenttime.format(c.getTime());
-                    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("request"+"/"+ke);
-                    //mRef.child("status").setValue("toprovide");
-                    //mRef.child("color").setValue("#85FC56");
+
                     final HashMap<String, Object> RequestValues = new HashMap<String, Object>();
-                    RequestValues.put("date", d);
-                    RequestValues.put("service", ser);
-                    RequestValues.put("event", eve);
-                    RequestValues.put("maxprice", maxP);
-                    RequestValues.put("numberofcustomer", numP);
-                    RequestValues.put("time", ti);
-                    RequestValues.put("specialcus", specus);
-                    RequestValues.put("beauticianoffer", spebeau);
-                    RequestValues.put("location", locate);
-                    RequestValues.put("status", status);
-                    //RequestValues.put("beauid",)
-                    RequestValues.put("dateform",dateform);
-                    RequestValues.put("uid", uid);
-                    RequestValues.put("key", key);
-                    RequestValues.put("namecus", requestValues.get("name").toString());
-                    RequestValues.put("namebeau",username);
-                    RequestValues.put("color", 0xFFFFFF);
-
-                    final HashMap<String, Object> changestatus = new HashMap<String, Object>();
-                    changestatus.put("afterofferstatus","toprovide");
-                    changestatus.put("afteroffercolor","#85FC56");
-                    changestatus.put("namecus", requestValues.get("name").toString());
-                    changestatus.put("date", d);
-                    changestatus.put("maxprice", maxP);
-                    changestatus.put("numberofcustomer",numP);
-                    changestatus.put("time", ti);
-                    changestatus.put("specialcus", specus);
-                    changestatus.put("beauticianoffer", spebeau);
-                    changestatus.put("location",locate);
-                    changestatus.put("currenttime",dateform);
-                    changestatus.put("event",eve);
-                    changestatus.put("service", ser);
-
-
-
-                    final HashMap<String, Object> keepkey = new HashMap<String, Object>();
-                    keepkey.put("key",key);
-                    keepkey.put("uid",uid);
-
+                    RequestValues.put("offerid", key);
+                    RequestValues.put("requestid", requestValues.get("key").toString());
+                    RequestValues.put("service", requestValues.get("service").toString());
+                    RequestValues.put("event", requestValues.get("event").toString());
+                    RequestValues.put("username", requestValues.get("name").toString());
+                    if(requestValues.get("profilecust")!=null){
+                        RequestValues.put("userprofile", requestValues.get("profilecust").toString());
+                    }
+                    RequestValues.put("beauname", username);
+                    RequestValues.put("beauprofile", beaupic);
+                    RequestValues.put("numberofperson", requestValues.get("numberofperson").toString());
+                    RequestValues.put("price", input_offer_price);
+                    RequestValues.put("amount", Integer.parseInt(input_offer_price) * Integer.parseInt(requestValues.get("numberofperson").toString()));
+                    RequestValues.put("date", requestValues.get("numberofperson").toString());
+                    if (input_offer_time.equals(null)) {
+                        RequestValues.put("time", input_offer_time);
+                    } else {
+                        RequestValues.put("time", requestValues.get("time").toString());
+                    }
+                    if (input_offer_location.equals(null)) {
+                        RequestValues.put("location", input_offer_location);
+                    } else {
+                        RequestValues.put("location", requestValues.get("location").toString());
+                    }
+                    RequestValues.put("specialrequest", requestValues.get("specialrequest").toString());
+                    RequestValues.put("status", "2");
+                    RequestValues.put("customerid", requestValues.get("custid").toString());
+                    RequestValues.put("currenttime", dateform);
+                    RequestValues.put("reqpic", requestValues.get("requestpic").toString());
+                    RequestValues.put("offerpic", "");
+                    RequestValues.put("beauid", mFirebaseUser.getUid().toString());
 
                     Map<String, Object> childUpdate = new HashMap<>();
                     //childUpdate.put("/request/"+ke,changestatus);
-                    childUpdate.put("/offer/"+ke+"/" + key, RequestValues);
-                    childUpdate.put("/beautician-offer/" + mFirebaseUser.getUid().toString() + "/" + key, RequestValues);
-                    childUpdate.put("/beautician-key/" + ke, keepkey);
+                    childUpdate.put("/offer1/" + key, RequestValues);
+                    childUpdate.put("/beautician-offer1/" + mFirebaseUser.getUid().toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
+                    childUpdate.put("/customer-received/" + requestValues.get("custid").toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
                     mRootRef.updateChildren(childUpdate);
-                    //Map<String, Object> childUpdate1 = new HashMap<>();
-                    mRootRef.child("beauticianbusiness/"+mFirebaseUser.getUid().toString()+"/"+key).updateChildren(changestatus);
-                   // mRootRef.child("beauticianbusiness/"+mFirebaseUser.getUid().toString()+"/"+key).updateChildren(RequestValues);
 
-                   // progressDialog.dismiss();
-                    Intent intent = new Intent(OfferPage.this,MainActivity.class);
-                    startActivity(intent);
+                    final DatabaseReference mCustReqRef = mRootRef.child("customer-request1").child(requestValues.get("custid").toString()).child(requestValues.get("key").toString());
+                    final DatabaseReference mBeauReqRef = mRootRef.child("beautician-received").child(mFirebaseUser.getUid().toString()).child(requestValues.get("key").toString());
 
+                    mCustReqRef.child("status").setValue("2");
+                    mBeauReqRef.child("status").setValue("2");
+                    // progressDialog.dismiss();
+                    Intent intent2 = new Intent(OfferPage.this, MainActivity.class);
+                    intent2.putExtra("menu", "request");
+                    startActivity(intent2);
                 }
             }
-
         });
+
+
+
 
     }
 
