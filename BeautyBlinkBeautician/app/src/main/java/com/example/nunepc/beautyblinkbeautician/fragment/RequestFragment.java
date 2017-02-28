@@ -23,15 +23,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.nunepc.beautyblinkbeautician.CancelFragment;
+import com.example.nunepc.beautyblinkbeautician.CompletedFragment;
 import com.example.nunepc.beautyblinkbeautician.Confirm;
 import com.example.nunepc.beautyblinkbeautician.EditProfile;
 import com.example.nunepc.beautyblinkbeautician.MainActivity;
 import com.example.nunepc.beautyblinkbeautician.MessagePage;
+import com.example.nunepc.beautyblinkbeautician.Offer;
 import com.example.nunepc.beautyblinkbeautician.OfferPage;
 import com.example.nunepc.beautyblinkbeautician.Promotion;
 import com.example.nunepc.beautyblinkbeautician.PromotionDetails;
 import com.example.nunepc.beautyblinkbeautician.R;
+import com.example.nunepc.beautyblinkbeautician.ToPayFragment;
+import com.example.nunepc.beautyblinkbeautician.TohireFragment;
 import com.example.nunepc.beautyblinkbeautician.Toprovide;
+import com.example.nunepc.beautyblinkbeautician.ToprovideFragment;
 import com.example.nunepc.beautyblinkbeautician.model.DataPromotion;
 import com.example.nunepc.beautyblinkbeautician.model.KeepStatus;
 import com.example.nunepc.beautyblinkbeautician.model.RequestData;
@@ -65,7 +71,7 @@ public class RequestFragment extends Fragment {
     private DatabaseReference databaseReference, dref;
     private LinearLayout createReq;
     private String test;
-    private Button btnStatus;
+    private Button btnOf,btnTopay,btnTopr,btnToh,btnCan,btnCom;
     private ImageView btnMsg;
 
     public RequestFragment(){ super(); }
@@ -88,6 +94,13 @@ public class RequestFragment extends Fragment {
     }
 
     private void initInstance(View rootView){
+        btnOf= (Button)rootView.findViewById(R.id.btnOffer);
+        btnToh= (Button)rootView.findViewById(R.id.btnTohire);
+        btnTopay= (Button)rootView.findViewById(R.id.btnTopay);
+        btnTopr = (Button)rootView.findViewById(R.id.btnToprovide);
+        btnCom= (Button)rootView.findViewById(R.id.btnCompleted);
+        btnCan= (Button)rootView.findViewById(R.id.btnCancel);
+
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -215,7 +228,66 @@ public class RequestFragment extends Fragment {
         recyclerView.setAdapter(firebaseRecyclerAdapter);
         recyclerView.setLayoutManager(mLayoutManager);
 
-
+        btnOf.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    recyclerView.setVisibility(View.GONE);
+                    android.support.v4.app.FragmentManager fm = getFragmentManager();
+                    android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.contentstatus, new Offer(), "fragment_screen");
+                    ft.commit();
+                }
+            });
+        btnToh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new TohireFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnTopr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new ToprovideFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnTopay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new ToPayFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnCom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new CompletedFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnCan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new CancelFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
     }
 
     @Override
