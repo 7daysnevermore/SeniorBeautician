@@ -132,7 +132,9 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 //NavUtils.navigateUpFromSameTask(this);
-                onBackPressed();
+                Intent intent = new Intent(ViewProfile.this,MainActivity.class);
+                intent.putExtra("menu","setting");
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

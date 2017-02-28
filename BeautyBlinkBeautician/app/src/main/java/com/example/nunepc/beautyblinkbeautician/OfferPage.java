@@ -65,9 +65,7 @@ public class OfferPage extends AppCompatActivity {
         requestValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("request");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-<<<<<<<
 
-=======
         date = (TextView) findViewById(R.id.cusD);
         service = (TextView) findViewById(R.id.cusSer);
         event = (TextView) findViewById(R.id.cusEv);
@@ -83,7 +81,6 @@ public class OfferPage extends AppCompatActivity {
         offer_time = (EditText) findViewById(R.id.offer_time);
         offer_location = (EditText) findViewById(R.id.offer_location);
 
->>>>>>>
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         uid = mFirebaseUser.getUid().toString();
         mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {

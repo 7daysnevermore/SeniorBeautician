@@ -62,9 +62,7 @@
         <activity android:name=".Confirm" />
         <activity android:name=".GalleryDetails" />
         <activity android:name=".PostGallery" />
-<<<<<<<
 
-=======
         <activity android:name=".AddEvent" />
         <activity android:name=".MessagePage"></activity>
         <activity android:name=".MapCurrentLocation"/>
@@ -72,14 +70,8 @@
         <activity android:name=".EditEvent" />
         <activity android:name=".TestNoti"></activity>
         <activity android:name=".EditGallery"></activity>
->>>>>>>
-        <activity android:name=".OpenPhoto" />
         <activity android:name=".Noti_Receive" />
         <activity android:name=".MyBusiness"></activity>
-        <activity android:name=".AddEvent" />
-        <activity android:name=".ShowEvent" />
-        <activity android:name=".EditEvent" />
-        <activity android:name=".EditGallery"></activity>
     </application>
 
 </manifest>
