@@ -65,6 +65,9 @@ public class OfferPage extends AppCompatActivity {
         requestValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("request");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
+<<<<<<<
+
+=======
         date = (TextView) findViewById(R.id.cusD);
         service = (TextView) findViewById(R.id.cusSer);
         event = (TextView) findViewById(R.id.cusEv);
@@ -80,6 +83,7 @@ public class OfferPage extends AppCompatActivity {
         offer_time = (EditText) findViewById(R.id.offer_time);
         offer_location = (EditText) findViewById(R.id.offer_location);
 
+>>>>>>>
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         uid = mFirebaseUser.getUid().toString();
         mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -100,6 +104,18 @@ public class OfferPage extends AppCompatActivity {
 
             }
         });
+
+        date = (TextView) findViewById(R.id.cusD);
+        service = (TextView) findViewById(R.id.cusSer);
+        event = (TextView) findViewById(R.id.cusEv);
+        time = (TextView) findViewById(R.id.cusTime);
+        special = (TextView) findViewById(R.id.cusSpe);
+        location = (TextView) findViewById(R.id.cusLo);
+        maxprice = (TextView) findViewById(R.id.cusMax);
+        name = (TextView) findViewById(R.id.tname);
+        numofPer = (TextView) findViewById(R.id.cusNum);
+        //spe_b = (EditText)findViewById(R.id.speB);
+
 
         k = requestValues.get("key").toString();
         date.setText(requestValues.get("date").toString());
