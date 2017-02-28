@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,83 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <HorizontalScrollView
 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnOffer"
+                android:text="Offer"
+                android:textStyle="bold"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textSize="14dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnTohire"
+                android:text="To hire"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnTopay"
+                android:text="To pay"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnToprovide"
+                android:text="To provide"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCompleted"
+                android:text="Completed"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnCancel"
+                android:text="Cancel"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textStyle="bold"
+                android:textSize="14dp"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -17,8 +93,16 @@
         android:layout_alignParentStart="true" />
 
 
+    <FrameLayout
+        android:id="@+id/contentstatus"
+        android:layout_width="match_parent"
+        android:background="@color/even_color"
+        android:layout_height="wrap_content"
+        android:layout_weight="15">
+
+    </FrameLayout>
 
 
 
 
-</RelativeLayout>
+</LinearLayout>
