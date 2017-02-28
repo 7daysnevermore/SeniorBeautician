@@ -35,7 +35,7 @@ public class GalleryDetails extends AppCompatActivity {
         galleryValue = (HashMap<String, Object>) getIntent().getExtras().getSerializable("gallery");
 
         Picasso.with(this).load(galleryValue.get("image").toString()).into(picpost);
-        name.setText(galleryValue.get("username").toString());
+        //name.setText(galleryValue.get("username").toString());
         caption.setText(galleryValue.get("caption").toString());
 
 

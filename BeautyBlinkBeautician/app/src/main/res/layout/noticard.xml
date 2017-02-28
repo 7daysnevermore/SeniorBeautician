@@ -3,73 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/ch_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ch_color"
-        >
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:id="@+id/pic_pro"
-
-                    android:layout_centerVertical="true"
-                    android:foregroundGravity="center" />
-
-                <TextView
-                    android:text="Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tname"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical" />
-                <TextView
-
-                    android:text="Description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/des" />
-            </LinearLayout>
-
-
-
-        </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:gravity="right">
+                android:layout_height="68dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:text="hh:mm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnTime"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="250dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.1">
 
-                    android:gravity="top|right" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/pic_pro"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:src="@mipmap/services" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/btnTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:textColor="#C0C0C0"
+                            android:textSize="11sp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="5dp"
+                            android:text="hh:mm" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:id="@+id/notify_text"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true">
+
+                            <TextView
+                                android:id="@+id/tname1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:paddingRight="10dp"
+                                android:layout_weight="1.3"
+                                android:gravity="bottom"
+                                android:textSize="14sp"
+                                android:text="Name" />
+
+                            <TextView
+                                android:id="@+id/tname2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:textSize="14sp"
+                                android:text="Name" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

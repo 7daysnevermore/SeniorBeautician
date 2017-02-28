@@ -1,6 +1,7 @@
 package com.example.nunepc.beautyblinkbeautician.fragment;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -78,8 +79,7 @@ public class NotiFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final NotiViewHolder viewHolder,final DataNoti model,final int position) {
-                viewHolder.setName(model.getName());
-                viewHolder.setDescription(model.getName(),model.getService(),model.getEvent());
+                viewHolder.setName(model.getName(),model.getService(),model.getEvent());
                 viewHolder.setCurrenttime(model.getCurrenttime());
 
             }
@@ -132,13 +132,12 @@ public class NotiFragment extends Fragment {
             super(itemView);
             mview=itemView;
         }
-        public void setName(String name){
-            TextView txname = (TextView)mview.findViewById(R.id.tname);
-            txname.setText(name);
-        }
-        public void setDescription(String name,String service,String event){
-            TextView txdes = (TextView)mview.findViewById(R.id.des);
-            txdes.setText("need to call"+service+"for"+event+"event");
+        public void setName(String name,String service,String event){
+            TextView txname1 = (TextView)mview.findViewById(R.id.tname1);
+            TextView txname2 = (TextView)mview.findViewById(R.id.tname2);
+            txname1.setTypeface(null, Typeface.BOLD);
+            txname1.setText(name);
+            txname2.setText(" need to call " + service + " for " + event + " event.");
         }
         public void setCurrenttime(String currenttime){
             TextView tm= (TextView)mview.findViewById(R.id.btnTime);
