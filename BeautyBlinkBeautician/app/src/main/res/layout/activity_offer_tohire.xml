@@ -300,7 +300,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@color/row_color" />
+                android:background="@color/wallet_bright_foreground_holo_dark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
