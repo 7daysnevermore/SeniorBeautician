@@ -13,5 +13,6 @@
     <color name="row_color">#CECCCC</color>
     <color name="hint_text_color">#ABA0A0</color>
     <color name="white">#FFFFFF</color>
+    <color name="ratingstar">#FFCC00</color>
 
 </resources>

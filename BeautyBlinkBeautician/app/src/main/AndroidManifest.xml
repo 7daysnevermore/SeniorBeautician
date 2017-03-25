@@ -69,7 +69,7 @@
         <activity android:name=".EditEvent" />
         <activity android:name=".TestNoti"></activity>
         <activity android:name=".EditGallery"></activity>
-        <activity android:name=".OpenPhoto" />
+        <activity android:name=".HiredDetails" />
         <activity android:name=".Noti_Receive" />
         <activity android:name=".MyBusiness"></activity>
     </application>

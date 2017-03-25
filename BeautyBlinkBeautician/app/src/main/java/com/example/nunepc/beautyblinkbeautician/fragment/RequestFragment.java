@@ -27,6 +27,7 @@ import com.example.nunepc.beautyblinkbeautician.CancelFragment;
 import com.example.nunepc.beautyblinkbeautician.CompletedFragment;
 import com.example.nunepc.beautyblinkbeautician.Confirm;
 import com.example.nunepc.beautyblinkbeautician.EditProfile;
+import com.example.nunepc.beautyblinkbeautician.HiredDetails;
 import com.example.nunepc.beautyblinkbeautician.MainActivity;
 import com.example.nunepc.beautyblinkbeautician.MessagePage;
 import com.example.nunepc.beautyblinkbeautician.Offer;
@@ -174,9 +175,18 @@ public class RequestFragment extends Fragment {
                                 RequestValues.put("profilecust", model.userprofile);
                                 RequestValues.put("requestpic", model.reqpic);
                                 RequestValues.put("currenttime", model.currenttime);
-                                Intent intent = new Intent(getActivity(),OfferPage.class);
-                                intent.putExtra("request",  RequestValues);
-                                startActivity(intent);
+
+                                if(model.status.equals("1")||model.status.equals("2")){
+                                    Intent intent = new Intent(getActivity(),OfferPage.class);
+                                    intent.putExtra("request",  RequestValues);
+                                    startActivity(intent);
+                                }
+                                if (model.status.equals("3") || model.status.equals("4") || model.status.equals("5")|| model.status.equals("6")|| model.status.equals("7")) {
+                                    Intent intent = new Intent(getActivity(), HiredDetails.class);
+                                    intent.putExtra("status",model.status);
+                                    intent.putExtra("request", RequestValues);
+                                    startActivity(intent);
+                                }
                             }
                         });
                         /*break;
