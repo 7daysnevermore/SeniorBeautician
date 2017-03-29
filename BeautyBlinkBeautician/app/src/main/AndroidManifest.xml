@@ -62,6 +62,7 @@
         <activity android:name=".Confirm" />
         <activity android:name=".GalleryDetails" />
         <activity android:name=".PostGallery" />
+        <activity android:name=".VerifiedShow"></activity>
 
         <activity android:name=".AddEvent" />
         <activity android:name=".MessagePage"></activity>
