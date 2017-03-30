@@ -121,14 +121,14 @@ public class RequestFragment extends Fragment {
 
             @Override
             protected void populateViewHolder(final RequestViewHolder viewHolder, final RequestData model, final int position) {
-                //viewHolder.setImage(getActivity().getApplicationContext(),model.getImage());
+                if(model.userprofile!=null){
+                    viewHolder.setProfile(getActivity().getApplicationContext(),model.userprofile);
+                }
                 viewHolder.setStatus(model.status);
                 viewHolder.setDate(model.date);
                 viewHolder.setEvent(model.event);
                 viewHolder.setMaxprice(model.maxprice);
                 viewHolder.setService(model.service);
-                //viewHolder.setColor(model.getColor());
-                viewHolder.setColorcircle("#ff0000");
                 viewHolder.setCurrenttime(model.currenttime);
                 viewHolder.setName(model.username);
                 btnMsg = (ImageView) viewHolder.mview.findViewById(R.id.btnMessage);
@@ -176,12 +176,12 @@ public class RequestFragment extends Fragment {
                                 RequestValues.put("requestpic", model.reqpic);
                                 RequestValues.put("currenttime", model.currenttime);
 
-                                if(model.status.equals("1")||model.status.equals("2")){
+                                if(model.status.equals("1")){
                                     Intent intent = new Intent(getActivity(),OfferPage.class);
                                     intent.putExtra("request",  RequestValues);
                                     startActivity(intent);
                                 }
-                                if (model.status.equals("3") || model.status.equals("4") || model.status.equals("5")|| model.status.equals("6")|| model.status.equals("7")) {
+                                if (model.status.equals("3") ||model.status.equals("2") || model.status.equals("4") || model.status.equals("5")|| model.status.equals("6")|| model.status.equals("7")) {
                                     Intent intent = new Intent(getActivity(), HiredDetails.class);
                                     intent.putExtra("status",model.status);
                                     intent.putExtra("request", RequestValues);
@@ -327,6 +327,10 @@ public class RequestFragment extends Fragment {
             mview=itemView;
 
         }
+        public void setProfile(Context context, String img){
+            ImageView tv =(ImageView)mview.findViewById(R.id.pic_pro);
+            Picasso.with(context).load(img).into(tv);
+        }
         public void setName(String name){
             TextView n = (TextView)mview.findViewById(R.id.tname);
             n.setText(name);
@@ -354,15 +358,19 @@ public class RequestFragment extends Fragment {
         }
         public void setStatus(String status){
             String finalstatus = null;
-            if(status.equals("1")||status.equals("2")){
+            if(status.equals("1")){
                 finalstatus = "Offer";
+                setColorcircle("#33CC33");
             }
-            if(status.equals("2")){ finalstatus = "To hire"; }
-            if(status.equals("3")){ finalstatus = "To pay"; }
-            if(status.equals("4")){ finalstatus = "To provide"; }
-            if(status.equals("5")){ finalstatus = "Completed"; }
-            if (status.equals("6")) {
+            if(status.equals("2")){ finalstatus = "To hire"; setColorcircle("#66CCFF");}
+            if(status.equals("3")){ finalstatus = "To confirm"; setColorcircle("#FFFF33"); }
+            if(status.equals("4")){ finalstatus = "To pay"; setColorcircle("#FF9933"); }
+            if(status.equals("5")){ finalstatus = "To provide"; setColorcircle("#FF0000");  }
+            if(status.equals("6")){ finalstatus = "To review"; setColorcircle("#660033"); }
+            if(status.equals("7")){ finalstatus = "Completed"; setColorcircle("#696969");}
+            if (status.equals("8")) {
                 finalstatus = "Cancel";
+                setColorcircle("#F5F5F5");
             }
             TextView tx = (TextView)mview.findViewById(R.id.desStatus);
             tx.setText(finalstatus);

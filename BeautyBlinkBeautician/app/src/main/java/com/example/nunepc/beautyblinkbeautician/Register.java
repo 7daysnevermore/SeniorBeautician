@@ -123,6 +123,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         dateView = (TextView) findViewById(R.id.button1);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
         birthday = (TextView) findViewById(R.id.birthdate);
 
         inputUsername = (EditText) findViewById(R.id.username);
@@ -466,6 +468,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                         ProfilePromoteValues.put("picture2", "");
                                         ProfilePromoteValues.put("picture3", "");
                                         ProfilePromoteValues.put("rating", "");
+                                        ProfilePromoteValues.put("sumrate", 0);
+                                        ProfilePromoteValues.put("custnumber", 0);
 
                                         Map<String, Object> childUpdate = new HashMap<>();
                                         childUpdate.put("/profilepromote/" + key, ProfilePromoteValues);
@@ -541,6 +545,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                                 ProfilePromoteValues.put("picture2", "");
                                 ProfilePromoteValues.put("picture3", "");
                                 ProfilePromoteValues.put("rating", "");
+                                ProfilePromoteValues.put("sumrate", 0);
+                                ProfilePromoteValues.put("custnumber", 0);
 
 
                                 Map<String, Object> childUpdate = new HashMap<>();

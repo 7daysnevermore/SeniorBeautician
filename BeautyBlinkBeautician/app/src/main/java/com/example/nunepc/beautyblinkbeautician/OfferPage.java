@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
 import com.example.nunepc.beautyblinkbeautician.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -39,14 +44,18 @@ public class OfferPage extends AppCompatActivity {
 
     private TextView date, service, event, time, special, location, maxprice, numofPer, name;
     HashMap<String, Object> requestValues;
+    private int SELECT_FILE =1;
+    private Uri imageUri = null;
     private EditText offer_price,offer_time,offer_location;
-    private ImageView btnOffer;
+    private ImageView special_img,offer_image,btnOffer;
     private String username,beaupic;
+    private StorageReference storageReference,filepath;
     String uid;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ProgressDialog progressDialog;
     private Button accept, decline, send_offer;
+    String status;
 
     Toolbar toolbar;
 
@@ -60,6 +69,8 @@ public class OfferPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        status = getIntent().getStringExtra("status");
+
         requestValues = (HashMap<String, Object>) getIntent().getExtras().getSerializable("request");
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -72,13 +83,18 @@ public class OfferPage extends AppCompatActivity {
         maxprice = (TextView) findViewById(R.id.cusMax);
         name = (TextView) findViewById(R.id.tname);
         numofPer = (TextView) findViewById(R.id.cusNum);
-        //spe_b = (EditText)findViewById(R.id.speB);
+        special_img = (ImageView) findViewById(R.id.special_img);
+
+        if(!requestValues.get("requestpic").toString().equals("")){
+            Picasso.with(getApplicationContext()).load(requestValues.get("requestpic").toString()).into(special_img);
+        }
 
         offer_price = (EditText) findViewById(R.id.offer_price);
         offer_time = (EditText) findViewById(R.id.offer_time);
         offer_location = (EditText) findViewById(R.id.offer_location);
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
         uid = mFirebaseUser.getUid().toString();
         mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,6 +145,17 @@ public class OfferPage extends AppCompatActivity {
         final LinearLayout linear = (LinearLayout) findViewById(R.id.offer_detail);
         send_offer = (Button) findViewById(R.id.send_offer);
 
+
+        offer_image = (ImageView) findViewById(R.id.offer_image);
+        offer_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,SELECT_FILE);
+            }
+        });
+
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,72 +190,96 @@ public class OfferPage extends AppCompatActivity {
                 final String input_offer_time = offer_time.getText().toString();
                 final String input_offer_location = offer_location.getText().toString();
 
-                if (!TextUtils.isEmpty(input_offer_price)) {
+                if (!TextUtils.isEmpty(input_offer_price)&&imageUri!=null) {
+
+                    filepath = storageReference.child("Request").child(imageUri.getLastPathSegment());
+                    filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Uri dowloadUrl = taskSnapshot.getDownloadUrl();
+
+                            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference mRequestRef = mRootRef.child("offer1");
+
+                            String key = mRequestRef.push().getKey();
+
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat currenttime = new SimpleDateFormat("MMM dd yyyy hh:mm a");
+                            String dateform = currenttime.format(c.getTime());
+
+                            final HashMap<String, Object> RequestValues = new HashMap<String, Object>();
+                            RequestValues.put("offerid", key);
+                            RequestValues.put("requestid", requestValues.get("key").toString());
+                            RequestValues.put("service", requestValues.get("service").toString());
+                            RequestValues.put("event", requestValues.get("event").toString());
+                            RequestValues.put("username", requestValues.get("name").toString());
+                            if(requestValues.get("profilecust")!=null){
+                                RequestValues.put("userprofile", requestValues.get("profilecust").toString());
+                            }
+                            RequestValues.put("beauname", username);
+                            RequestValues.put("beauprofile", beaupic);
+                            RequestValues.put("numberofperson", requestValues.get("numberofperson").toString());
+                            RequestValues.put("price", input_offer_price);
+                            RequestValues.put("amount", Integer.parseInt(input_offer_price) * Integer.parseInt(requestValues.get("numberofperson").toString()));
+                            RequestValues.put("date", requestValues.get("date").toString());
+                            if (input_offer_time.equals(null)) {
+                                RequestValues.put("time", input_offer_time);
+                            } else {
+                                RequestValues.put("time", requestValues.get("time").toString());
+                            }
+                            if (input_offer_location.equals(null)) {
+                                RequestValues.put("location", input_offer_location);
+                            } else {
+                                RequestValues.put("location", requestValues.get("location").toString());
+                            }
+                            RequestValues.put("specialrequest", requestValues.get("specialrequest").toString());
+                            RequestValues.put("status", "2");
+                            RequestValues.put("customerid", requestValues.get("custid").toString());
+                            RequestValues.put("currenttime", dateform);
+                            RequestValues.put("reqpic", requestValues.get("requestpic").toString());
+                            RequestValues.put("offerpic", dowloadUrl.toString());
+                            RequestValues.put("beauid", mFirebaseUser.getUid().toString());
+
+                            Map<String, Object> childUpdate = new HashMap<>();
+                            //childUpdate.put("/request/"+ke,changestatus);
+                            childUpdate.put("/offer1/" + key, RequestValues);
+                            childUpdate.put("/beautician-offer1/" + mFirebaseUser.getUid().toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
+                            childUpdate.put("/customer-received/" + requestValues.get("custid").toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
+                            mRootRef.updateChildren(childUpdate);
+
+                            final DatabaseReference mCustReqRef = mRootRef.child("customer-request1").child(requestValues.get("custid").toString()).child(requestValues.get("key").toString());
+                            final DatabaseReference mBeauReqRef = mRootRef.child("beautician-received").child(mFirebaseUser.getUid().toString()).child(requestValues.get("key").toString());
+
+                            mCustReqRef.child("status").setValue("2");
+                            mBeauReqRef.child("status").setValue("2");
+                            // progressDialog.dismiss();
+                            Intent intent2 = new Intent(OfferPage.this, MainActivity.class);
+                            intent2.putExtra("menu", "request");
+                            startActivity(intent2);
+
+                        }
+                    });
                     //Create root of Request
-                    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                    DatabaseReference mRequestRef = mRootRef.child("offer1");
 
-                    String key = mRequestRef.push().getKey();
-
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat currenttime = new SimpleDateFormat("MMM dd yyyy hh:mm a");
-                    String dateform = currenttime.format(c.getTime());
-
-                    final HashMap<String, Object> RequestValues = new HashMap<String, Object>();
-                    RequestValues.put("offerid", key);
-                    RequestValues.put("requestid", requestValues.get("key").toString());
-                    RequestValues.put("service", requestValues.get("service").toString());
-                    RequestValues.put("event", requestValues.get("event").toString());
-                    RequestValues.put("username", requestValues.get("name").toString());
-                    if(requestValues.get("profilecust")!=null){
-                        RequestValues.put("userprofile", requestValues.get("profilecust").toString());
-                    }
-                    RequestValues.put("beauname", username);
-                    RequestValues.put("beauprofile", beaupic);
-                    RequestValues.put("numberofperson", requestValues.get("numberofperson").toString());
-                    RequestValues.put("price", input_offer_price);
-                    RequestValues.put("amount", Integer.parseInt(input_offer_price) * Integer.parseInt(requestValues.get("numberofperson").toString()));
-                    RequestValues.put("date", requestValues.get("numberofperson").toString());
-                    if (input_offer_time.equals(null)) {
-                        RequestValues.put("time", input_offer_time);
-                    } else {
-                        RequestValues.put("time", requestValues.get("time").toString());
-                    }
-                    if (input_offer_location.equals(null)) {
-                        RequestValues.put("location", input_offer_location);
-                    } else {
-                        RequestValues.put("location", requestValues.get("location").toString());
-                    }
-                    RequestValues.put("specialrequest", requestValues.get("specialrequest").toString());
-                    RequestValues.put("status", "2");
-                    RequestValues.put("customerid", requestValues.get("custid").toString());
-                    RequestValues.put("currenttime", dateform);
-                    RequestValues.put("reqpic", requestValues.get("requestpic").toString());
-                    RequestValues.put("offerpic", "");
-                    RequestValues.put("beauid", mFirebaseUser.getUid().toString());
-
-                    Map<String, Object> childUpdate = new HashMap<>();
-                    //childUpdate.put("/request/"+ke,changestatus);
-                    childUpdate.put("/offer1/" + key, RequestValues);
-                    childUpdate.put("/beautician-offer1/" + mFirebaseUser.getUid().toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
-                    childUpdate.put("/customer-received/" + requestValues.get("custid").toString() + "/" + requestValues.get("key").toString() + "/" + key, RequestValues);
-                    mRootRef.updateChildren(childUpdate);
-
-                    final DatabaseReference mCustReqRef = mRootRef.child("customer-request1").child(requestValues.get("custid").toString()).child(requestValues.get("key").toString());
-                    final DatabaseReference mBeauReqRef = mRootRef.child("beautician-received").child(mFirebaseUser.getUid().toString()).child(requestValues.get("key").toString());
-
-                    mCustReqRef.child("status").setValue("2");
-                    mBeauReqRef.child("status").setValue("2");
-                    // progressDialog.dismiss();
-                    Intent intent2 = new Intent(OfferPage.this, MainActivity.class);
-                    intent2.putExtra("menu", "request");
-                    startActivity(intent2);
                 }
             }
         });
 
 
 
+
+    }
+
+    @Override
+    protected  void onActivityResult(int requestCode, int resultCode, Intent data ){
+        super.onActivityResult(requestCode,resultCode,data);
+
+        if(requestCode == SELECT_FILE && resultCode == RESULT_OK){
+            imageUri = data.getData();
+            offer_image.setImageURI(imageUri);
+
+        }
 
     }
 

@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.icu.util.Calendar;
@@ -41,6 +42,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
     private TextView dateView,time_start,time_end;
     Button date,set_time_start,set_time_end;
     private int mHour, mMinute;
+    private ProgressDialog progressDialog;
 
     Toolbar toolbar;
 
@@ -70,6 +72,11 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
         dd = getIntent().getExtras().getInt("day");
         mm = getIntent().getExtras().getInt("month");
         yyyy = getIntent().getExtras().getInt("year");
+
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        year = calendar.get(java.util.Calendar.YEAR);
+        month = calendar.get(java.util.Calendar.MONTH);
+        day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
 
         //find view by id
         dateView = (TextView) findViewById(R.id.button1);
@@ -193,6 +200,8 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void AddEventtoFirebase(){
+        progressDialog.setMessage("Adding ...");
+        progressDialog.show();
 
         radioGroup_ques = (RadioGroup) findViewById(R.id.available);
         int selectedId = radioGroup_ques.getCheckedRadioButtonId();
@@ -244,12 +253,14 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
 
             mRootRef.updateChildren(childUpdate);
 
+            progressDialog.dismiss();
+
             Intent intent = new Intent(AddEvent.this,MainActivity.class);
             intent.putExtra("menu","planner");
             startActivity(intent);
 
-        }
 
+        }
 
     }
 

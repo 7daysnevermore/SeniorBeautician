@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by NunePC on 1/3/2560.
@@ -37,7 +38,7 @@ public class HiredDetails extends AppCompatActivity {
     TextView payment_date, payment_time, payment_bank, payment_amount,topic,desc,waittopay,confirm,cancel;
     LinearLayout bt_payment, bt_finish, bt_confirm, payment,review;
     private TextView date, service, event, time, special, location, maxprice, numofPer, amount, beauname, yes, no;
-    ImageView picpro, slip;
+    ImageView picpro, slip,attachphoto;
     String status;
     private AlertDialog dialog;
     private RatingBar rating_Bar;
@@ -69,6 +70,7 @@ public class HiredDetails extends AppCompatActivity {
         desc = (TextView) findViewById(R.id.des);
         slip = (ImageView) findViewById(R.id.slip);
         rating_Bar = (RatingBar) findViewById(R.id.rating);
+        attachphoto = (ImageView) findViewById(R.id.attachphoto);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -85,6 +87,38 @@ public class HiredDetails extends AppCompatActivity {
 
                     DatabaseReference mBeauRef = FirebaseDatabase.getInstance().getReference().child("/beautician-received/" + beauid + "/" + requestValues.get("key").toString());
                     mBeauRef.child("status").setValue("4");
+
+                    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+
+                    String[] Dateparts = requestValues.get("date").toString().split("-");
+                    String day = Dateparts[0];
+                    String month = Dateparts[1];
+                    String year = Dateparts[2];
+
+                    String[] Timeparts = requestValues.get("time").toString().split(":");
+                    String hh = Timeparts[0]+2;
+                    String mm = Timeparts[1];
+
+                    final HashMap<String, Object> PlannerValues = new HashMap<>();
+                    PlannerValues.put("title", requestValues.get("event").toString());
+                    PlannerValues.put("location", requestValues.get("location").toString());
+                    PlannerValues.put("note","");
+                    PlannerValues.put("day",day);
+                    PlannerValues.put("month", month);
+                    PlannerValues.put("year", year);
+                    PlannerValues.put("start",requestValues.get("time").toString());
+                    PlannerValues.put("end", hh+":"+mm);
+                    PlannerValues.put("status", requestValues.get("status").toString());
+                    PlannerValues.put("uid", mFirebaseUser.getUid().toString());
+
+                    String datekey = requestValues.get("date").toString();
+                    String startkey = requestValues.get("time").toString();
+
+
+                    Map<String,Object> childUpdate = new HashMap<>();
+                    childUpdate.put("/beautician-planner/"+mFirebaseUser.getUid().toString()+"/"+datekey+"/"+startkey, PlannerValues);
+
+                    mRootRef.updateChildren(childUpdate);
 
                     Intent intent = new Intent(HiredDetails.this, MainActivity.class);
                     intent.putExtra("menu", "request");
@@ -279,10 +313,14 @@ public class HiredDetails extends AppCompatActivity {
                     } else {
 
                         DataOffer hired = datashot.getValue(DataOffer.class);
-                        if(hired.status.equals("3")){
+                        //if(hired.status.equals("3")){
                             if (hired.beaupic!="") {
                                 Picasso.with(getApplicationContext()).load(hired.beaupic).fit().centerCrop().into(picpro);
                             }
+                            if (hired.offerpic != "") {
+                                Picasso.with(getApplicationContext()).load(hired.offerpic).fit().centerCrop().into(attachphoto);
+                            }
+
                             beauid = hired.beauid;
                             beauname.setText(hired.beauname);
                             date.setText(hired.date);
@@ -294,7 +332,7 @@ public class HiredDetails extends AppCompatActivity {
                             location.setText(hired.location);
                             maxprice.setText(hired.price);
                             numofPer.setText(hired.numberofperson);
-                        }
+                       // }
 
 
                     }
