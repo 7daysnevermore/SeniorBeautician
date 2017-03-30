@@ -49,7 +49,7 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
     Toolbar toolbar;
 
     String uid;
-    TextView previewname;
+    TextView previewname,verified_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,9 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
         bt_planner = (ImageView) findViewById(R.id.bt_planner);
         bt_review = (ImageView) findViewById(R.id.bt_review);
         bt_detail = (ImageView) findViewById(R.id.bt_detail);
+
+        verified_detail = (TextView) findViewById(R.id.verified_detail);
+        verified_detail.setOnClickListener(this);
 
 
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -166,6 +169,9 @@ public class StorePreview extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.verified_detail:
+                startActivity(new Intent(StorePreview.this, VerifiedShow.class));
+                break;
             case R.id.bt_gallery:
                 if(previous=="review"){
                     bt_review.setImageResource(R.mipmap.request_702);
