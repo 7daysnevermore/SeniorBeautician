@@ -3,7 +3,9 @@ package com.example.nunepc.beautyblinkbeautician;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,6 +43,8 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
     private int s03_price;
     private int s04_price;
 
+    Toolbar toolbar;
+
     TextView addall;
 
     Button add;
@@ -53,6 +57,11 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addservice);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         servicekey = (ArrayList<String>)getIntent().getSerializableExtra("serviceno");
 
@@ -100,9 +109,18 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
             add.setOnClickListener(this);
 
         }
+    }
 
-
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                //NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

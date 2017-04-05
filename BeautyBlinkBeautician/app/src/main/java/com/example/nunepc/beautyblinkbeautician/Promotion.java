@@ -64,9 +64,8 @@ public class Promotion extends AppCompatActivity {
         //up button
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -164,7 +163,9 @@ public class Promotion extends AppCompatActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 //NavUtils.navigateUpFromSameTask(this);
-                onBackPressed();
+                Intent intent = new Intent(Promotion.this,MainActivity.class);
+                intent.putExtra("menu","setting");
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

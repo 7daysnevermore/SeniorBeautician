@@ -3,10 +3,6 @@ package com.example.nunepc.beautyblinkbeautician.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,32 +11,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.nunepc.beautyblinkbeautician.CancelFragment;
-import com.example.nunepc.beautyblinkbeautician.CompletedFragment;
-import com.example.nunepc.beautyblinkbeautician.Confirm;
-import com.example.nunepc.beautyblinkbeautician.EditProfile;
 import com.example.nunepc.beautyblinkbeautician.HiredDetails;
-import com.example.nunepc.beautyblinkbeautician.MainActivity;
 import com.example.nunepc.beautyblinkbeautician.MessagePage;
-import com.example.nunepc.beautyblinkbeautician.Offer;
 import com.example.nunepc.beautyblinkbeautician.OfferPage;
-import com.example.nunepc.beautyblinkbeautician.Promotion;
-import com.example.nunepc.beautyblinkbeautician.PromotionDetails;
 import com.example.nunepc.beautyblinkbeautician.R;
-import com.example.nunepc.beautyblinkbeautician.ToPayFragment;
-import com.example.nunepc.beautyblinkbeautician.TohireFragment;
-import com.example.nunepc.beautyblinkbeautician.Toprovide;
-import com.example.nunepc.beautyblinkbeautician.ToprovideFragment;
-import com.example.nunepc.beautyblinkbeautician.model.DataPromotion;
-import com.example.nunepc.beautyblinkbeautician.model.KeepStatus;
 import com.example.nunepc.beautyblinkbeautician.model.RequestData;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +36,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * Created by NunePC on 18/11/2559.
@@ -70,9 +49,7 @@ public class RequestFragment extends Fragment {
     private FirebaseUser mFirebaseUser;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference databaseReference, dref;
-    private LinearLayout createReq;
-    private String test;
-    private Button btnOf,btnTopay,btnTopr,btnToh,btnCan,btnCom;
+    private Button btnOf,btnTopay,btnTopr,btnToh,btnCan,btnCom,btnToconfirm,btnToReview;
     private ImageView btnMsg;
 
     public RequestFragment(){ super(); }
@@ -101,6 +78,8 @@ public class RequestFragment extends Fragment {
         btnTopr = (Button)rootView.findViewById(R.id.btnToprovide);
         btnCom= (Button)rootView.findViewById(R.id.btnCompleted);
         btnCan= (Button)rootView.findViewById(R.id.btnCancel);
+        btnToconfirm = (Button)rootView.findViewById(R.id.btnToconfirm);
+        btnToReview  = (Button)rootView.findViewById(R.id.btnToReview);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -295,6 +274,26 @@ public class RequestFragment extends Fragment {
                 android.support.v4.app.FragmentManager fm = getFragmentManager();
                 android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.contentstatus, new CancelFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnToconfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new ToconfirmFragment(), "fragment_screen");
+                ft.commit();
+            }
+        });
+        btnToReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.GONE);
+                android.support.v4.app.FragmentManager fm = getFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.contentstatus, new ToReviewFragment(), "fragment_screen");
                 ft.commit();
             }
         });

@@ -2,6 +2,7 @@ package com.example.nunepc.beautyblinkbeautician;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -45,7 +46,7 @@ public class PostGallery extends AppCompatActivity {
     EditText caption;
     TextView share;
     private Button takeP,chooseP,can;
-    private int REQUEST_CAMERA =0,SELECT_FILE=1;
+    private int REQUEST_CAMERA =1,SELECT_FILE=1;
     private AlertDialog dialog;
     Uri imageUri = null;
     private ProgressDialog progressDialog;
@@ -117,7 +118,9 @@ public class PostGallery extends AppCompatActivity {
                     private void cameraIntent() {
 
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent,REQUEST_CAMERA);
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(intent,REQUEST_CAMERA);
+                        }
                     }
                 });
 
@@ -169,11 +172,16 @@ public class PostGallery extends AppCompatActivity {
 
 
         }
-        else if(requestCode == REQUEST_CAMERA && requestCode == RESULT_OK){
+        if(requestCode == REQUEST_CAMERA && requestCode == RESULT_OK){
             dialog.dismiss();
             imageUri = data.getData();
             picpost.setImageURI(imageUri);
+
+            //Bitmap mphoto = (Bitmap) data.getExtras().get("data");
+            //picpost.setImageBitmap(mphoto);
+
         }
+
 
     }
 

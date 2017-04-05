@@ -64,6 +64,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
         //up button
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mFirebaseAuth = FirebaseAuth.getInstance();

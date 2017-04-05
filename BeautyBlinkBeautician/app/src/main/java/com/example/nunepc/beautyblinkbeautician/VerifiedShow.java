@@ -22,6 +22,7 @@ public class VerifiedShow extends AppCompatActivity implements View.OnClickListe
         //up button
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

@@ -65,6 +65,7 @@ public class Verified extends AppCompatActivity {
         //up button
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         citizenimg = (ImageView) findViewById(R.id.identity_img);
         certimg1 = (ImageView) findViewById(R.id.certificate_img);

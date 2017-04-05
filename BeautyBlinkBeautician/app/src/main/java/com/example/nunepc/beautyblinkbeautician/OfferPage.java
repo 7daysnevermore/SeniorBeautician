@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nunepc.beautyblinkbeautician.fragment.RequestFragment;
+import com.example.nunepc.beautyblinkbeautician.model.DataProfilePromote;
 import com.example.nunepc.beautyblinkbeautician.model.User;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,7 +51,7 @@ public class OfferPage extends AppCompatActivity {
     private ImageView special_img,offer_image,btnOffer;
     private String username,beaupic;
     private StorageReference storageReference,filepath;
-    String uid;
+    String uid,rating;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
     private ProgressDialog progressDialog;
@@ -67,6 +68,7 @@ public class OfferPage extends AppCompatActivity {
         //up button
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         status = getIntent().getStringExtra("status");
@@ -96,15 +98,25 @@ public class OfferPage extends AppCompatActivity {
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
         uid = mFirebaseUser.getUid().toString();
-        mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        mRootRef.child("beautician-profilepromote").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
 
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user == null) {
-                } else {
-                    username = user.username;
-                    beaupic = user.profile;
+
+                for (DataSnapshot startChild : dataSnapshot.getChildren()) {
+
+                    DataProfilePromote user = startChild.getValue(DataProfilePromote.class);
+                    String key = startChild.getKey();
+
+                    if (user == null) {
+                    } else {
+                        username = user.username;
+                        beaupic = user.BeauticianProfile;
+                        rating = user.rating;
+                    }
+
                 }
             }
 
@@ -239,6 +251,7 @@ public class OfferPage extends AppCompatActivity {
                             RequestValues.put("currenttime", dateform);
                             RequestValues.put("reqpic", requestValues.get("requestpic").toString());
                             RequestValues.put("offerpic", dowloadUrl.toString());
+                            RequestValues.put("rating", rating);
                             RequestValues.put("beauid", mFirebaseUser.getUid().toString());
 
                             Map<String, Object> childUpdate = new HashMap<>();

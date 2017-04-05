@@ -30,15 +30,29 @@
                 style="@style/Widget.AppCompat.Button.Colored"/>
 
             <Button
+                android:id="@+id/btnTohire"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnTohire"
-                android:text="To hire"
-                android:textStyle="bold"
-                android:textSize="14dp"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                style="@style/Widget.AppCompat.Button.Colored"/>
+                android:text="To hire"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnToconfirm"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="To confirm"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+
+
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,26 +63,39 @@
                 android:textStyle="bold"
                 android:textSize="14dp"
                 style="@style/Widget.AppCompat.Button.Colored"/>
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/btnToprovide"
-                android:text="To provide"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
-                android:textStyle="bold"
+                android:text="To provide"
                 android:textSize="14dp"
-                style="@style/Widget.AppCompat.Button.Colored"/>
+                android:textStyle="bold" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnCompleted"
-                android:text="Completed"
+                android:id="@+id/btnToReview"
+                android:text="To review"
                 android:minHeight="0dp"
                 android:minWidth="0dp"
                 android:textStyle="bold"
                 android:textSize="14dp"
                 style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:id="@+id/btnCompleted"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="Completed"
+                android:textSize="14dp"
+                android:textStyle="bold" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,13 +123,11 @@
     <FrameLayout
         android:id="@+id/contentstatus"
         android:layout_width="match_parent"
-        android:background="@color/even_color"
         android:layout_height="wrap_content"
-        android:layout_weight="15">
+        android:layout_weight="15"
+        android:background="@color/even_color">
 
     </FrameLayout>
-
-
 
 
 </LinearLayout>

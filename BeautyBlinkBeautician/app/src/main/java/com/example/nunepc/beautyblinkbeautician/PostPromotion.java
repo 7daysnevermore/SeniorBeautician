@@ -68,6 +68,7 @@ public class PostPromotion extends AppCompatActivity {
         setContentView(R.layout.activity_post_promotion);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
