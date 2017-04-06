@@ -93,7 +93,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                 if (user == null) {
                     Toast.makeText(ViewProfile.this, "Error: could not fetch user.", Toast.LENGTH_LONG).show();
                 } else {
-                    if (user.profile != "") {
+                    if (!user.profile.equals("")) {
                         Picasso.with(ViewProfile.this).load(user.profile).fit().centerCrop().into(profilePicture);
                     }
                     username.setText(user.username);
@@ -184,7 +184,7 @@ public class ViewProfile extends AppCompatActivity implements View.OnClickListen
                                 keypro = childSnapshot.getKey();
                             }
 
-                            if (!keypro.equals(null)) {
+                            if (keypro!=null) {
 
                                 //Add to profile promote
                                 final DatabaseReference mPromoteRef = mProfilePromoteRef.child("profilepromote").child(keypro);

@@ -248,25 +248,22 @@ public class Verified extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 final Uri downloadUrl = taskSnapshot.getDownloadUrl();
 
-                //create root of Promotion
-                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference().child("beautician-verified").child(uid);
+                DatabaseReference mRef = FirebaseDatabase.getInstance().getReference().child("beautician-verified").child(uid);
 
-                final HashMap<String, Object> VerifiedValues = new HashMap<>();
-                VerifiedValues.put("image", downloadUrl.toString());
-
-                Map<String, Object> childUpdate = new HashMap<>();
                 if (pic.equals("1")) {
-                    mRootRef.child("citizenid").setValue(downloadUrl.toString());
+                    mRef.child("citizenid").setValue(downloadUrl.toString());
                 }
                 if (pic.equals("2")) {
-                    mRootRef.child("makeup").setValue(downloadUrl.toString());
+                    mRef.child("makeup").setValue(downloadUrl.toString());
                 }
                 if (pic.equals("3")) {
-                    mRootRef.child("hairstyle").setValue(downloadUrl.toString());
+                    mRef.child("hairstyle").setValue(downloadUrl.toString());
                 }
                 if (pic.equals("4")) {
-                    mRootRef.child("hairdressing").setValue(downloadUrl.toString());
+                    mRef.child("hairdressing").setValue(downloadUrl.toString());
                 }
+
+
             }
         });
     }
