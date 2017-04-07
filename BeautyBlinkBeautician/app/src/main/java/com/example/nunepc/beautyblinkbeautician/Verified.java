@@ -81,8 +81,6 @@ public class Verified extends AppCompatActivity {
         identitytext3 = (TextView) findViewById(R.id.cert2);
         identitytext4 = (TextView) findViewById(R.id.cert3);
 
-        identity = (Button) findViewById(R.id.identity);
-        certi_btn1 = (Button) findViewById(R.id.certi_btn);
 
         verifieduser = (TextView) findViewById(R.id.verifieduser);
         verifieduser1 = (TextView) findViewById(R.id.verifieduser1);
@@ -154,25 +152,25 @@ public class Verified extends AppCompatActivity {
                 } else {
                     if (verified.citizenid != null) {
                         identitytext.setTextColor(Color.parseColor("#91dc5a"));
-                        identity.setVisibility(View.GONE);
+                        uploadimg1.setVisibility(View.GONE);
                         verifieduser.setVisibility(View.VISIBLE);
                         citizenimg.setImageResource(R.mipmap.useradd_done);
                     }
                     if (verified.makeup != null) {
                         identitytext2.setTextColor(Color.parseColor("#91dc5a"));
-                        certi_btn1.setVisibility(View.GONE);
+                        uploadimg2.setVisibility(View.GONE);
                         verifieduser1.setVisibility(View.VISIBLE);
                         certimg1.setImageResource(R.mipmap.diploma_done);
                     }
                     if (verified.hairstyle != null) {
                         identitytext3.setTextColor(Color.parseColor("#91dc5a"));
-                        certi_btn2.setVisibility(View.GONE);
+                        uploadimg3.setVisibility(View.GONE);
                         verifieduser2.setVisibility(View.VISIBLE);
                         certimg2.setImageResource(R.mipmap.diploma_done);
                     }
                     if (verified.hairdressing != null) {
                         identitytext4.setTextColor(Color.parseColor("#91dc5a"));
-                        certi_btn3.setVisibility(View.GONE);
+                        uploadimg4.setVisibility(View.GONE);
                         verifieduser3.setVisibility(View.VISIBLE);
                         certimg3.setImageResource(R.mipmap.diploma_done);
                     }
@@ -237,7 +235,7 @@ public class Verified extends AppCompatActivity {
             putfile(imageUri3, "3");
         }
         if (imageUri4 != null) {
-            filepath = storageReference.child("Verified").child(imageUri3.getLastPathSegment());
+            filepath = storageReference.child("Verified").child(imageUri4.getLastPathSegment());
             putfile(imageUri4, "4");
         }
     }
@@ -252,15 +250,32 @@ public class Verified extends AppCompatActivity {
 
                 if (pic.equals("1")) {
                     mRef.child("citizenid").setValue(downloadUrl.toString());
+                    identitytext.setTextColor(Color.parseColor("#91dc5a"));
+                    uploadimg1.setVisibility(View.GONE);
+                    verifieduser.setVisibility(View.VISIBLE);
+                    citizenimg.setImageResource(R.mipmap.useradd_done);
                 }
                 if (pic.equals("2")) {
                     mRef.child("makeup").setValue(downloadUrl.toString());
+                    identitytext2.setTextColor(Color.parseColor("#91dc5a"));
+                    uploadimg2.setVisibility(View.GONE);
+                    verifieduser1.setVisibility(View.VISIBLE);
+                    certimg1.setImageResource(R.mipmap.diploma_done);
                 }
                 if (pic.equals("3")) {
                     mRef.child("hairstyle").setValue(downloadUrl.toString());
+                    identitytext3.setTextColor(Color.parseColor("#91dc5a"));
+                    uploadimg3.setVisibility(View.GONE);
+                    verifieduser2.setVisibility(View.VISIBLE);
+                    certimg2.setImageResource(R.mipmap.diploma_done);
+
                 }
                 if (pic.equals("4")) {
                     mRef.child("hairdressing").setValue(downloadUrl.toString());
+                    identitytext4.setTextColor(Color.parseColor("#91dc5a"));
+                    uploadimg4.setVisibility(View.GONE);
+                    verifieduser3.setVisibility(View.VISIBLE);
+                    certimg3.setImageResource(R.mipmap.diploma_done);
                 }
 
 
