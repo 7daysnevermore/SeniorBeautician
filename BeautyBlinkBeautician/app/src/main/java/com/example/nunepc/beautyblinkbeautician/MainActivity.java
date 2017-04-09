@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //up button
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //Initialize Firebase Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -186,14 +189,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initInstances() {
         DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
         noti = (TextView) findViewById(R.id.family_hub_tv_count);
-        notiBtn = (Button) findViewById(R.id.noti);
-        notiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TestNoti.class);
-                startActivity(intent);
-            }
-        });
         /*mRootRef.child("beautician").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
