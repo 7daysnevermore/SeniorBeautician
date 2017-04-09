@@ -228,7 +228,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
-        if(!TextUtils.isEmpty(input_title)&&(!TextUtils.isEmpty(String.valueOf(hour1))||hour1!=0)&&(!TextUtils.isEmpty(String.valueOf(hour2))||hour2!=0)){
+        if(!TextUtils.isEmpty(input_title)&&hour1!=0&&hour2!=0){
 
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
