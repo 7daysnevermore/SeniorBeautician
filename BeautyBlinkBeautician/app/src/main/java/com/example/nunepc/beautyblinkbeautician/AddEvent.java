@@ -201,8 +201,8 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void AddEventtoFirebase(){
-        progressDialog.setMessage("Adding ...");
-        progressDialog.show();
+        //progressDialog.setMessage("Adding ...");
+        //rogressDialog.show();
 
         radioGroup_ques = (RadioGroup) findViewById(R.id.available);
         int selectedId = radioGroup_ques.getCheckedRadioButtonId();
@@ -228,7 +228,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
-        if(!input_title.equals(null)&&hour1!=0&&hour2!=0){
+        if(!TextUtils.isEmpty(input_title)&&(!TextUtils.isEmpty(String.valueOf(hour1))||hour1!=0)&&(!TextUtils.isEmpty(String.valueOf(hour2))||hour2!=0)){
 
             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -254,7 +254,7 @@ public class AddEvent extends AppCompatActivity implements View.OnClickListener 
 
             mRootRef.updateChildren(childUpdate);
 
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
 
             Intent intent = new Intent(AddEvent.this,MainActivity.class);
             intent.putExtra("menu","planner");
