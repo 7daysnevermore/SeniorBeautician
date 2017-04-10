@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -38,7 +39,7 @@ public class HiredDetails extends AppCompatActivity {
     TextView payment_date, payment_time, payment_bank, payment_amount,topic,desc,waittopay,confirm,cancel;
     LinearLayout bt_payment, bt_finish, bt_confirm, payment,review;
     private TextView date, service, event, time, special, location, maxprice, numofPer, amount, beauname, yes, no;
-    ImageView picpro, slip,attachphoto;
+    ImageView picpro, slip,attachphoto,picreview;
     String status;
     private AlertDialog dialog;
     private RatingBar rating_Bar;
@@ -69,6 +70,7 @@ public class HiredDetails extends AppCompatActivity {
         topic = (TextView) findViewById(R.id.topic);
         desc = (TextView) findViewById(R.id.des);
         slip = (ImageView) findViewById(R.id.slip);
+        picreview = (ImageView) findViewById(R.id.picreview);
         rating_Bar = (RatingBar) findViewById(R.id.rating);
         attachphoto = (ImageView) findViewById(R.id.attachphoto);
 
@@ -152,7 +154,7 @@ public class HiredDetails extends AppCompatActivity {
             payment.setVisibility(View.VISIBLE);
             view2.setVisibility(View.VISIBLE);
 
-            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("uid").toString())
+            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("custid").toString())
                     .child(requestValues.get("key").toString());
 
             data.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -160,8 +162,6 @@ public class HiredDetails extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     for (DataSnapshot datashot : dataSnapshot.getChildren()) {
-
-
                         if (datashot.getValue() == null) {
                         } else {
 
@@ -187,7 +187,7 @@ public class HiredDetails extends AppCompatActivity {
             payment.setVisibility(View.VISIBLE);
             view2.setVisibility(View.VISIBLE);
 
-            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("uid").toString())
+            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("custid").toString())
                     .child(requestValues.get("key").toString());
 
             data.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -201,6 +201,7 @@ public class HiredDetails extends AppCompatActivity {
                         } else {
 
                             DataPayment hired = datashot.getValue(DataPayment.class);
+                            if(hired.slip!=null)
                             Picasso.with(getApplicationContext()).load(hired.slip).fit().centerCrop().into(slip);
                             payment_date.setText(hired.date);
                             payment_time.setText(hired.time);
@@ -226,7 +227,7 @@ public class HiredDetails extends AppCompatActivity {
             view2.setVisibility(View.VISIBLE);
             view1.setVisibility(View.VISIBLE);
 
-            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("uid").toString())
+            DatabaseReference data = FirebaseDatabase.getInstance().getReference().child("customer-payment").child(requestValues.get("custid").toString())
                     .child(requestValues.get("key").toString());
 
             data.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -256,7 +257,7 @@ public class HiredDetails extends AppCompatActivity {
 
                 }
             });
-            DatabaseReference dataReview = FirebaseDatabase.getInstance().getReference().child("customer-review").child(requestValues.get("uid").toString())
+            DatabaseReference dataReview = FirebaseDatabase.getInstance().getReference().child("customer-review").child(requestValues.get("custid").toString())
                     .child(requestValues.get("key").toString());
 
             dataReview.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -270,6 +271,7 @@ public class HiredDetails extends AppCompatActivity {
                         } else {
 
                             DataReview rev = datashot.getValue(DataReview.class);
+                            Picasso.with(getApplicationContext()).load(rev.image).fit().centerCrop().into(picreview);
                             rating_Bar.setRating((float) (rev.rating*1.0));
                             topic.setText(rev.topic);
                             desc.setText(rev.desc);
@@ -285,6 +287,7 @@ public class HiredDetails extends AppCompatActivity {
                 }
             });
         }
+
 
         date = (TextView) findViewById(R.id.cusD);
         service = (TextView) findViewById(R.id.cusSer);
