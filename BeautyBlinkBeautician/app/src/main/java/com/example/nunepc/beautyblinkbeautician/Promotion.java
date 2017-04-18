@@ -144,8 +144,6 @@ public class Promotion extends AppCompatActivity {
 
 
 
-
-
         create_pro = (LinearLayout)findViewById(R.id.create_pro);
         create_pro.setOnClickListener(new View.OnClickListener() {
             @Override

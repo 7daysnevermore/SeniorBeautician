@@ -61,57 +61,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage.Notification notification, Map<String, String> data) {
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.balo);
 
-
-        /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference ref1 =ref.child("statusfornoti").child("status");
-        ref1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String str = dataSnapshot.getValue(String.class);
-                s =dataSnapshot.getValue(String.class);
-
-
-                dn.setStatus(str);
-                //System.out.println(dn.getStatus());
-                String str1 = dn.getStatus();
-                sst(dn.getStatus());
-                Log.d("Guboringlaewwww",""+str1);
-                Log.d("Banana",""+str1);
-                list.add(str1);
-                Log.d("list",""+ list.get(0));
-                switch (dn.getStatus()){
-                    case "offer":
-                        Log.d("Please","="+dn.getStatus());
-
-                        break;
-                }
-                n.put("s",dataSnapshot.getValue(String.class).toString());
-                s=n.get("s").toString();
-                Log.d("WWW","="+n.get("s").toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });*/
-
-        //null value
-        // Log.d("list111",""+ list.get(0));
-        //Log.d("WWW22222","="+s);
-        //Log.d("Please1","="+dn.getStatus());
-        Log.d("testweisus",""+trans);
-
-        /*intent = new Intent(getApplicationContext(),Noti_Receive.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("picture_url", data.get("picture_url"));
-        bundle.putString("status","offer");
-        //Values.put("pictureurl","http://opsbug.com/static/google-io.jpg");
-        intent.putExtras(bundle);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);*/
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(notification.getTitle())
@@ -119,81 +73,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 //.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.win))
-                //.setContentIntent(pendingIntent)
-                //.setContentInfo("HelloBye")
+                .setContentIntent(pendingIntent)
+                .setContentInfo("Hello")
                 .setLargeIcon(icon)
                 .setColor(Color.RED)
                 .setLights(Color.RED, 1000, 300)
-                .setDefaults(Notification.DEFAULT_VIBRATE);
-        //.setSmallIcon(R.mipmap.ic_launcher);
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setSmallIcon(R.mipmap.ic_launcher);
 
 
-        try {
-            ref1.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    String str = dataSnapshot.getValue(String.class);
-                    s =dataSnapshot.getValue(String.class);
-
-
-                    dn.setStatus(str);
-                    //System.out.println(dn.getStatus());
-                    String str1 = dn.getStatus();
-                    sst(dn.getStatus());
-                    Log.d("Guboringlaewwww",""+str1);
-                    Log.d("Banana",""+str1);
-                    list.add(str1);
-                    Log.d("list",""+ list.get(0));
-                    switch (dn.getStatus()){
-                        case "offer":
-                            Log.d("Please","="+dn.getStatus());
-
-                            break;
-                    }
-                    n.put("s",dataSnapshot.getValue(String.class).toString());
-                    s=n.get("s").toString();
-                    Log.d("WWW","="+n.get("s").toString());
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            String picture_url = data.get("picture_url");
-            if (picture_url != null && !"".equals(picture_url)) {
-                URL url = new URL(picture_url);
-                Bitmap bigPicture = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                notificationBuilder.setStyle(
-                        new NotificationCompat.BigPictureStyle().bigPicture(bigPicture).setSummaryText(notification.getBody())
-                );
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        Log.d("lastatata",""+s.toString());
-        switch (s.toString()){
-            case "offer":
-                intent = new Intent(getApplicationContext(),Noti_Receive.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Bundle bundle = new Bundle();
-                bundle.putString("picture_url", data.get("picture_url"));
-                bundle.putString("status","offer");
-                //Values.put("pictureurl","http://opsbug.com/static/google-io.jpg");
-                intent.putExtras(bundle);
-                break;
-        }
-       // intent = new Intent(getApplicationContext(),Noti_Receive.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        notificationBuilder.setContentIntent(pendingIntent);
-        notificationBuilder.setContentInfo(s.toString());
-        notificationBuilder.setSmallIcon(R.drawable.balo);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
